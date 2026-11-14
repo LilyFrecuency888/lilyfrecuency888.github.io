@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lily Frequency · Bienestar sonoro</title>
+<meta name="description" content="Lily Frequency: frecuencias, meditación guiada y respiración para tu bienestar diario.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120f1a;--bg2:#1c1630;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(1200px 800px at 50% -10%,#3a2563 0%,var(--bg) 60%) fixed,var(--bg);line-height:1.65;overflow-x:hidden}
+a{color:inherit}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.stars i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.0;animation:tw 4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.6)}50%{opacity:.9;transform:scale(1)}}
+main,header,footer{position:relative;z-index:1}
+nav{display:flex;justify-content:space-between;align-items:center;max-width:1080px;margin:0 auto;padding:22px 22px}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Cormorant Garamond",serif;font-size:1.55rem;font-weight:600;letter-spacing:.02em;text-decoration:none}
+.logo svg{width:34px;height:34px}
+nav .links a{margin-left:20px;text-decoration:none;color:var(--muted);font-weight:600;font-size:.95rem}
+nav .links a:hover{color:var(--lila)}
+.hero{max-width:1080px;margin:0 auto;padding:30px 22px 60px;display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
+.eyebrow{display:inline-block;padding:6px 14px;border-radius:999px;background:rgba(201,167,255,.14);border:1px solid rgba(201,167,255,.35);color:var(--lila2);font-weight:600;font-size:.85rem;letter-spacing:.06em}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.02;margin:18px 0 16px}
+h1 em{font-style:italic;background:linear-gradient(90deg,var(--lila),var(--rosa),var(--menta));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:1.15rem;color:var(--muted);max-width:520px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:999px;font-weight:700;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.main{background:linear-gradient(90deg,var(--lila),var(--rosa));color:#2a1640;box-shadow:0 10px 30px -8px rgba(255,159,210,.6)}
+.btn.ghost{border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)}
+.soon{font-size:.85rem;color:var(--muted);margin-top:12px}
+.mandala{position:relative;aspect-ratio:1;max-width:480px;width:100%;margin:0 auto}
+.mandala svg{width:100%;height:100%;overflow:visible}
+.spin{transform-origin:50% 50%;animation:spin 90s linear infinite}
+.spin.rev{animation-duration:140s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pulse{animation:pulse 6s ease-in-out infinite;transform-origin:50% 50%}
+@keyframes pulse{0%,100%{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1.02)}}
+.glow{position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle,rgba(201,167,255,.45),rgba(255,159,210,.12) 55%,transparent 70%);filter:blur(20px);animation:pulse 6s ease-in-out infinite}
+.wave{max-width:1080px;margin:0 auto;padding:0 22px}
+.wave svg{width:100%;height:90px;display:block}
+.wave path{fill:none;stroke-width:2;stroke-linecap:round}
+section{max-width:1080px;margin:0 auto;padding:70px 22px}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2rem,4vw,2.9rem);text-align:center;margin-bottom:10px}
+.sub{text-align:center;color:var(--muted);max-width:640px;margin:0 auto 40px}
+.freqs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px}
+.freq{position:relative;padding:22px 16px;border-radius:24px;text-align:center;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid rgba(201,167,255,.22);overflow:hidden;transition:transform .25s,border-color .25s}
+.freq:hover{transform:translateY(-4px);border-color:var(--rosa)}
+.freq svg{width:58px;height:58px;margin-bottom:8px}
+.freq b{display:block;font-family:"Cormorant Garamond",serif;font-size:2rem;line-height:1}
+.freq b small{font-size:1rem;color:var(--lila)}
+.freq span{font-size:.92rem;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{padding:26px;border-radius:26px;background:rgba(28,22,48,.75);border:1px solid rgba(201,167,255,.18);backdrop-filter:blur(6px)}
+.card .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;margin-bottom:14px;background:linear-gradient(135deg,rgba(201,167,255,.35),rgba(255,159,210,.25));font-size:1.4rem}
+.card h3{font-size:1.15rem;margin-bottom:6px}
+.card p{color:var(--muted);font-size:.97rem}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;counter-reset:s}
+.step{position:relative;padding:28px 24px 24px;border-radius:26px;border:1px dashed rgba(201,167,255,.4);text-align:center}
+.step:before{counter-increment:s;content:counter(s);position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#2a1640;background:linear-gradient(135deg,var(--lila),var(--rosa))}
+.step h3{margin:6px 0}
+.step p{color:var(--muted);font-size:.97rem}
+.modes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px}
+.modes span{padding:8px 16px;border-radius:999px;background:rgba(143,240,208,.12);border:1px solid rgba(143,240,208,.35);color:var(--menta);font-weight:600;font-size:.9rem}
+.contact{text-align:center;padding:50px 26px;border-radius:34px;background:linear-gradient(135deg,rgba(201,167,255,.18),rgba(255,159,210,.12));border:1px solid rgba(201,167,255,.3);position:relative;overflow:hidden}
+.contact .seed{position:absolute;right:-60px;top:-60px;width:240px;opacity:.18}
+.contact .seed.l{left:-60px;right:auto;top:auto;bottom:-60px}
+.note{max-width:760px;margin:0 auto;text-align:center;font-size:.9rem;color:var(--muted);padding:0 22px 40px}
+footer{border-top:1px solid rgba(201,167,255,.15);padding:28px 22px;text-align:center;color:var(--muted);font-size:.9rem}
+footer a{color:var(--lila2)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s,transform .9s}
+.reveal.in{opacity:1;transform:none}
+@media (max-width:820px){.hero{grid-template-columns:1fr;text-align:center}.lead{margin:0 auto}.cta{justify-content:center}.mandala{max-width:340px;order:-1}nav .links{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a7ff"/><stop offset=".55" stop-color="#ff9fd2"/><stop offset="1" stop-color="#8ff0d0"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8ff0d0"/><stop offset=".5" stop-color="#c9a7ff"/><stop offset="1" stop-color="#ff9fd2"/></linearGradient>
+    <!-- Semilla de la vida: 7 círculos -->
+    <symbol id="seed" viewBox="-60 -60 120 120"><g fill="none" stroke="url(#g1)" stroke-width="2">
+      <circle r="20"/><circle cx="20" r="20"/><circle cx="-20" r="20"/><circle cx="10" cy="17.32" r="20"/><circle cx="-10" cy="17.32" r="20"/><circle cx="10" cy="-17.32" r="20"/><circle cx="-10" cy="-17.32" r="20"/><circle r="40"/></g></symbol>
+  </defs>
+</svg>
+
+<header>
+  <nav>
+    <a class="logo" href="#"><svg viewBox="-60 -60 120 120"><use href="#seed" x="-60" y="-60" width="120" height="120"/></svg>Lily Frequency</a>
+    <div class="links"><a href="#frecuencias">Frecuencias</a><a href="#app">La app</a><a href="#como">Cómo funciona</a><a href="#contacto">Contacto</a></div>
+  </nav>
+  <div class="hero">
+    <div>
+      <span class="eyebrow">✦ Bienestar sonoro ✦</span>
+      <h1>Vibra en <em>armonía</em> con tu frecuencia</h1>
+      <p class="lead">Frecuencias, meditaciones guiadas y respiración consciente para acompañar tu día: calma, descanso, enfoque y conexión contigo.</p>
+      <div class="cta">
+        <a class="btn main" href="#app">✿ Conoce la app</a>
+        <a class="btn ghost" href="#contacto">Pregúntame</a>
+      </div>
+      <p class="soon">Muy pronto en Google Play para Android.</p>
+    </div>
+    <div class="mandala" aria-label="Flor de la vida">
+      <div class="glow"></div>
+      <svg viewBox="-200 -200 400 400" id="flor">
+        <g class="spin rev" id="rings"></g>
+        <g class="spin" id="flower"></g>
+        <g class="pulse" id="core"></g>
+      </svg>
+    </div>
+  </div>
+  <div class="wave" aria-hidden="true"><svg viewBox="0 0 1000 90" preserveAspectRatio="none"><path id="w1" stroke="url(#g2)"/><path id="w2" stroke="#c9a7ff" opacity=".45"/><path id="w3" stroke="#ff9fd2" opacity=".3"/></svg></div>
+</header>
+
+<main>
+  <section id="frecuencias" class="reveal">
+    <h2>Frecuencias que te acompañan</h2>
+    <p class="sub">Tonos tradicionales del mundo del sonido y la meditación, para crear tu momento de pausa.</p>
+    <div class="freqs" id="freqs"></div>
+  </section>
+
+  <section id="app" class="reveal">
+    <h2>Todo en una app</h2>
+    <p class="sub">Más de 150 programas organizados para cada momento del día. Sin registro, sin anuncios y sin recopilar tus datos.</p>
+    <div class="cards">
+      <div class="card"><div class="ic">🌙</div><h3>Sueño y calma</h3><p>Programas para soltar el día, relajarte y preparar tu descanso.</p></div>
+      <div class="card"><div class="ic">🧘‍♀️</div><h3>Meditación guiada</h3><p>Respiraciones con indicaciones en pantalla: 4‑7‑8, cuadrada, coherencia del corazón y más.</p></div>
+      <div class="card"><div class="ic">🌈</div><h3>Chakras y Solfeggio</h3><p>Recorre los centros de energía y las frecuencias Solfeggio y planetarias.</p></div>
+      <div class="card"><div class="ic">✨</div><h3>Intuición</h3><p>Entrena tu intuición con colores, formas y cartas, con tu propio marcador.</p></div>
+      <div class="card"><div class="ic">🎚️</div><h3>Frecuencia libre</h3><p>Crea tus propias secuencias de frecuencias y guárdalas para usarlas cuando quieras.</p></div>
+      <div class="card"><div class="ic">💌</div><h3>Sesiones a distancia</h3><p>Tu terapeuta te envía un código con tu sesión personalizada y su intención para ti.</p></div>
+    </div>
+    <div class="modes"><span>Tono puro</span><span>Binaural · con audífonos</span><span>Isocrónico · con parlante</span></div>
+  </section>
+
+  <section id="como" class="reveal">
+    <h2>Cómo funciona</h2>
+    <p class="sub">Simple y amoroso, a tu ritmo.</p>
+    <div class="steps">
+      <div class="step"><h3>Instala</h3><p>Descarga Lily Frequency en tu celular Android.</p></div>
+      <div class="step"><h3>Explora gratis</h3><p>Disfruta 14 días con todos los programas abiertos.</p></div>
+      <div class="step"><h3>Sigue vibrando</h3><p>Continúa con tu membresía mensual y el código que te da tu terapeuta.</p></div>
+    </div>
+  </section>
+
+  <section id="contacto" class="reveal">
+    <div class="contact">
+      <svg class="seed" viewBox="-60 -60 120 120" aria-hidden="true"><use href="#seed" x="-60" y="-60" width="120" height="120"/></svg>
+      <svg class="seed l" viewBox="-60 -60 120 120" aria-hidden="true"><use href="#seed" x="-60" y="-60" width="120" height="120"/></svg>
+      <h2>¿Tienes preguntas?</h2>
+      <p class="sub" style="margin-bottom:24px">Escríbeme y con gusto te acompaño a elegir tus programas o tu membresía.</p>
+      <a class="btn main" href="https://wa.me/50234819870" target="_blank" rel="noopener">💬 Escríbeme por WhatsApp</a>
+    </div>
+  </section>
+
+  <p class="note">Lily Frequency es una herramienta de apoyo y relajación. No diagnostica, trata ni cura enfermedades y no sustituye atención médica o psicológica. Usa volumen bajo y no la uses mientras manejas.</p>
+</main>
+
+<footer>
+  © <span id="y"></span> Lily Frequency · <a href="privacidad.html">Política de privacidad</a>
+</footer>
+
+<script>
+const NS="http://www.w3.org/2000/svg";
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e}
+// Flor de la vida: 19 círculos en red hexagonal + borde
+(function(){
+  const r=40,f=document.getElementById("flower"),rings=document.getElementById("rings"),core=document.getElementById("core");
+  const pts=[];
+  for(let q=-2;q<=2;q++)for(let s=-2;s<=2;s++){const t=-q-s;if(Math.abs(t)>2)continue;pts.push([r*(q+s/2),r*s*Math.sqrt(3)/2])}
+  pts.forEach(([x,y],i)=>el("circle",{cx:x,cy:y,r:r,fill:"none",stroke:"url(#g1)","stroke-width":1.6,opacity:.9},f));
+  el("circle",{r:r*3,fill:"none",stroke:"#c9a7ff","stroke-width":2,opacity:.8},f);
+  el("circle",{r:r*3+8,fill:"none",stroke:"#ff9fd2","stroke-width":1,opacity:.5},f);
+  // anillos exteriores con puntos (como notas de frecuencia)
+  for(let k=0;k<3;k++){const R=150+k*16;el("circle",{r:R,fill:"none",stroke:"#c9a7ff","stroke-width":.6,"stroke-dasharray":k===1?"2 6":"1 10",opacity:.55},rings)}
+  for(let i=0;i<12;i++){const a=i*Math.PI/6;el("circle",{cx:Math.cos(a)*166,cy:Math.sin(a)*166,r:i%3?2.4:4,fill:i%2?"#ff9fd2":"#8ff0d0"},rings)}
+  // hexagrama central
+  const hex=(rot)=>{let d="";for(let i=0;i<3;i++){const a=rot+i*2*Math.PI/3;d+=(i?"L":"M")+Math.cos(a)*r*1.73+","+Math.sin(a)*r*1.73}return d+"Z"};
+  el("path",{d:hex(-Math.PI/2),fill:"none",stroke:"#ffd98a","stroke-width":1.4,opacity:.85},core);
+  el("path",{d:hex(Math.PI/2),fill:"none",stroke:"#ffd98a","stroke-width":1.4,opacity:.85},core);
+  el("circle",{r:6,fill:"#fff",opacity:.9},core);
+})();
+// Tarjetas de frecuencias con su onda
+const F=[["432","Hz","Armonía y calma",1.2],["528","Hz","Amor y renovación",1.6],["7.83","Hz","Resonancia Schumann",.6],["396","Hz","Soltar y liberar",1],["639","Hz","Conexión y vínculos",2],["963","Hz","Conexión espiritual",2.6]];
+document.getElementById("freqs").innerHTML=F.map(([n,u,t,k],i)=>{let d="";for(let x=0;x<=100;x+=2){const y=29+14*Math.sin(x/100*Math.PI*2*k*2)*Math.sin(x/100*Math.PI);d+=(x?"L":"M")+x*0.58+","+y.toFixed(1)}
+  return `<div class="freq"><svg viewBox="0 0 58 58"><circle cx="29" cy="29" r="27" fill="none" stroke="url(#g1)" stroke-width="1.2" opacity=".6"/><path d="${d}" fill="none" stroke="${["#c9a7ff","#ff9fd2","#8ff0d0"][i%3]}" stroke-width="2" stroke-linecap="round"/></svg><b>${n} <small>${u}</small></b><span>${t}</span></div>`}).join("");
+// Ondas animadas
+(function(){
+  const w=[["w1",22,3,.0018],["w2",16,5,.0026],["w3",12,2,.0012]].map(([id,a,k,s])=>({p:document.getElementById(id),a,k,s}));
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function frame(t){w.forEach(o=>{let d="";for(let x=0;x<=1000;x+=10){const y=45+o.a*Math.sin(x/1000*Math.PI*2*o.k+t*o.s)*Math.sin(x/1000*Math.PI);d+=(x?"L":"M")+x+","+y.toFixed(1)}o.p.setAttribute("d",d)});if(!reduce)requestAnimationFrame(frame)}
+  frame(0);
+})();
+// Estrellas
+(function(){const s=document.getElementById("stars");for(let i=0;i<70;i++){const e=document.createElement("i");e.style.left=Math.random()*100+"%";e.style.top=Math.random()*100+"%";e.style.animationDelay=(Math.random()*4)+"s";const z=Math.random()<.2?4:2;e.style.width=e.style.height=z+"px";e.style.background=["#fff","#c9a7ff","#ff9fd2","#8ff0d0"][i%4];s.appendChild(e)}})();
+// Aparición suave
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(e=>io.observe(e));
+setTimeout(()=>document.querySelectorAll(".reveal").forEach(e=>e.classList.add("in")),2500);
+document.getElementById("y").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
