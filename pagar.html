@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagar · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120f1a;--s2:#251e34;--line:#3a2f52;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(900px 650px at 50% -8%,#3a2563,var(--bg) 62%) fixed,var(--bg);line-height:1.6;min-height:100vh}
+a{color:var(--lila2)}
+.wrap{max-width:620px;margin:0 auto;padding:22px 18px 70px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:600;text-decoration:none;color:var(--txt)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2rem,6vw,2.8rem);line-height:1.08;margin-bottom:6px}
+h1 em{font-style:italic;background:linear-gradient(90deg,var(--lila),var(--rosa),var(--menta));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.7rem;margin:34px 0 6px}
+.muted{color:var(--muted)}.small{font-size:.86rem}
+.box{background:rgba(29,23,48,.82);border:1px solid var(--line);border-radius:22px;padding:20px;margin-top:16px}
+.resumen{border-color:var(--lila);text-align:center}
+.resumen .pl{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--lila)}
+.resumen .mt{font-family:"Cormorant Garamond",serif;font-size:3rem;line-height:1.05;color:var(--oro);margin:4px 0}
+.resumen .gt{font-size:1rem;color:var(--menta);font-weight:700}
+.resumen .ds{color:var(--muted);font-size:.92rem;margin-top:6px}
+select{width:100%;padding:13px;border-radius:14px;border:1.5px solid var(--line);background:var(--s2);color:var(--txt);font:600 1rem Quicksand,sans-serif;margin-top:10px}
+.aviso{background:rgba(255,217,138,.12);border:1px solid rgba(255,217,138,.45);border-radius:16px;padding:14px;margin-top:14px;font-size:.95rem}
+.aviso b{color:var(--oro)}
+.qrbox{text-align:center}
+.qrbox .qrw{background:#fff;border-radius:18px;padding:14px;display:inline-block;max-width:260px;width:100%;margin-top:8px}
+.qrbox svg{width:100%;height:auto;display:block;shape-rendering:crispEdges}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:999px;border:0;font:700 1rem Quicksand,sans-serif;text-decoration:none;cursor:pointer}
+.btn.main{background:linear-gradient(90deg,var(--lila),var(--rosa));color:#2a1640}
+.btn.wa{background:#25D366;color:#07301a}
+.btn.ghost{background:transparent;border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;justify-content:center}
+ol{margin:10px 0 0 20px}li{margin:7px 0}
+#paypal-container-P2XVLNGBX2LT4{margin-top:14px;min-height:48px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:44px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">✦ Lily Frequency</a><a href="./" class="small">← Volver</a></nav>
+  <h1>Activa tu <em>membresía</em></h1>
+  <p class="muted">Elige tu plan, paga y recibe tu código de acceso por WhatsApp.</p>
+
+  <select id="plan" aria-label="Plan"></select>
+
+  <div class="box resumen">
+    <div class="pl" id="rPl"></div>
+    <div class="mt" id="rMt"></div>
+    <div class="gt" id="rGt"></div>
+    <div class="ds" id="rDs"></div>
+  </div>
+
+  <h2>1. Paga</h2>
+
+  <div class="box">
+    <p><b>Con tarjeta o PayPal</b> <span class="muted small">· en dólares, desde cualquier país</span></p>
+    <div class="aviso">Escribe exactamente <b id="aMt"></b> en el campo de monto. El botón no lo pone solo.</div>
+    <div id="paypal-container-P2XVLNGBX2LT4"></div>
+    <p class="muted small" style="margin-top:10px">¿No carga el botón? <a id="ppLink" href="https://www.paypal.com/ncp/payment/P2XVLNGBX2LT4" target="_blank" rel="noopener">Abre el pago en PayPal</a>.</p>
+  </div>
+
+  <div class="box qrbox">
+    <p><b>Con Cuik</b> <span class="muted small">· en quetzales, desde Guatemala</span></p>
+    <p class="muted small">Escanea el código desde tu app de banco y escribe <b id="qMt" style="color:var(--menta)"></b>.</p>
+    <div class="qrw"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69 69" class="qr"><path class="qrline" stroke="#12101a" d="M2 2.5h7m6 0h4m1 0h1m3 0h1m6 0h5m1 0h2m2 0h1m2 0h1m2 0h1m1 0h2m2 0h1m3 0h1m2 0h7m-65 1h1m5 0h1m6 0h1m1 0h1m3 0h2m3 0h5m2 0h1m4 0h3m2 0h1m4 0h1m2 0h2m2 0h1m2 0h1m1 0h1m5 0h1m-65 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m2 0h2m8 0h1m3 0h1m4 0h1m2 0h2m2 0h4m2 0h1m3 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-65 1h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h2m1 0h2m2 0h7m2 0h2m1 0h1m1 0h1m1 0h1m2 0h2m3 0h3m1 0h2m2 0h2m2 0h1m1 0h3m1 0h1m-65 1h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h2m1 0h2m3 0h2m5 0h5m7 0h1m1 0h2m2 0h1m4 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-65 1h1m5 0h1m1 0h1m1 0h3m3 0h2m1 0h2m1 0h1m1 0h1m3 0h1m1 0h1m3 0h5m2 0h1m1 0h1m2 0h1m1 0h3m2 0h2m3 0h1m5 0h1m-65 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-57 1h1m1 0h2m3 0h2m1 0h1m2 0h1m1 0h1m2 0h2m1 0h2m3 0h1m4 0h2m2 0h3m5 0h4m-55 1h1m1 0h5m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m8 0h9m1 0h1m2 0h1m3 0h4m1 0h1m2 0h1m1 0h2m1 0h5m-63 1h3m2 0h1m2 0h1m1 0h1m3 0h4m1 0h1m3 0h1m1 0h3m2 0h1m1 0h1m3 0h2m2 0h3m10 0h2m2 0h1m3 0h4m-64 1h8m1 0h1m1 0h2m2 0h2m2 0h5m3 0h2m1 0h2m2 0h2m2 0h1m1 0h2m5 0h3m3 0h1m3 0h1m1 0h1m1 0h1m-61 1h2m1 0h1m1 0h2m2 0h1m1 0h8m2 0h1m2 0h2m2 0h1m9 0h5m2 0h1m3 0h1m1 0h2m2 0h1m1 0h1m4 0h1m-64 1h2m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m1 0h4m2 0h1m1 0h1m3 0h1m1 0h1m1 0h7m2 0h1m2 0h1m2 0h1m1 0h1m2 0h1m3 0h1m2 0h4m-64 1h2m1 0h3m1 0h1m1 0h1m1 0h2m4 0h1m1 0h2m1 0h5m3 0h3m8 0h2m5 0h1m4 0h3m1 0h1m1 0h1m2 0h1m1 0h1m-63 1h2m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m4 0h1m3 0h1m4 0h2m1 0h1m2 0h5m1 0h1m2 0h1m3 0h2m1 0h1m1 0h3m1 0h1m1 0h1m2 0h1m-62 1h3m2 0h1m1 0h1m1 0h2m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h1m1 0h4m3 0h1m2 0h1m1 0h1m3 0h1m3 0h3m3 0h1m3 0h1m-60 1h7m1 0h1m1 0h2m1 0h1m5 0h1m2 0h1m1 0h1m3 0h1m1 0h2m3 0h2m1 0h1m4 0h1m1 0h1m2 0h1m4 0h2m1 0h2m2 0h3m-62 1h1m6 0h1m1 0h1m6 0h1m2 0h1m1 0h6m3 0h3m1 0h3m1 0h1m1 0h4m2 0h3m1 0h5m1 0h1m1 0h1m4 0h1m-62 1h1m2 0h1m1 0h1m1 0h4m3 0h1m4 0h2m3 0h1m2 0h1m3 0h1m4 0h1m2 0h4m1 0h2m2 0h1m2 0h2m2 0h1m1 0h4m-64 1h4m1 0h1m7 0h4m2 0h2m1 0h2m2 0h2m2 0h3m1 0h2m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m3 0h1m1 0h2m2 0h2m3 0h1m-64 1h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h3m2 0h1m2 0h1m1 0h2m2 0h2m3 0h1m2 0h2m1 0h1m2 0h2m3 0h3m1 0h1m1 0h2m3 0h1m1 0h4m-63 1h1m2 0h1m2 0h1m2 0h1m1 0h3m1 0h1m1 0h3m3 0h2m1 0h1m2 0h1m4 0h2m2 0h1m2 0h4m1 0h1m1 0h1m1 0h1m1 0h3m4 0h2m1 0h2m-65 1h1m1 0h1m3 0h2m1 0h2m2 0h2m2 0h6m1 0h2m1 0h2m2 0h1m1 0h1m2 0h4m1 0h1m1 0h1m2 0h3m2 0h1m1 0h3m2 0h1m1 0h3m-62 1h1m1 0h1m1 0h1m2 0h1m1 0h2m3 0h1m2 0h5m1 0h1m2 0h4m1 0h1m2 0h1m2 0h1m3 0h1m2 0h1m1 0h3m4 0h2m3 0h1m1 0h1m1 0h1m-64 1h5m1 0h1m1 0h1m2 0h1m8 0h2m1 0h1m4 0h1m4 0h1m2 0h2m3 0h3m2 0h3m1 0h1m4 0h2m3 0h1m2 0h2m-64 1h2m5 0h4m3 0h1m3 0h1m1 0h1m3 0h3m1 0h3m1 0h1m3 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1m2 0h1m2 0h1m2 0h3m1 0h1m-63 1h1m1 0h4m1 0h1m1 0h1m1 0h2m1 0h4m3 0h2m1 0h1m1 0h3m3 0h3m1 0h1m2 0h1m2 0h1m1 0h1m3 0h4m2 0h1m1 0h4m1 0h1m-63 1h2m1 0h2m1 0h6m1 0h2m1 0h1m2 0h3m2 0h1m1 0h1m2 0h3m3 0h2m2 0h1m1 0h4m1 0h1m1 0h1m2 0h1m1 0h1m2 0h2m1 0h2m1 0h1m-64 1h5m1 0h3m1 0h4m1 0h1m1 0h1m1 0h4m2 0h2m2 0h1m5 0h2m1 0h1m2 0h2m2 0h2m1 0h1m1 0h2m4 0h1m2 0h2m1 0h3m-64 1h1m6 0h4m3 0h2m2 0h4m1 0h4m2 0h1m5 0h2m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m1 0h3m3 0h2m-61 1h9m1 0h1m1 0h2m1 0h2m2 0h1m1 0h4m5 0h6m6 0h1m2 0h1m2 0h1m2 0h1m2 0h1m1 0h5m1 0h2m-64 1h1m2 0h2m3 0h1m1 0h2m2 0h3m1 0h1m1 0h6m1 0h1m1 0h2m3 0h1m1 0h2m2 0h5m2 0h1m1 0h1m2 0h1m2 0h2m3 0h2m-61 1h1m1 0h2m1 0h1m1 0h7m3 0h1m4 0h1m3 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h1m5 0h1m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m2 0h1m-61 1h2m3 0h1m2 0h6m4 0h6m3 0h1m3 0h1m5 0h1m1 0h4m2 0h1m2 0h2m1 0h3m3 0h2m2 0h1m-62 1h6m5 0h1m5 0h1m1 0h1m1 0h1m2 0h2m1 0h6m3 0h1m1 0h1m4 0h1m1 0h3m2 0h1m2 0h5m1 0h2m-64 1h3m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h4m3 0h1m4 0h1m1 0h1m3 0h3m2 0h3m3 0h1m2 0h4m2 0h1m2 0h2m-63 1h3m1 0h4m1 0h5m1 0h1m2 0h1m3 0h1m2 0h5m1 0h1m1 0h2m1 0h2m3 0h1m1 0h1m2 0h2m4 0h1m4 0h1m1 0h2m-63 1h2m3 0h1m1 0h3m2 0h1m3 0h1m1 0h1m1 0h1m1 0h1m2 0h1m5 0h1m1 0h5m1 0h2m1 0h1m1 0h2m6 0h1m1 0h7m2 0h2m-63 1h1m3 0h2m5 0h3m3 0h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h2m2 0h1m1 0h1m4 0h1m1 0h4m1 0h1m2 0h2m1 0h3m-62 1h1m2 0h2m2 0h1m1 0h2m2 0h1m3 0h1m2 0h3m1 0h1m2 0h1m2 0h3m1 0h1m2 0h1m5 0h5m3 0h3m1 0h1m2 0h4m2 0h1m-61 1h1m1 0h1m1 0h1m2 0h1m2 0h1m2 0h1m2 0h1m1 0h4m2 0h1m1 0h2m2 0h3m1 0h1m3 0h1m5 0h2m3 0h2m2 0h1m1 0h1m2 0h2m-62 1h1m2 0h1m1 0h2m4 0h1m2 0h1m1 0h1m2 0h2m1 0h1m2 0h1m2 0h2m1 0h2m1 0h2m4 0h1m6 0h1m2 0h3m2 0h2m1 0h1m3 0h1m-60 1h3m1 0h1m2 0h1m2 0h4m1 0h1m1 0h6m3 0h2m1 0h1m1 0h2m3 0h1m2 0h5m1 0h2m2 0h1m1 0h2m2 0h1m2 0h1m-63 1h1m3 0h1m2 0h1m1 0h1m1 0h1m3 0h1m2 0h1m6 0h3m2 0h3m1 0h1m4 0h6m1 0h1m3 0h1m2 0h2m2 0h1m1 0h1m3 0h1m-65 1h1m1 0h3m1 0h2m1 0h1m2 0h2m2 0h1m1 0h2m1 0h2m2 0h3m1 0h3m4 0h1m2 0h1m1 0h1m4 0h1m1 0h1m4 0h2m1 0h2m1 0h1m1 0h3m-63 1h1m1 0h1m1 0h1m1 0h4m1 0h2m1 0h3m1 0h2m1 0h1m10 0h2m4 0h5m3 0h2m5 0h1m2 0h1m2 0h1m2 0h1m-63 1h2m2 0h2m1 0h2m1 0h3m3 0h3m3 0h1m1 0h2m2 0h3m3 0h5m2 0h1m2 0h1m2 0h3m2 0h1m2 0h2m1 0h2m1 0h1m-63 1h1m1 0h2m3 0h1m4 0h1m1 0h1m3 0h3m1 0h2m1 0h2m6 0h2m1 0h6m3 0h2m1 0h2m3 0h3m2 0h1m1 0h1m2 0h1m-62 1h3m1 0h2m1 0h2m1 0h2m1 0h2m3 0h1m1 0h2m1 0h1m2 0h1m2 0h2m1 0h6m3 0h1m3 0h3m4 0h1m1 0h2m1 0h1m1 0h2m-62 1h2m1 0h2m4 0h3m6 0h1m1 0h1m3 0h3m2 0h1m2 0h2m2 0h1m3 0h2m1 0h1m4 0h1m3 0h2m2 0h2m1 0h1m3 0h1m-65 1h1m4 0h5m1 0h1m2 0h1m2 0h3m1 0h1m1 0h2m2 0h2m4 0h1m1 0h1m6 0h2m3 0h1m3 0h1m2 0h2m1 0h1m5 0h1m-61 1h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h1m2 0h2m2 0h3m1 0h2m4 0h4m4 0h1m1 0h1m2 0h2m1 0h3m1 0h5m1 0h1m1 0h1m2 0h1m-64 1h1m1 0h1m2 0h5m3 0h1m2 0h1m3 0h1m1 0h5m2 0h2m1 0h2m2 0h1m1 0h2m1 0h1m1 0h1m3 0h2m2 0h1m2 0h1m1 0h3m2 0h4m-65 1h1m1 0h2m3 0h2m2 0h1m3 0h1m2 0h1m2 0h6m4 0h1m2 0h4m2 0h1m1 0h4m2 0h2m3 0h3m3 0h2m1 0h1m-61 1h2m1 0h3m1 0h3m2 0h1m1 0h2m1 0h1m1 0h2m1 0h2m3 0h5m2 0h1m1 0h2m1 0h1m1 0h2m1 0h1m5 0h1m1 0h1m1 0h1m-57 1h1m2 0h1m3 0h1m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m3 0h1m4 0h1m4 0h2m1 0h2m1 0h1m1 0h1m1 0h4m1 0h1m3 0h2m1 0h1m1 0h1m1 0h2m1 0h1m-63 1h2m1 0h1m1 0h2m1 0h1m3 0h2m3 0h1m3 0h2m1 0h1m2 0h1m1 0h7m1 0h1m2 0h3m3 0h2m4 0h1m2 0h6m-54 1h1m2 0h1m2 0h1m1 0h4m2 0h1m1 0h4m2 0h1m3 0h1m1 0h1m2 0h2m1 0h1m2 0h1m3 0h1m1 0h1m2 0h3m3 0h1m2 0h2m-65 1h7m5 0h1m4 0h4m1 0h1m4 0h4m1 0h1m1 0h1m3 0h1m2 0h1m1 0h2m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m-63 1h1m5 0h1m1 0h2m1 0h1m1 0h1m1 0h3m6 0h2m4 0h1m3 0h1m1 0h1m5 0h3m2 0h1m1 0h1m2 0h5m3 0h2m-62 1h1m1 0h3m1 0h1m1 0h2m2 0h3m1 0h1m9 0h2m1 0h9m3 0h1m6 0h2m1 0h1m2 0h1m1 0h5m1 0h1m-63 1h1m1 0h3m1 0h1m1 0h3m2 0h2m1 0h1m1 0h4m1 0h1m1 0h1m2 0h2m1 0h2m1 0h4m1 0h1m1 0h3m1 0h1m1 0h3m3 0h7m1 0h1m1 0h1m-64 1h1m1 0h3m1 0h1m1 0h1m1 0h3m2 0h4m3 0h2m1 0h1m1 0h2m1 0h1m2 0h1m1 0h2m2 0h1m2 0h1m3 0h1m1 0h1m2 0h1m2 0h1m2 0h1m2 0h4m-64 1h1m5 0h1m2 0h1m2 0h1m4 0h6m1 0h2m2 0h1m2 0h1m4 0h1m2 0h1m1 0h4m2 0h1m4 0h1m1 0h2m4 0h2m1 0h1m-64 1h7m1 0h2m1 0h2m4 0h1m3 0h1m1 0h1m3 0h1m1 0h3m1 0h1m2 0h1m4 0h2m2 0h2m1 0h4m1 0h2m1 0h1m1 0h1m1 0h2"/></svg></div>
+  </div>
+
+  <h2>2. Recibe tu código</h2>
+  <div class="box">
+    <ol>
+      <li>Toma captura de tu comprobante de pago.</li>
+      <li>Mándamela por WhatsApp con el botón de abajo.</li>
+      <li>Te respondo con tu código de acceso.</li>
+    </ol>
+    <div class="row"><a class="btn wa" id="wa" href="#" target="_blank" rel="noopener">💬 Enviar mi comprobante</a></div>
+    <p class="muted small" style="text-align:center;margin-top:12px">Los códigos se entregan a mano, así que puede tomar unas horas.</p>
+  </div>
+
+  <p class="muted small" style="margin-top:20px">El monto en quetzales es de referencia, calculado a Q7.65 por dólar. Si tu banco usa otro tipo de cambio, la diferencia es mínima.</p>
+
+  <footer>© Lily Frequency · <a href="privacidad.html">Política de privacidad</a> · <a href="terapeutas.html">Terapeutas</a></footer>
+</div>
+<script src="https://www.paypal.com/sdk/js?client-id=BAA1Rchowc9QGFNuMh8UQTaARUv18BrH5Rvr_hhWXT1A4rtGFNRyF1hynk8ZSVBX9wteeaOjIqgGnWcGcM&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
+<script>
+const PLANES=[
+ {id:"mensual",n:"Membresía mensual",usd:8.88,d:"30 días con todos los programas, la zona de miembros y los descargables."},
+ {id:"anual",n:"Membresía anual · Precio fundadoras",usd:28.88,d:"Un año completo. Solo para las primeras 100 fundadoras."},
+ {id:"familiar",n:"Familiar adicional",usd:18.88,d:"Una persona más en tu membresía, al año, con su propio perfil."},
+ {id:"familia",n:"Plan Familia",usd:88,d:"Hasta 6 personas y sus mascotas, al año, cada una con su perfil."},
+ {id:"t11",n:"Licencia de terapeuta · 1 a 11 pacientes",usd:188,d:"Al año. Para terapeutas que empiezan su práctica."},
+ {id:"t22",n:"Licencia de terapeuta · 12 a 22 pacientes",usd:333,d:"Al año. Para consulta individual establecida."},
+ {id:"t44",n:"Licencia de terapeuta · 23 a 44 pacientes",usd:555,d:"Al año. Para consultorios y centros pequeños."},
+ {id:"t66",n:"Licencia de terapeuta · 45 a 66 pacientes",usd:777,d:"Al año. Para clínicas holísticas en crecimiento."},
+ {id:"t100",n:"Licencia de terapeuta · 67 a 100 pacientes",usd:888,d:"Al año. Para clínicas y centros de bienestar completos."}
+];
+const TC=7.65, WA="50234819870";
+const $=id=>document.getElementById(id);
+const usd=v=>"USD "+v.toFixed(2).replace(/\.00$/,"");
+const gtq=v=>"Q "+Math.round(v*TC).toLocaleString("es-GT");
+const sel=$("plan");
+sel.innerHTML=PLANES.map(p=>`<option value="${p.id}">${p.n} — ${usd(p.usd)}</option>`).join("");
+function pinta(){
+  const p=PLANES.find(x=>x.id===sel.value)||PLANES[0];
+  $("rPl").textContent=p.n;$("rMt").textContent=usd(p.usd);$("rGt").textContent="≈ "+gtq(p.usd)+" en Cuik";
+  $("rDs").textContent=p.d;$("aMt").textContent=usd(p.usd);$("qMt").textContent=gtq(p.usd);
+  let ref="";try{ref=localStorage.getItem("lf-ref")||new URLSearchParams(location.search).get("ref")||""}catch{}
+  const t="Hola, ya pagué "+p.n+" ("+usd(p.usd)+"). Aquí va mi comprobante."+(ref?" · Me recomendó: "+ref:"");
+  $("wa").href="https://wa.me/"+WA+"?text="+encodeURIComponent(t);
+  try{history.replaceState(null,"","?plan="+p.id+(ref?"&ref="+encodeURIComponent(ref):""))}catch{}
+}
+sel.onchange=pinta;
+const q0=new URLSearchParams(location.search).get("plan");
+if(q0&&PLANES.some(p=>p.id===q0))sel.value=q0;
+try{const r=new URLSearchParams(location.search).get("ref");if(r)localStorage.setItem("lf-ref",r.toUpperCase())}catch{}
+pinta();
+try{paypal.HostedButtons({hostedButtonId:"P2XVLNGBX2LT4"}).render("#paypal-container-P2XVLNGBX2LT4")}catch(e){}
+</script>
+</body>
+</html>
