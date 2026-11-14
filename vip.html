@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sala VIP · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0913;--s2:#1d1730;--line:#3a2f52;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(900px 650px at 50% -8%,#3d2a66,var(--bg) 62%) fixed,var(--bg);line-height:1.6;min-height:100vh}
+a{color:var(--lila2)}
+.wrap{max-width:820px;margin:0 auto;padding:22px 18px 70px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:600;text-decoration:none;color:var(--txt)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.2rem,6vw,3.3rem);line-height:1.05;margin-bottom:8px}
+h1 em{font-style:italic;background:linear-gradient(90deg,var(--oro),var(--rosa),var(--lila));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.95rem;margin:40px 0 6px}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+.box{background:rgba(29,23,48,.8);border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:16px}
+#code{width:100%;padding:14px;border-radius:14px;border:1.5px solid var(--line);background:var(--s2);color:var(--txt);font:700 1.25rem/1 ui-monospace,monospace;letter-spacing:.25em;text-transform:uppercase;text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:999px;border:0;font:700 1rem Quicksand,sans-serif;cursor:pointer;text-decoration:none}
+.btn.main{background:linear-gradient(90deg,var(--lila),var(--rosa));color:#2a1640}
+.btn.ghost{background:transparent;border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.err{color:var(--rosa);margin-top:10px;min-height:1.4em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:12px;margin-top:14px}
+.card{text-align:left;background:var(--s2);border:1px solid var(--line);border-radius:18px;padding:15px;cursor:pointer;color:var(--txt);font:inherit}
+.card:hover,.card.on{border-color:var(--rosa)}
+.card b{display:block;margin-bottom:3px}
+.card small{color:var(--muted)}
+.player{background:rgba(12,9,19,.96);border:1px solid var(--lila);border-radius:22px;padding:18px;margin-top:16px}
+.player .hz{font-family:"Cormorant Garamond",serif;font-size:2.5rem;line-height:1;color:var(--lila)}
+.player .hz small{font-size:1rem;color:var(--rosa)}
+.player .ph{font-weight:700;color:var(--menta);min-height:1.4em}
+.player .g{font-size:1.06rem;margin:6px 0}
+.bar{height:6px;border-radius:9px;background:var(--s2);overflow:hidden;margin:10px 0 4px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--lila),var(--rosa))}
+.luz{background:linear-gradient(135deg,rgba(255,217,138,.1),rgba(201,167,255,.08));border:1px solid rgba(255,217,138,.35);border-radius:18px;padding:16px;margin-top:10px}
+.luz .seq{font-family:"Cormorant Garamond",serif;font-size:1.5rem;line-height:1.35;color:var(--oro);font-style:italic}
+.luz .meta{font-size:.86rem;color:var(--muted);margin-top:6px}
+.luz .hzb{display:inline-block;margin-top:8px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);font-size:.78rem;font-weight:700;color:var(--menta);cursor:pointer;background:none;font-family:inherit}
+.cod{display:flex;gap:12px;align-items:center;background:var(--s2);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:10px;flex-wrap:wrap}
+.cod .n{font-family:ui-monospace,monospace;font-size:1.25rem;font-weight:800;color:var(--oro);letter-spacing:.04em}
+.cod .d{flex:1;min-width:190px}
+.cod .d b{display:block}
+.cod .d span{font-size:.88rem;color:var(--muted)}
+.sellos{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-top:14px}
+.sello{background:var(--s2);border:1px solid var(--line);border-radius:20px;padding:14px;text-align:center}
+.sello svg{width:100%;height:auto;display:block;margin-bottom:8px}
+.sello b{display:block;font-size:.98rem}
+.sello span{font-size:.84rem;color:var(--muted)}
+.act{background:linear-gradient(135deg,rgba(201,167,255,.15),rgba(255,159,210,.08));border:1px solid var(--lila);border-radius:20px;padding:20px;margin-top:14px}
+.act .num{font-family:"Cormorant Garamond",serif;font-size:3.2rem;line-height:1;color:var(--oro)}
+.act .top{display:flex;gap:14px;align-items:center}
+input[type=date]{padding:12px;border-radius:12px;border:1.5px solid var(--line);background:var(--s2);color:var(--txt);font:inherit}
+.notice{font-size:.86rem;color:var(--muted);border-left:3px solid var(--rosa);padding-left:12px;margin-top:16px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:46px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">✦ Lily Frequency</a><a href="./" class="small">← Volver</a></nav>
+  <h1>Sala <em>VIP</em></h1>
+  <p class="muted">Lenguaje de luz, códigos frecuenciales, sellos de geometría sagrada, meditaciones de reconfiguración y tu activación personal. Solo para quienes canjearon sus Lirios.</p>
+
+  <div class="box" id="gate">
+    <p><b>Tu código VIP</b></p>
+    <p class="muted small">Es el código personal que recibiste al canjear tus Lirios. Empieza con VIP.</p>
+    <div style="margin-top:12px"><input id="code" maxlength="9" autocomplete="off" placeholder="VIP______" aria-label="Código VIP"></div>
+    <div class="row"><button class="btn main" id="go">Entrar ✦</button><a class="btn ghost" href="promotoras.html">¿Cómo gano mi acceso?</a></div>
+    <p class="err" id="err"></p>
+  </div>
+
+  <div id="area" hidden>
+    <h2>Meditaciones de reconfiguración</h2>
+    <p class="muted">Usa audífonos. Empieza con volumen bajo.</p>
+    <div class="player" id="player" hidden>
+      <div class="hz" id="pHz">–</div>
+      <div><b id="pName"></b> · <span class="muted" id="pStep"></span></div>
+      <div class="ph" id="pPh"></div>
+      <div class="g" id="pG"></div>
+      <div class="bar"><i id="pBar"></i></div>
+      <div class="row">
+        <button class="btn main" id="pPlay">▶ Escuchar</button><button class="btn ghost" id="pStop">■ Detener</button>
+        <span class="small muted" style="margin-left:auto">Volumen <input type="range" id="pVol" min="0" max="100" value="35" style="width:100px;vertical-align:middle"></span>
+      </div>
+      <label class="small muted" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="pIso"> Sin audífonos (pulsos por parlante)</label>
+    </div>
+    <div class="grid" id="lista"></div>
+
+    <h2>Lenguaje de luz</h2>
+    <p class="muted">Vocaliza en voz baja, sin buscar que suene bien. Toca el tono para acompañarte mientras lo haces.</p>
+    <div id="luz"></div>
+
+    <h2>Códigos frecuenciales</h2>
+    <p class="muted">Escríbelos a mano, repítelos por dentro o ponlos donde los veas cada día.</p>
+    <div id="codigos"></div>
+
+    <h2>Sellos de geometría sagrada</h2>
+    <p class="muted">Contempla el centro del sello mientras respiras lento.</p>
+    <div class="sellos" id="sellos"></div>
+
+    <h2>Tu activación personal</h2>
+    <p class="muted">Según tu número de vida. Tu fecha no sale de este teléfono.</p>
+    <div class="row"><input type="date" id="birth"><button class="btn ghost" id="calc">Ver mi activación</button></div>
+    <div id="act"></div>
+
+    <div class="notice">Esta sala es un espacio de práctica contemplativa y trabajo interior. No sustituye atención médica ni psicológica. Si tienes epilepsia sensible a estímulos, consulta a tu médico antes de usar tonos pulsados.</div>
+    <div class="row"><button class="btn ghost" id="out">Cerrar sesión</button></div>
+  </div>
+
+  <footer>© Lily Frequency · <a href="privacidad.html">Política de privacidad</a> · <a href="miembros.html">Zona de miembros</a></footer>
+</div>
+<script src="vip-data.js"></script>
+<script>
+
+const $=id=>document.getElementById(id);
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+async function unlock(code){
+  const enc=new TextEncoder();
+  try{
+    const h=new Uint8Array(await crypto.subtle.digest("SHA-256",enc.encode(code)));
+    const id=[...h.slice(0,3)].map(x=>x.toString(16).padStart(2,"0")).join("");
+    const w=VAULT.wrap[id];if(!w)return null;
+    const base=await crypto.subtle.importKey("raw",enc.encode(code),"PBKDF2",false,["deriveKey"]);
+    const wk=await crypto.subtle.deriveKey({name:"PBKDF2",salt:enc.encode("lilyvip|"+code),iterations:150000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+    const K=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(w[0])},wk,b64(w[1]));
+    const kk=await crypto.subtle.importKey("raw",K,"AES-GCM",false,["decrypt"]);
+    const gz=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(VAULT.iv)},kk,b64(VAULT.ct));
+    const txt=await new Response(new Blob([gz]).stream().pipeThrough(new DecompressionStream("gzip"))).text();
+    return JSON.parse(txt);
+  }catch(e){return null}
+}
+async function enter(code,silent){
+  code=(code||"").trim().toUpperCase().replace(/\s/g,"");
+  $("err").textContent=silent?"":"Verificando…";$("go").disabled=true;
+  const d=await unlock(code);$("go").disabled=false;
+  if(!d){$("err").textContent=silent?"":"Código no válido. Revísalo o pídelo de nuevo.";try{localStorage.removeItem("lf-vip")}catch{}return}
+  try{localStorage.setItem("lf-vip",code)}catch{}
+  $("gate").hidden=true;$("area").hidden=false;render(d);
+}
+$("go").onclick=()=>enter($("code").value);
+$("code").onkeydown=e=>{if(e.key==="Enter")enter($("code").value)};
+$("out").onclick=()=>{try{localStorage.removeItem("lf-vip")}catch{}stopAll();location.reload()};
+try{const c=localStorage.getItem("lf-vip");if(c)enter(c,true)}catch{}
+
+/* ---------- sellos ---------- */
+const NS="http://www.w3.org/2000/svg";
+function svgSello(tipo){
+  const W=200,c=W/2;let g=`<svg viewBox="0 0 ${W} ${W}" xmlns="${NS}"><defs><linearGradient id="gg${tipo}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a7ff"/><stop offset=".55" stop-color="#ff9fd2"/><stop offset="1" stop-color="#8ff0d0"/></linearGradient></defs>`;
+  const L=(d,s,w=1.4,o=1)=>g+=`<path d="${d}" fill="none" stroke="${s}" stroke-width="${w}" opacity="${o}"/>`;
+  const Ci=(x,y,r,s,w=1.4,o=1)=>g+=`<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${s}" stroke-width="${w}" opacity="${o}"/>`;
+  const tri=(R,rot)=>{let d="";for(let i=0;i<3;i++){const a=rot+i*2*Math.PI/3;d+=(i?"L":"M")+(c+Math.cos(a)*R).toFixed(2)+","+(c+Math.sin(a)*R).toFixed(2)}return d+"Z"};
+  const hexPts=(r,n)=>{const p=[];for(let q=-n;q<=n;q++)for(let s=-n;s<=n;s++){if(Math.abs(-q-s)>n)continue;p.push([c+r*(q+s/2),c+r*s*Math.sqrt(3)/2])}return p};
+  if(tipo==="merkaba"){Ci(c,c,86,"url(#gg"+tipo+")",1.6,.5);L(tri(70,-Math.PI/2),"#ffd98a",2);L(tri(70,Math.PI/2),"#8ff0d0",2);
+    for(let i=0;i<3;i++){const a=-Math.PI/2+i*2*Math.PI/3;L(`M${c},${c}L${(c+Math.cos(a)*70).toFixed(2)},${(c+Math.sin(a)*70).toFixed(2)}`,"#ffd98a",.8,.7)}
+    for(let i=0;i<3;i++){const a=Math.PI/2+i*2*Math.PI/3;L(`M${c},${c}L${(c+Math.cos(a)*70).toFixed(2)},${(c+Math.sin(a)*70).toFixed(2)}`,"#8ff0d0",.8,.7)}
+    g+=`<circle cx="${c}" cy="${c}" r="4" fill="#fff"/>`}
+  else if(tipo==="flor"){hexPts(22,2).forEach(([x,y])=>Ci(x,y,22,"url(#gg"+tipo+")",1.2,.9));Ci(c,c,66,"#c9a7ff",1.8,.8);Ci(c,c,72,"#ff9fd2",.8,.5)}
+  else if(tipo==="semilla"){Ci(c,c,30,"url(#gg"+tipo+")",1.6);for(let i=0;i<6;i++){const a=i*Math.PI/3;Ci(c+Math.cos(a)*30,c+Math.sin(a)*30,30,"url(#gg"+tipo+")",1.6)}Ci(c,c,60,"#c9a7ff",1.6,.8);Ci(c,c,68,"#ffd98a",.8,.5)}
+  else if(tipo==="toro"){for(let i=0;i<14;i++){const t=i/14*Math.PI;const rx=18+Math.sin(t)*54,ry=8+Math.sin(t)*34;g+=`<ellipse cx="${c}" cy="${c}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" fill="none" stroke="${i%2?"#ff9fd2":"#c9a7ff"}" stroke-width="1" opacity=".75" transform="rotate(${(i*180/14).toFixed(1)} ${c} ${c})"/>`}
+    Ci(c,c,78,"#8ff0d0",1.2,.5);g+=`<circle cx="${c}" cy="${c}" r="5" fill="#8ff0d0"/>`}
+  else if(tipo==="ojo"){L(`M${c-74},${c}Q${c},${c-56} ${c+74},${c}Q${c},${c+56} ${c-74},${c}Z`,"url(#gg"+tipo+")",2);
+    Ci(c,c,30,"#c9a7ff",1.6);Ci(c,c,16,"#ff9fd2",1.4);g+=`<circle cx="${c}" cy="${c}" r="6" fill="#fff"/>`;
+    for(let i=0;i<24;i++){const a=i*Math.PI/12,r1=36,r2=i%2?44:50;L(`M${(c+Math.cos(a)*r1).toFixed(1)},${(c+Math.sin(a)*r1).toFixed(1)}L${(c+Math.cos(a)*r2).toFixed(1)},${(c+Math.sin(a)*r2).toFixed(1)}`,"#ffd98a",1,.8)}}
+  else {let d="",ph=1.618;for(let i=0;i<=260;i++){const t=i/260*Math.PI*5,r=3.2*Math.pow(ph,t/(Math.PI/2));if(r>86)break;d+=(i?"L":"M")+(c+Math.cos(t)*r).toFixed(2)+","+(c+Math.sin(t)*r).toFixed(2)}
+    L(d,"url(#gg"+tipo+")",2.2);Ci(c,c,88,"#c9a7ff",1,.4);for(let i=0;i<8;i++){const a=i*Math.PI/4;g+=`<circle cx="${(c+Math.cos(a)*88).toFixed(1)}" cy="${(c+Math.sin(a)*88).toFixed(1)}" r="${i%2?2:3.5}" fill="${i%2?"#ff9fd2":"#8ff0d0"}"/>`}}
+  return g+"</svg>";
+}
+
+/* ---------- numerología ---------- */
+const sumD=s=>String(s).replace(/\D/g,"").split("").reduce((a,d)=>a+ +d,0);
+const reduceN=n=>{while(n>9&&n!==11&&n!==22&&n!==33)n=sumD(n);return n};
+const lifePath=iso=>{const[y,m,d]=iso.split("-");return reduceN(reduceN(sumD(y))+reduceN(sumD(m))+reduceN(sumD(d)))};
+
+let DATA=null;
+function render(d){DATA=d;
+  $("lista").innerHTML=d.medit.map((p,i)=>`<button class="card" data-i="${i}"><b>${esc(p.name)}</b><small>${esc(p.desc)}<br>${Math.round(p.steps.reduce((a,s)=>a+s.dur,0)/60)} min · ${p.steps.length} pasos</small></button>`).join("");
+  $("luz").innerHTML=d.luz.map(l=>`<div class="luz"><div class="seq">${esc(l.seq)}</div><div class="meta"><b>${esc(l.int)}</b> · ${esc(l.pron)}</div><button class="hzb" data-hz="${l.hz}">♪ Tono ${l.hz} Hz</button></div>`).join("");
+  $("codigos").innerHTML=d.codigos.map(x=>`<div class="cod"><div class="n">${esc(x.c)}</div><div class="d"><b>${esc(x.n)}</b><span>${esc(x.s)}</span></div><button class="hzb" data-hz="${x.hz}">♪ ${x.hz} Hz</button></div>`).join("");
+  $("sellos").innerHTML=d.sellos.map(s=>`<div class="sello">${svgSello(s.t)}<b>${esc(s.n)}</b><span>${esc(s.s)}</span><br><button class="hzb" data-hz="${s.hz}">♪ ${s.hz} Hz</button></div>`).join("");
+  try{const b=localStorage.getItem("lf-vip-birth");if(b){$("birth").value=b;showAct(b)}}catch{}
+}
+$("lista").onclick=e=>{const c=e.target.closest("[data-i]");if(!c)return;document.querySelectorAll("#lista .card").forEach(x=>x.classList.toggle("on",x===c));load(DATA.medit[+c.dataset.i]);play()};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-hz]");if(!b)return;tone(+b.dataset.hz,b)});
+$("calc").onclick=()=>{const b=$("birth").value;if(!b){$("act").innerHTML='<p class="muted">Elige tu fecha de nacimiento.</p>';return}try{localStorage.setItem("lf-vip-birth",b)}catch{}showAct(b)};
+function showAct(b){const n=lifePath(b),a=DATA.act.find(x=>x.n===n);if(!a)return;
+  $("act").innerHTML=`<div class="act"><div class="top"><div class="num">${a.n}</div><div><b>${esc(a.t)}</b><br><span class="muted">Tu número de vida</span></div></div>
+  <p style="margin-top:10px">${esc(a.x)}</p>
+  <p style="margin-top:12px"><span class="muted small">Tu frase de luz</span><br><span style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-style:italic;color:var(--oro)">${esc(a.f)}</span></p>
+  <p style="margin-top:10px"><span class="muted small">Tu código frecuencial</span><br><span style="font-family:ui-monospace,monospace;font-size:1.2rem;font-weight:800;color:var(--menta)">${esc(a.c)}</span></p>
+  <button class="hzb" data-hz="${a.hz}">♪ Tu tono ${a.hz} Hz</button></div>`}
+
+/* ---------- audio ---------- */
+let ctx,master,cur=null,idx=0,stepStart=0,voice=null,tick=null,playing=false,toneV=null,toneT=null,toneB=null;
+const vol=()=>$("pVol").value/100*.6;
+function ensure(){if(ctx)return;ctx=new (window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=vol();master.connect(ctx.destination)}
+$("pVol").oninput=()=>{if(master)master.gain.setTargetAtTime(vol(),ctx.currentTime,.1)};
+function mk(s){const t=ctx.currentTime,out=ctx.createGain();out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(1,t+3);out.connect(master);const n=[out];
+  const iso=$("pIso").checked;
+  if(s.b&&!iso){const L=ctx.createOscillator(),R=ctx.createOscillator(),m=ctx.createChannelMerger(2);L.frequency.value=s.f;R.frequency.value=s.f+s.b;L.connect(m,0,0);R.connect(m,0,1);m.connect(out);L.start();R.start();n.push(L,R,m)}
+  else if(s.b){const o=ctx.createOscillator(),g=ctx.createGain(),l=ctx.createOscillator(),lg=ctx.createGain();o.frequency.value=s.f;g.gain.value=.5;l.frequency.value=s.b;lg.gain.value=.5;l.connect(lg);lg.connect(g.gain);o.connect(g);g.connect(out);o.start();l.start();n.push(o,g,l,lg)}
+  else{const o=ctx.createOscillator();o.frequency.value=s.f;o.connect(out);o.start();n.push(o)}
+  return{out,n}}
+function kill(v,f=1.2){if(!v)return;const t=ctx.currentTime;v.out.gain.cancelScheduledValues(t);v.out.gain.setValueAtTime(v.out.gain.value,t);v.out.gain.linearRampToValueAtTime(0,t+f);setTimeout(()=>v.n.forEach(x=>{try{x.stop&&x.stop()}catch{}try{x.disconnect()}catch{}}),f*1000+200)}
+function load(p){stopAll();cur=p;idx=0;$("player").hidden=false;show();$("player").scrollIntoView({behavior:"smooth",block:"nearest"})}
+function show(){const s=cur.steps[idx];$("pHz").innerHTML=(+s.f).toLocaleString("es")+" <small>Hz"+(s.b?" · "+s.b+" Hz":"")+"</small>";$("pName").textContent=cur.name;$("pStep").textContent="Paso "+(idx+1)+"/"+cur.steps.length+" · "+s.label;$("pG").textContent=s.g||"";$("pPh").textContent=""}
+function startStep(i){idx=i;kill(voice);voice=mk(cur.steps[i]);stepStart=ctx.currentTime;show()}
+async function play(){if(!cur)return;stopTone();ensure();await ctx.resume();if(!playing){startStep(idx);playing=true;clearInterval(tick);tick=setInterval(upd,250)}$("pPlay").textContent="♪ Sonando"}
+function stopAll(){clearInterval(tick);if(voice)kill(voice,.6);voice=null;playing=false;$("pPlay").textContent="▶ Escuchar";$("pBar").style.width="0";$("pPh").textContent=""}
+function upd(){if(!playing)return;const s=cur.steps[idx],t=ctx.currentTime-stepStart;
+  if(t>=s.dur){if(idx<cur.steps.length-1)startStep(idx+1);else{stopAll();$("pPh").textContent="Sesión completa ✨";return}}
+  const tot=cur.steps.reduce((a,x)=>a+x.dur,0),done=cur.steps.slice(0,idx).reduce((a,x)=>a+x.dur,0)+Math.min(t,s.dur);$("pBar").style.width=(done/tot*100)+"%";
+  if(s.br){const[a,h,e,h2]=s.br,c=a+h+e+h2,x=t%c;let ph,l;if(x<a){ph="Inhala";l=a-x}else if(x<a+h){ph="Sostén";l=a+h-x}else if(x<a+h+e){ph="Exhala";l=a+h+e-x}else{ph="Pausa";l=c-x}$("pPh").textContent=ph+" · "+Math.ceil(l)}else $("pPh").textContent=""}
+$("pPlay").onclick=play;$("pStop").onclick=stopAll;
+function stopTone(){if(toneV){kill(toneV,.5);toneV=null}if(toneB){toneB.textContent=toneB.dataset.lbl||toneB.textContent;toneB=null}clearTimeout(toneT)}
+async function tone(hz,btn){const same=toneB===btn;stopTone();if(same)return;
+  stopAll();ensure();await ctx.resume();toneV=mk({f:hz,b:0});toneB=btn;btn.dataset.lbl=btn.dataset.lbl||btn.textContent;btn.textContent="■ Detener";
+  toneT=setTimeout(stopTone,300000)}
+</script>
+</body>
+</html>
