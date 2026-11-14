@@ -219,6 +219,8 @@ document.getElementById("freqs").innerHTML=F.map(([n,u,t,k],i)=>{let d="";for(le
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll(".reveal").forEach(e=>io.observe(e));
 setTimeout(()=>document.querySelectorAll(".reveal").forEach(e=>e.classList.add("in")),2500);
+// Promotoras: ?ref=CODIGO se agrega al mensaje de WhatsApp
+(function(){let ref=(new URLSearchParams(location.search).get("ref")||"").replace(/[^A-Za-z0-9_-]/g,"").slice(0,20).toUpperCase();try{if(ref)localStorage.setItem("lf-ref",ref);else ref=localStorage.getItem("lf-ref")||""}catch{}if(!ref)return;document.querySelectorAll('a[href^="https://wa.me/"]').forEach(l=>{try{const u=new URL(l.href);const t=u.searchParams.get("text")||"Hola, quiero información de Lily Frequency";u.searchParams.set("text",t+" · Me recomendó: "+ref);l.href=u.toString()}catch{}})})();
 document.getElementById("y").textContent=new Date().getFullYear();
 </script>
 </body>
