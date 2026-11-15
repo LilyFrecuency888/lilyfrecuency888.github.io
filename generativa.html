@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Música viva · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="lily.css">
+<style>
+.wrap{max-width:760px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+h1{font-size:clamp(2rem,5.5vw,2.7rem);margin-bottom:8px}
+h2{font-size:1.45rem;margin:28px 0 4px}
+#area[hidden]{display:none}
+.ambientes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;margin-top:14px}
+.amb{text-align:left;padding:16px 17px;border-radius:20px;border:1px solid rgba(201,167,255,.16);background:linear-gradient(162deg,rgba(38,30,60,.82),rgba(22,17,38,.86));color:var(--txt);font:inherit;cursor:pointer;transition:transform .2s,border-color .2s}
+.amb:hover{transform:translateY(-2px);border-color:rgba(201,167,255,.42)}
+.amb.on{border-color:var(--lila);box-shadow:0 0 0 1px var(--lila) inset}
+.amb b{display:block;font-size:1.05rem;font-family:"Cormorant Garamond",serif;font-weight:600}
+.amb small{color:var(--muted);font-size:.81rem;line-height:1.45;display:block;margin-top:4px}
+#lienzo{width:100%;height:120px;display:block;margin-top:16px;border-radius:18px;border:1px solid var(--line);background:rgba(18,15,26,.6)}
+#panel{position:sticky;bottom:0;z-index:40;margin-top:20px;background:rgba(18,15,26,.97);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:22px;padding:17px}
+.ctr{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ajustes{display:grid;grid-template-columns:auto 1fr;gap:9px 12px;align-items:center;margin-top:15px;font-size:.82rem;color:var(--muted)}
+input[type=range]{accent-color:var(--lila);width:100%}
+.pastillas{display:flex;gap:7px;flex-wrap:wrap}
+.pastillas button{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:700 .78rem Quicksand,inherit;cursor:pointer;min-height:36px}
+.pastillas button.on{background:var(--aurora);color:var(--ink);border-color:transparent}
+.nota{font-family:"Cormorant Garamond",serif;font-size:1.6rem;line-height:1.1}
+.nota span{font-family:Quicksand;font-size:.82rem;color:var(--muted);display:block;margin-top:2px}
+.aviso{font-size:.84rem;color:var(--muted);background:rgba(201,167,255,.07);border-left:2px solid var(--lila);border-radius:0 12px 12px 0;padding:12px 15px;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">&#10022; Lily Frequency</a><a href="miembros.html" class="small">Zona de miembros &rarr;</a></nav>
+
+  <div id="gate">
+    <h1>Música <em>viva</em></h1>
+    <p class="muted">Música que se compone sola mientras la escuchas y nunca se repite.</p>
+    <div class="box"><p class="muted">Cargando&hellip;</p></div>
+  </div>
+
+  <div id="area" hidden>
+    <h1>Música <em>viva</em></h1>
+    <p class="muted">Nada de esto está grabado. Cada nota se decide en el momento, a partir de una señal que se mueve sola y nunca repite el mismo camino. Si la dejas una hora, es una hora de música que no ha existido antes y no va a volver a existir.</p>
+
+    <h2>Elige el ambiente</h2>
+    <div class="ambientes" id="ambientes"></div>
+
+    <canvas id="lienzo" aria-label="La señal que está generando la música"></canvas>
+
+    <div id="panel">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+        <div class="nota" id="pNota">&mdash;<span id="pAmb">Ninguno</span></div>
+        <div class="small muted" style="text-align:right" id="pTiempo">0:00</div>
+      </div>
+      <div class="ctr" style="margin-top:12px">
+        <button class="btn pri" id="pPlay">&#9654; Empezar</button>
+        <button class="btn" id="pStop">&#9632;</button>
+      </div>
+      <div class="ajustes">
+        <span>Densidad</span><input type="range" id="aDen" min="10" max="100" value="45">
+        <span>Volumen</span><input type="range" id="aVol" min="0" max="100" value="55">
+        <span>Afinación</span>
+        <div class="pastillas" id="aAfin">
+          <button data-f="432" class="on">432 Hz</button>
+          <button data-f="440">440 Hz</button>
+          <button data-f="528">528 Hz</button>
+        </div>
+        <span>Fondo</span>
+        <div class="pastillas" id="aFondo">
+          <button data-b="0" class="on">Sin onda</button>
+          <button data-b="6">Theta 6</button>
+          <button data-b="10">Alfa 10</button>
+          <button data-b="7.83">Schumann</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="aviso">
+      Está inspirado en la sonificación de biodatos, que es como se hace la música de las plantas y los hongos: una señal viva se traduce en notas. Aquí la señal la genera la página, no un organismo. Si algún día conectamos un sensor a una planta de verdad, este mismo motor toca con ella.
+    </div>
+
+    <div class="row" style="margin-top:22px"><button class="btn" id="out">Cerrar sesión</button></div>
+  </div>
+
+  <footer>&copy; Lily Frequency &middot; <a href="terminos.html">Términos</a> &middot; <a href="privacidad.html">Privacidad</a></footer>
+</div>
+
+<script src="lily-config.js"></script>
+<script src="lily-acceso.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+
+const AMB=[
+ {id:"bosque", n:"Bosque", d:"Claro y alto, como gotas entre hojas. Para trabajar o leer con algo vivo de fondo.",
+  esc:[0,2,4,7,9], oct:1.0, vel:[1.1,3.4], tim:"campana", filtro:2600, rev:3.2, col:"#8ff0d0"},
+ {id:"micelio", n:"Micelio", d:"Bajo y pausado, con mucho espacio entre nota y nota. Para meditar o dormirse.",
+  esc:[0,2,3,5,7,10], oct:0.5, vel:[2.6,7.5], tim:"madera", filtro:1100, rev:5.5, col:"#c9a7ff"},
+ {id:"raiz", n:"Raíz", d:"Muy grave, casi un suelo que respira. Para el cuerpo más que para el oído.",
+  esc:[0,3,5,7,10], oct:0.25, vel:[4.5,12], tim:"cuerda", filtro:620, rev:7.5, col:"#ffd98a"}
+];
+const NOM=["Do","Do#","Re","Re#","Mi","Fa","Fa#","Sol","Sol#","La","La#","Si"];
+
+let amb=AMB[0], afin=432, fondoHz=0;
+let ctx=null, maestro=null, reverb=null, bus=null, fondo=null;
+let corriendo=false, t0=0, reloj=null, dibujo=null, agenda=null;
+let proximo=0, deriva=0, paso=0, ultimo=-1, historia=[];
+
+window.enter=function(){ $("gate").hidden=true; $("area").hidden=false; pintar(); medirLienzo(); return true; };
+
+function pintar(){
+  $("ambientes").innerHTML=AMB.map((a,i)=>
+    '<button type="button" class="amb'+(i===0?' on':'')+'" data-i="'+i+'">'+
+    '<b>'+a.n+'</b><small>'+a.d+'</small></button>').join("");
+}
+$("ambientes").onclick=e=>{
+  const b=e.target.closest("[data-i]"); if(!b) return;
+  document.querySelectorAll(".amb").forEach(x=>x.classList.toggle("on",x===b));
+  amb=AMB[+b.dataset.i];
+  $("pAmb").textContent=amb.n;
+  if(corriendo){ rehacerReverb(); }
+};
+$("aAfin").onclick=e=>{
+  const b=e.target.closest("[data-f]"); if(!b) return;
+  $("aAfin").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  afin=+b.dataset.f;
+};
+$("aFondo").onclick=e=>{
+  const b=e.target.closest("[data-b]"); if(!b) return;
+  $("aFondo").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  fondoHz=+b.dataset.b;
+  if(corriendo){ apagarFondo(); if(fondoHz) encenderFondo(); }
+};
+$("aVol").oninput=()=>{ if(maestro&&ctx) maestro.gain.setTargetAtTime($("aVol").value/100*.5,ctx.currentTime,.15) };
+
+function senal(t){
+  return Math.sin(t*0.0370)*0.34
+       + Math.sin(t*0.0113+1.7)*0.21
+       + Math.sin(t*0.0071+4.2)*0.13
+       + Math.sin(t*0.1870+0.9)*0.17
+       + Math.sin(t*0.4310+3.1)*0.11
+       + deriva;
+}
+function avanzarDeriva(){
+  deriva += (Math.random()-0.5)*0.035;
+  deriva *= 0.995;
+  if(deriva> 0.75) deriva= 0.75;
+  if(deriva<-0.75) deriva=-0.75;
+}
+
+function hacerReverb(seg){
+  const sr=ctx.sampleRate, largo=Math.floor(sr*seg), b=ctx.createBuffer(2,largo,sr);
+  for(let c=0;c<2;c++){
+    const d=b.getChannelData(c);
+    for(let i=0;i<largo;i++){
+      const x=i/largo;
+      d[i]=(Math.random()*2-1)*Math.pow(1-x,2.6);
+    }
+  }
+  const cv=ctx.createConvolver(); cv.buffer=b; return cv;
+}
+function rehacerReverb(){
+  if(!ctx) return;
+  const nuevo=hacerReverb(amb.rev), mezcla=ctx.createGain();
+  mezcla.gain.value=.9; nuevo.connect(mezcla); mezcla.connect(maestro);
+  if(reverb){ try{reverb.disconnect()}catch(e){} }
+  reverb=nuevo;
+}
+function arrancarAudio(){
+  if(ctx) return;
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  maestro=ctx.createGain();
+  maestro.gain.value=$("aVol").value/100*.5;
+  maestro.connect(ctx.destination);
+  bus=ctx.createGain(); bus.gain.value=.85; bus.connect(maestro);
+  rehacerReverb();
+}
+
+function nota(cuando, semis, fuerza){
+  const f=afin*Math.pow(2,semis/12)*amb.oct;
+  const g=ctx.createGain(), filt=ctx.createBiquadFilter();
+  filt.type="lowpass"; filt.frequency.value=amb.filtro; filt.Q.value=.6;
+
+  let largo=amb.tim==="campana"?3.2:amb.tim==="madera"?2.2:6.5;
+  const pico=fuerza*(amb.tim==="cuerda"?.20:.16);
+  g.gain.setValueAtTime(0,cuando);
+  g.gain.linearRampToValueAtTime(pico, cuando+(amb.tim==="cuerda"?.9:.012));
+  g.gain.exponentialRampToValueAtTime(.0008, cuando+largo);
+
+  const vs=[];
+  const o=ctx.createOscillator();
+  o.type = amb.tim==="campana" ? "triangle" : amb.tim==="madera" ? "sine" : "sawtooth";
+  o.frequency.value=f; vs.push(o);
+
+  if(amb.tim==="campana"){
+    const o2=ctx.createOscillator(), g2=ctx.createGain();
+    o2.type="sine"; o2.frequency.value=f*2.76; g2.gain.value=.22;
+    o2.connect(g2); g2.connect(filt); o2.start(cuando); o2.stop(cuando+largo+.2); vs.push(o2,g2);
+  }
+  if(amb.tim==="cuerda"){
+    const o3=ctx.createOscillator(), g3=ctx.createGain();
+    o3.type="triangle"; o3.frequency.value=f*0.6667; g3.gain.value=.4;
+    o3.connect(g3); g3.connect(filt); o3.start(cuando); o3.stop(cuando+largo+.2); vs.push(o3,g3);
+  }
+
+  o.connect(filt); filt.connect(g);
+  g.connect(bus);
+  if(reverb) g.connect(reverb);
+  o.start(cuando); o.stop(cuando+largo+.2);
+  setTimeout(()=>vs.forEach(n=>{try{n.disconnect()}catch(e){}}),(largo+1)*1000);
+
+  $("pNota").firstChild.nodeValue=NOM[((semis%12)+12)%12];
+}
+
+function encenderFondo(){
+  if(!fondoHz||!ctx) return;
+  const L=ctx.createOscillator(),R=ctx.createOscillator(),m=ctx.createChannelMerger(2),g=ctx.createGain();
+  const base=afin*amb.oct/2;
+  L.frequency.value=base; R.frequency.value=base+fondoHz;
+  g.gain.setValueAtTime(0,ctx.currentTime);
+  g.gain.linearRampToValueAtTime(.07,ctx.currentTime+4);
+  L.connect(m,0,0); R.connect(m,0,1); m.connect(g); g.connect(maestro);
+  L.start(); R.start();
+  fondo={g,nodos:[L,R,m,g]};
+}
+function apagarFondo(){
+  if(!fondo||!ctx) return;
+  const g=fondo.g, nodos=fondo.nodos, t=ctx.currentTime;
+  g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value,t);
+  g.gain.linearRampToValueAtTime(0,t+1.5);
+  setTimeout(()=>nodos.forEach(n=>{try{n.stop&&n.stop()}catch(e){}try{n.disconnect()}catch(e){}}),1800);
+  fondo=null;
+}
+
+function planificar(){
+  if(!corriendo) return;
+  const ahora=ctx.currentTime, horizonte=ahora+1.0;
+  while(proximo<horizonte){
+    if(proximo<ahora) proximo=ahora+.05;
+    const t=proximo-t0;
+    avanzarDeriva();
+    const v=senal(t);
+    const n=amb.esc.length;
+    paso += (Math.random()*2-1)*1.7;
+    paso *= 0.7;
+    const centro=((v+1)/2)*n*1.9;
+    let idx=Math.max(0,Math.round(centro+paso));
+    if(idx===ultimo){ paso += (Math.random()<.5?-1:1)*1.25; idx=Math.max(0,Math.round(centro+paso)); }
+    ultimo=idx;
+    const semis=amb.esc[((idx%n)+n)%n]+12*Math.floor(idx/n);
+    const fuerza=.55+Math.abs(v)*.45;
+    nota(proximo, semis, fuerza);
+
+    const den=$("aDen").value/100;
+    const a=amb.vel[0], b=amb.vel[1];
+    const base=b-(b-a)*den;
+    proximo += base*(0.55+Math.random()*0.9);
+  }
+}
+
+function medirLienzo(){
+  const c=$("lienzo"); if(!c) return;
+  const r=c.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+  c.width=Math.max(300,r.width*dpr); c.height=120*dpr;
+}
+window.addEventListener("resize",medirLienzo);
+
+function trazar(){
+  const c=$("lienzo"); if(!c) return;
+  const g=c.getContext("2d"), W=c.width, H=c.height, dpr=window.devicePixelRatio||1;
+  const t=(ctx?ctx.currentTime:0)-t0;
+  historia.push(senal(t));
+  if(historia.length>260) historia.shift();
+  g.clearRect(0,0,W,H);
+  g.lineWidth=2*dpr; g.strokeStyle=amb.col; g.globalAlpha=.9;
+  g.beginPath();
+  historia.forEach((v,i)=>{
+    const x=(i/259)*W, y=H/2 - v*(H*0.36);
+    i?g.lineTo(x,y):g.moveTo(x,y);
+  });
+  g.stroke();
+  g.globalAlpha=.16; g.lineWidth=1*dpr; g.strokeStyle="#bfb2dc";
+  g.beginPath(); g.moveTo(0,H/2); g.lineTo(W,H/2); g.stroke();
+  g.globalAlpha=1;
+}
+
+async function empezar(){
+  arrancarAudio();
+  await ctx.resume();
+  if(corriendo) return;
+  corriendo=true; t0=ctx.currentTime; proximo=ctx.currentTime+.4; historia=[];
+  $("pAmb").textContent=amb.n;
+  $("pPlay").innerHTML="&#9834; Sonando";
+  if(fondoHz) encenderFondo();
+  agenda=setInterval(planificar,220);
+  dibujo=setInterval(trazar,110);
+  reloj=setInterval(()=>{
+    const s=Math.floor(ctx.currentTime-t0);
+    $("pTiempo").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+  },1000);
+  planificar();
+}
+function parar(){
+  corriendo=false;
+  clearInterval(agenda); clearInterval(dibujo); clearInterval(reloj);
+  apagarFondo();
+  $("pPlay").innerHTML="&#9654; Empezar";
+  $("pNota").firstChild.nodeValue="—";
+  $("pTiempo").textContent="0:00";
+}
+$("pPlay").onclick=()=>corriendo?parar():empezar();
+$("pStop").onclick=parar;
+<\/script>
+</body>
+</html>
