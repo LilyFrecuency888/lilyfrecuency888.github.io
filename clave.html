@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cambiar contraseña · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="lily.css">
+<style>
+.wrap{max-width:460px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+label{display:block;font-size:.84rem;color:var(--muted);margin:14px 0 6px}
+input{width:100%;padding:13px 15px}
+.err{color:var(--rosa);font-size:.88rem;min-height:20px;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">&#10022; Lily Frequency</a><a href="registro.html" class="small">Mi cuenta &rarr;</a></nav>
+  <h1>Nueva <em>contraseña</em></h1>
+  <div class="box" style="margin-top:16px" id="caja">
+    <label for="c1">Escribe tu nueva contraseña</label>
+    <input id="c1" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres">
+    <label for="c2">Escríbela otra vez</label>
+    <input id="c2" type="password" autocomplete="new-password">
+    <div class="err" id="err"></div>
+    <div class="row" style="margin-top:14px"><button class="btn pri" id="go">Guardar</button></div>
+  </div>
+  <footer>&copy; Lily Frequency</footer>
+</div>
+<script src="lily-config.js"></script>
+<script type="module">
+const $=id=>document.getElementById(id);
+const C=window.LF_SUPABASE||{};
+if(!C.url||C.url.indexOf("PEGAR")===0){$("caja").innerHTML='<p class="muted">Todavía no está conectado.</p>';throw new Error("sin configurar")}
+const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
+const sb=createClient(C.url,C.anon,{auth:{persistSession:true,autoRefreshToken:true,storageKey:"lf-sesion",detectSessionInUrl:true}});
+$("go").onclick=async()=>{
+  const a=$("c1").value,b=$("c2").value;
+  if(a.length<8){$("err").textContent="Necesita al menos 8 caracteres.";return}
+  if(a!==b){$("err").textContent="Las dos no coinciden.";return}
+  $("go").disabled=true;$("err").textContent="Guardando…";
+  const {error}=await sb.auth.updateUser({password:a});
+  $("go").disabled=false;
+  if(error){$("err").textContent=/same as the old|should be different/i.test(error.message)?"Esa ya es tu contraseña actual. Escribe una distinta.":error.message;return}
+  $("caja").innerHTML='<p style="color:var(--menta)">Listo, tu contraseña quedó cambiada.</p><div class="row" style="margin-top:14px"><a class="btn pri" href="miembros.html">Ir a la zona de miembros</a></div>';
+};
+<\/script>
+</body>
+</html>
