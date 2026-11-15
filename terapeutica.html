@@ -132,6 +132,7 @@ async function enter(code,silent){
   $("go").disabled=false;
   if(!r){$("err").textContent=silent?"":"Ese código no abre esta zona. Revisa que sea el del mes en curso.";return false}
   try{localStorage.setItem("lf-ter-code",String(code).trim().toUpperCase())}catch(e){}
+  $("err").textContent="";
   $("gate").hidden=true;$("area").hidden=false;
   render(r.data);
   return true;
