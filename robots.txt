@@ -15,3 +15,6 @@ Disallow: /registro.html
 Disallow: /admin.html
 Disallow: /clave.html
 Disallow: /generativa.html
+Disallow: /cuencos.html
+Disallow: /cielo-tierra.html
+Disallow: /paises.js
