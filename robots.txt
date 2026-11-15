@@ -7,3 +7,10 @@ Disallow: /vip.html
 Disallow: /terapeutica-data.js
 Disallow: /manifestacion-data.js
 Disallow: /vip-data.js
+Disallow: /decretos.html
+Disallow: /audio/
+Disallow: /conciencia.html
+Disallow: /conciencia-data.js
+Disallow: /registro.html
+Disallow: /admin.html
+Disallow: /clave.html
