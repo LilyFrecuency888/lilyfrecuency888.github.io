@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /miembros.html
+Disallow: /terapeutica.html
+Disallow: /manifestacion.html
+Disallow: /vip.html
+Disallow: /terapeutica-data.js
+Disallow: /manifestacion-data.js
+Disallow: /vip-data.js
