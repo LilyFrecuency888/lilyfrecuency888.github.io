@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap");
+
+/* ============================================================
+   Lily Frequency · sistema visual compartido
+   Se carga DESPUES del <style> de cada pagina, asi que unifica
+   sin borrar lo propio de cada una.
+   ============================================================ */
+
+:root{
+  --bg:#120f1a; --bg2:#1a1430;
+  --surface:#1d1730; --surface2:#251e3a;
+  --line:#3a2f52;
+  --lila:#c9a7ff; --lila2:#e4d4ff; --rosa:#ff9fd2; --menta:#8ff0d0; --oro:#ffd98a;
+  --txt:#f4eeff; --muted:#bfb2dc; --ink:#2a1640;
+  --aurora:linear-gradient(100deg,#c9a7ff,#ff9fd2 48%,#8ff0d0);
+  --r:20px; --rl:28px;
+  --halo:0 18px 46px -30px rgba(0,0,0,.95);
+}
+
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:Quicksand,system-ui,-apple-system,sans-serif;
+  color:var(--txt);
+  line-height:1.65;
+  letter-spacing:.005em;
+  background:
+    radial-gradient(1100px 760px at 50% -12%,#3a2563 0%,rgba(18,15,26,0) 62%) fixed,
+    var(--bg);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* --- cielo estrellado, solo donde la pagina no trae el suyo --- */
+body::before{
+  content:"";
+  position:fixed; inset:-60%; z-index:0; pointer-events:none; opacity:.5;
+  background-image:
+    radial-gradient(1px 1px at 18px 26px,#fff,transparent),
+    radial-gradient(1px 1px at 96px 62px,rgba(201,167,255,.95),transparent),
+    radial-gradient(1.7px 1.7px at 148px 124px,rgba(255,255,255,.8),transparent),
+    radial-gradient(1px 1px at 58px 176px,rgba(255,159,210,.85),transparent),
+    radial-gradient(1.2px 1.2px at 210px 40px,rgba(143,240,208,.7),transparent),
+    radial-gradient(1px 1px at 240px 200px,rgba(255,255,255,.6),transparent);
+  background-size:280px 280px;
+  animation:lf-deriva 120s linear infinite;
+}
+body:has(.stars)::before{display:none}
+@keyframes lf-deriva{to{transform:translate3d(-280px,-280px,0)}}
+
+header,main,footer,.wrap,nav,section{position:relative;z-index:1}
+
+/* --- tipografia --- */
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;letter-spacing:-.005em}
+h1{line-height:1.05}
+h2{line-height:1.12}
+h1 em,h2 em{
+  font-style:italic;
+  background:var(--aurora);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.muted{color:var(--muted)}
+.small{font-size:.87rem}
+
+/* raya de aurora bajo los titulos de seccion */
+.wrap h2:not(.sin-raya)::after{
+  content:"";display:block;width:46px;height:2px;border-radius:2px;
+  margin-top:8px;background:var(--aurora);opacity:.75;
+}
+
+/* --- marca --- */
+.logo{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:600;letter-spacing:.012em;
+  text-decoration:none;color:var(--txt);
+  display:inline-flex;align-items:center;gap:9px;
+}
+.logo:hover{color:var(--lila2)}
+
+/* --- tarjetas --- */
+.box{
+  position:relative;
+  border-radius:var(--rl);
+  background:linear-gradient(162deg,rgba(40,32,64,.9),rgba(23,18,40,.92));
+  border:1px solid rgba(201,167,255,.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),var(--halo);
+  padding:clamp(18px,3.4vw,26px);
+}
+.box::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+  background:var(--aurora);opacity:.22;pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+
+.card{
+  border-radius:var(--r);
+  background:linear-gradient(162deg,rgba(38,30,60,.82),rgba(22,17,38,.86));
+  border:1px solid rgba(201,167,255,.16);
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.card:hover{transform:translateY(-2px);border-color:rgba(201,167,255,.4);box-shadow:var(--halo)}
+.card.on,.card.active{border-color:var(--lila);box-shadow:0 0 0 1px var(--lila) inset,0 0 28px -14px var(--lila)}
+
+/* --- botones --- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:46px;padding:12px 24px;border-radius:999px;
+  font-family:Quicksand,inherit;font-weight:700;font-size:.95rem;
+  text-decoration:none;cursor:pointer;
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn.main,.btn.pri{
+  background:var(--aurora);border:0;color:var(--ink);
+  box-shadow:0 12px 30px -12px rgba(255,159,210,.65);
+}
+.btn.ghost,.btn:not(.main):not(.pri):not(.wa){
+  background:rgba(201,167,255,.07);
+  border:1.5px solid rgba(201,167,255,.42);
+  color:var(--lila2);
+}
+.btn.ghost:hover,.btn:not(.main):not(.pri):not(.wa):hover{background:rgba(201,167,255,.16)}
+.btn.wa{background:#25d366;border:0;color:#07301a}
+
+/* --- campos --- */
+input[type=text],input[type=email],input[type=tel],textarea,select{
+  font-family:Quicksand,inherit;
+  font-size:max(16px,1rem);            /* evita el zoom automatico en el celular */
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:rgba(37,30,58,.9);
+  color:var(--txt);
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+input:focus,textarea:focus,select:focus{
+  outline:0;border-color:var(--lila);
+  box-shadow:0 0 0 3px rgba(201,167,255,.2);
+}
+
+/* --- accesibilidad --- */
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid var(--lila);outline-offset:3px;border-radius:8px;
+}
+::selection{background:rgba(201,167,255,.35);color:#fff}
+
+/* --- barras de desplazamiento --- */
+*{scrollbar-width:thin;scrollbar-color:rgba(201,167,255,.4) transparent}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:rgba(201,167,255,.35);border-radius:9px}
+::-webkit-scrollbar-thumb:hover{background:rgba(201,167,255,.55)}
+
+/* --- pie --- */
+footer{
+  border-top:1px solid rgba(201,167,255,.14);
+  margin-top:48px;padding:30px 22px;
+  text-align:center;color:var(--muted);font-size:.88rem;
+}
+footer a{color:var(--lila2);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* --- celular --- */
+@media (max-width:620px){
+  .box{border-radius:22px}
+  .btn{width:100%}
+  .row .btn{width:auto;flex:1 1 auto;min-width:46%}
+  h1{font-size:clamp(1.9rem,8vw,2.5rem)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
