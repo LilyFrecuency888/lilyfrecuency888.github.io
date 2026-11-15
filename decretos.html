@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decretos con mi voz · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="lily.css">
+<style>
+.wrap{max-width:720px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+h1{font-size:clamp(2rem,5.5vw,2.7rem);margin-bottom:8px}
+h2{font-size:1.5rem;margin:30px 0 4px}
+.pistas{display:grid;gap:10px;margin-top:12px}
+.pista{text-align:left;padding:15px 17px;border-radius:18px;color:var(--txt);font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:3px;border:1px solid rgba(201,167,255,.16);background:linear-gradient(162deg,rgba(38,30,60,.82),rgba(22,17,38,.86));transition:transform .2s,border-color .2s}
+.pista:hover{transform:translateY(-2px);border-color:rgba(201,167,255,.4)}
+.pista.on{border-color:var(--lila);box-shadow:0 0 0 1px var(--lila) inset}
+.pista b{font-size:1rem}
+.pista small{color:var(--muted);font-size:.82rem;line-height:1.45}
+.pista .dur{color:var(--lila);font-size:.76rem;font-weight:700;margin-top:3px}
+.camas{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cama{flex:1 1 auto;min-width:150px;padding:13px 15px;border-radius:16px;border:1px solid var(--line);background:rgba(37,30,58,.6);color:var(--muted);font:inherit;cursor:pointer;text-align:left;transition:.2s}
+.cama b{display:block;color:var(--txt);font-size:.95rem;font-weight:700}
+.cama span{font-size:.78rem}
+.cama.on{border-color:var(--lila);background:rgba(201,167,255,.12);color:var(--lila2)}
+.cama.on b{color:var(--lila2)}
+#player{position:sticky;bottom:0;z-index:40;margin-top:26px;background:rgba(18,15,26,.97);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:22px;padding:17px}
+#player[hidden]{display:none}
+.titulo{font-family:"Cormorant Garamond",serif;font-size:1.5rem;line-height:1.1}
+.bar{height:4px;border-radius:4px;background:rgba(201,167,255,.2);overflow:hidden;margin:12px 0 4px;cursor:pointer}
+.bar i{display:block;height:100%;background:var(--aurora);width:0}
+.tiempos{display:flex;justify-content:space-between;font-size:.76rem;color:var(--muted)}
+.ctr{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.mez{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:center;margin-top:14px;font-size:.82rem;color:var(--muted)}
+input[type=range]{accent-color:var(--lila);width:100%}
+label.chk{display:flex;align-items:center;gap:7px;font-size:.82rem;color:var(--muted);cursor:pointer}
+#area[hidden]{display:none}
+.aviso{font-size:.84rem;color:var(--muted);background:rgba(201,167,255,.07);border-left:2px solid var(--lila);border-radius:0 12px 12px 0;padding:11px 14px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">&#10022; Lily Frequency</a><a href="miembros.html" class="small">Zona de miembros &rarr;</a></nav>
+
+  <div id="gate">
+    <h1>Decretos <em>con mi voz</em></h1>
+    <p class="muted">Mis decretos grabados, sonando sobre la frecuencia que elijas.</p>
+    <div class="box"><p class="muted">Cargando&hellip;</p></div>
+  </div>
+
+  <div id="area" hidden>
+    <h1>Decretos <em>con mi voz</em></h1>
+    <p class="muted" id="sub"></p>
+
+    <h2>Elige la grabación</h2>
+    <div class="pistas" id="pistas"></div>
+
+    <h2>Elige la frecuencia de fondo</h2>
+    <p class="muted small">Puedes cambiarla mientras suena. Con audífonos se siente el efecto binaural; sin ellos marca la casilla de abajo.</p>
+    <div class="camas" id="camas"></div>
+
+    <div class="aviso">
+      Escúchalo con los ojos cerrados y sin hacer otra cosa. Si puedes, repite cada decreto en voz baja después de mí: decirlo con tu propia voz vale más que oírlo.
+    </div>
+
+    <div id="player" hidden>
+      <div class="titulo" id="pTit">&mdash;</div>
+      <div class="small muted" id="pSub"></div>
+      <div class="bar" id="pBar"><i id="pFill"></i></div>
+      <div class="tiempos"><span id="tAhora">0:00</span><span id="tTotal">0:00</span></div>
+      <div class="ctr">
+        <button class="btn pri" id="pPlay">&#9654; Escuchar</button>
+        <button class="btn" id="pStop">&#9632;</button>
+        <label class="chk"><input type="checkbox" id="pLoop"> Repetir</label>
+        <label class="chk"><input type="checkbox" id="pIso"> Sin audífonos</label>
+      </div>
+      <div class="mez">
+        <span>Mi voz</span><input type="range" id="vVoz" min="0" max="100" value="85">
+        <span>Frecuencia</span><input type="range" id="vFre" min="0" max="100" value="38">
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:22px"><button class="btn" id="out">Cerrar sesión</button></div>
+  </div>
+
+  <footer>&copy; Lily Frequency &middot; <a href="terminos.html">Términos</a> &middot; <a href="privacidad.html">Privacidad</a></footer>
+</div>
+
+<script src="lily-config.js"></script>
+<script src="lily-acceso.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+
+const PISTAS=[
+ {id:"d121", archivo:"audio/decretos-121.mp3",
+  nombre:"121 decretos diarios",
+  desc:"Los 121 decretos seguidos, en mi voz. Para escuchar completo una vez al día, de preferencia al despertar o antes de dormir.",
+  dur:"6:11"}
+];
+
+const CAMAS=[
+ {id:"rep", n:"Reprogramación", d:"528 Hz · theta 6 Hz", f:528,  b:6,   hint:"El estado donde el subconsciente recibe sin discutir"},
+ {id:"exp", n:"Expansión",      d:"963 Hz · theta 4.5 Hz", f:963, b:4.5, hint:"Theta profundo, para escucha larga y quieta"},
+ {id:"anc", n:"Anclaje",        d:"432 Hz · 7.83 Hz",   f:432,  b:7.83,hint:"Schumann, para cerrar y volver al cuerpo"},
+ {id:"sin", n:"Sin frecuencia", d:"Solo mi voz",        f:0,    b:0,   hint:"Para escucharlo limpio"}
+];
+
+window.enter=function(){ $("gate").hidden=true; $("area").hidden=false; pintar(); return true; };
+
+let pista=null, cama=CAMAS[0];
+
+function pintar(){
+  $("sub").textContent=PISTAS.length+(PISTAS.length===1?" grabación":" grabaciones")+" · voz propia, sin música de terceros";
+  $("pistas").innerHTML=PISTAS.map((p,i)=>
+    '<button type="button" class="pista" data-i="'+i+'"><b>'+p.nombre+'</b>'+
+    '<small>'+p.desc+'</small><span class="dur">'+p.dur+'</span></button>').join("");
+  $("camas").innerHTML=CAMAS.map((c,i)=>
+    '<button type="button" class="cama'+(i===0?' on':'')+'" data-c="'+i+'">'+
+    '<b>'+c.n+'</b><span>'+c.d+'</span></button>').join("");
+}
+
+$("pistas").onclick=e=>{
+  const b=e.target.closest("[data-i]"); if(!b) return;
+  document.querySelectorAll(".pista").forEach(x=>x.classList.toggle("on",x===b));
+  cargar(PISTAS[+b.dataset.i]); tocar();
+};
+$("camas").onclick=e=>{
+  const b=e.target.closest("[data-c]"); if(!b) return;
+  document.querySelectorAll(".cama").forEach(x=>x.classList.toggle("on",x===b));
+  cama=CAMAS[+b.dataset.c];
+  $("pSub").textContent=cama.n+" · "+cama.d;
+  if(sonando){ apagarCama(); if(cama.f) encenderCama(); }
+};
+
+const voz=new Audio();
+voz.preload="none";
+voz.volume=.85;
+let sonando=false;
+
+function cargar(p){
+  pista=p;
+  voz.src=p.archivo;
+  $("player").hidden=false;
+  $("pTit").textContent=p.nombre;
+  $("pSub").textContent=cama.n+" · "+cama.d;
+  $("tTotal").textContent=p.dur;
+}
+voz.addEventListener("loadedmetadata",()=>{ $("tTotal").textContent=reloj(voz.duration) });
+voz.addEventListener("timeupdate",()=>{
+  if(!voz.duration) return;
+  $("pFill").style.width=(voz.currentTime/voz.duration*100)+"%";
+  $("tAhora").textContent=reloj(voz.currentTime);
+});
+voz.addEventListener("ended",()=>{ if(!$("pLoop").checked) parar(); });
+voz.addEventListener("error",()=>{
+  $("pSub").innerHTML='<span style="color:var(--rosa)">No pude cargar la grabación. Recarga la página.</span>';
+});
+function reloj(s){ s=Math.floor(s||0); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0") }
+
+$("pBar").onclick=e=>{
+  if(!voz.duration) return;
+  const r=e.currentTarget.getBoundingClientRect();
+  voz.currentTime=((e.clientX-r.left)/r.width)*voz.duration;
+};
+$("vVoz").oninput=()=>{ voz.volume=$("vVoz").value/100 };
+$("pLoop").onchange=()=>{ voz.loop=$("pLoop").checked };
+
+let ctx=null, nodos=[], maestro=null;
+const volCama=()=>$("vFre").value/100*.35;
+
+function encenderCama(){
+  if(!cama.f) return;
+  if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)();
+  maestro=ctx.createGain();
+  const t=ctx.currentTime;
+  maestro.gain.setValueAtTime(0,t);
+  maestro.gain.linearRampToValueAtTime(volCama(),t+3);
+  maestro.connect(ctx.destination);
+  nodos=[maestro];
+  const iso=$("pIso").checked;
+  if(cama.b>0 && !iso){
+    const L=ctx.createOscillator(),R=ctx.createOscillator(),m=ctx.createChannelMerger(2);
+    L.frequency.value=cama.f; R.frequency.value=cama.f+cama.b;
+    L.connect(m,0,0); R.connect(m,0,1); m.connect(maestro);
+    L.start(); R.start(); nodos.push(L,R,m);
+  }else if(cama.b>0){
+    const o=ctx.createOscillator(),g=ctx.createGain(),lfo=ctx.createOscillator(),lg=ctx.createGain();
+    o.frequency.value=cama.f; g.gain.value=.5;
+    lfo.frequency.value=cama.b; lg.gain.value=.5;
+    lfo.connect(lg); lg.connect(g.gain); o.connect(g); g.connect(maestro);
+    o.start(); lfo.start(); nodos.push(o,g,lfo,lg);
+  }else{
+    const o=ctx.createOscillator(); o.frequency.value=cama.f; o.connect(maestro); o.start(); nodos.push(o);
+  }
+}
+function apagarCama(){
+  if(!maestro||!ctx){ nodos=[]; return }
+  const t=ctx.currentTime, m=maestro, lista=nodos;
+  m.gain.cancelScheduledValues(t);
+  m.gain.setValueAtTime(m.gain.value,t);
+  m.gain.linearRampToValueAtTime(0,t+1);
+  setTimeout(()=>lista.forEach(n=>{try{n.stop&&n.stop()}catch(e){}try{n.disconnect()}catch(e){}}),1400);
+  maestro=null; nodos=[];
+}
+$("vFre").oninput=()=>{ if(maestro&&ctx) maestro.gain.setTargetAtTime(volCama(),ctx.currentTime,.1) };
+$("pIso").onchange=()=>{ if(sonando){ apagarCama(); encenderCama() } };
+
+async function tocar(){
+  if(!pista) return;
+  if(ctx) await ctx.resume();
+  try{ await voz.play() }catch(e){ return }
+  if(!sonando){ sonando=true; encenderCama() }
+  $("pPlay").innerHTML="&#9834; Sonando";
+}
+function pausar(){
+  voz.pause(); sonando=false; apagarCama();
+  $("pPlay").innerHTML="&#9654; Escuchar";
+}
+function parar(){
+  voz.pause(); voz.currentTime=0; sonando=false; apagarCama();
+  $("pPlay").innerHTML="&#9654; Escuchar";
+  $("pFill").style.width="0"; $("tAhora").textContent="0:00";
+}
+$("pPlay").onclick=()=>{ voz.paused ? tocar() : pausar() };
+$("pStop").onclick=parar;
+<\/script>
+</body>
+</html>
