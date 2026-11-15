@@ -39,6 +39,16 @@ select{width:100%;padding:13px;border-radius:14px;border:1.5px solid var(--line)
 ol{margin:10px 0 0 20px}li{margin:7px 0}
 #paypal-container-P2XVLNGBX2LT4{margin-top:14px;min-height:48px}
 footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:44px}
+.tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,205px),1fr));gap:10px;margin:14px 0 4px}
+.gt2{font-family:"Cormorant Garamond",serif;font-size:1.25rem;margin:22px 0 2px;color:var(--lila2)}
+.tar{position:relative;text-align:left;padding:16px;border-radius:20px;border:1px solid rgba(201,167,255,.2);background:linear-gradient(162deg,rgba(38,30,60,.85),rgba(22,17,38,.88));color:var(--txt);font:inherit;cursor:pointer;transition:transform .2s,border-color .2s}
+.tar:hover{transform:translateY(-2px);border-color:rgba(201,167,255,.45)}
+.tar.on{border-color:var(--lila);box-shadow:0 0 0 1px var(--lila) inset}
+.tar b{display:block;font-size:.95rem;line-height:1.3}
+.tar .pr{font-family:"Cormorant Garamond",serif;font-size:1.7rem;margin-top:6px;display:block;line-height:1}
+.tar .q{color:var(--muted);font-size:.78rem}
+.tar .ah{display:inline-block;margin-top:9px;padding:3px 10px;border-radius:999px;background:rgba(143,240,208,.16);color:var(--menta);font-size:.72rem;font-weight:700}
+#plan{display:none}
 </style>
 <link rel="stylesheet" href="lily.css">
 </head>
@@ -49,6 +59,7 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:44px}
   <p class="muted">Elige tu plan, paga y recibe tu código de acceso por WhatsApp.</p>
 
   <select id="plan" aria-label="Plan"></select>
+  <div id="tarjetas"></div>
 
   <div class="box resumen">
     <div class="pl" id="rPl"></div>
@@ -121,11 +132,28 @@ function pinta(){
   $("wa").href="https://wa.me/"+WA+"?text="+encodeURIComponent(t);
   try{history.replaceState(null,"","?plan="+p.id+(ref?"&ref="+encodeURIComponent(ref):""))}catch{}
 }
-sel.onchange=pinta;
+const PERSONAL=["mensual","anual","familiar","familia"];
+function tarjeta(p){
+  var ah="";
+  if(p.id==="anual"){ var m=PLANES.find(function(x){return x.id==="mensual"});
+    if(m){ var d=m.usd*12-p.usd; if(d>0) ah='<span class="ah">Ahorras '+usd(d)+' al a\u00f1o</span>'; } }
+  return '<button type="button" class="tar" data-p="'+p.id+'"><b>'+p.n+'</b><span class="pr">'+usd(p.usd)+'</span><span class="q">\u2248 '+gtq(p.usd)+' en Cuik</span>'+ah+'</button>';
+}
+function grupo(tit,lista){ return '<div class="gt2">'+tit+'</div><div class="tarjetas">'+lista.map(tarjeta).join("")+'</div>'; }
+function tarjetas(){
+  var c=$("tarjetas"); if(!c) return;
+  c.innerHTML=grupo("Para ti",PLANES.filter(function(p){return PERSONAL.indexOf(p.id)>=0}))
+            +grupo("Para terapeutas",PLANES.filter(function(p){return PERSONAL.indexOf(p.id)<0}));
+  c.onclick=function(e){ var b=e.target.closest("[data-p]"); if(!b) return; sel.value=b.dataset.p; pinta(); sincroniza(); };
+}
+function sincroniza(){ var p=sel.value; document.querySelectorAll(".tar").forEach(function(x){ x.classList.toggle("on",x.dataset.p===p) }); }
+sel.onchange=function(){ pinta(); sincroniza(); };
 const q0=new URLSearchParams(location.search).get("plan");
 if(q0&&PLANES.some(p=>p.id===q0))sel.value=q0;
 try{const r=new URLSearchParams(location.search).get("ref");if(r)localStorage.setItem("lf-ref",r.toUpperCase())}catch{}
+tarjetas();
 pinta();
+sincroniza();
 try{paypal.HostedButtons({hostedButtonId:"P2XVLNGBX2LT4"}).render("#paypal-container-P2XVLNGBX2LT4")}catch(e){}
 </script>
 </body>
