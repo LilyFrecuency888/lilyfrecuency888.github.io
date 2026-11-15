@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conexión Cielo y Tierra · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="lily.css">
+<style>
+.wrap{max-width:760px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+h1{font-size:clamp(2rem,5.5vw,2.7rem);margin-bottom:8px}
+h2{font-size:1.45rem;margin:28px 0 4px}
+#area[hidden]{display:none}
+.fila{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:9px;margin-top:12px}
+.op{text-align:left;padding:14px 15px;border-radius:18px;border:1px solid rgba(201,167,255,.16);background:linear-gradient(162deg,rgba(38,30,60,.82),rgba(22,17,38,.86));color:var(--txt);font:inherit;cursor:pointer;transition:transform .2s,border-color .2s}
+.op:hover{transform:translateY(-2px);border-color:rgba(201,167,255,.42)}
+.op.on{border-color:var(--lila);box-shadow:0 0 0 1px var(--lila) inset}
+.op b{display:block;font-size:.98rem;font-family:"Cormorant Garamond",serif;font-weight:600}
+.op small{color:var(--muted);font-size:.79rem;line-height:1.4;display:block;margin-top:3px}
+.op .bpm{color:var(--rosa);font-size:.75rem;font-weight:700;display:block;margin-top:5px}
+#panel{position:sticky;bottom:0;z-index:40;margin-top:22px;background:rgba(18,15,26,.97);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:22px;padding:17px}
+.ctr{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ajustes{display:grid;grid-template-columns:auto 1fr;gap:9px 12px;align-items:center;margin-top:15px;font-size:.82rem;color:var(--muted)}
+input[type=range]{accent-color:var(--lila);width:100%}
+.pastillas{display:flex;gap:7px;flex-wrap:wrap}
+.pastillas button{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:700 .78rem Quicksand,inherit;cursor:pointer;min-height:36px}
+.pastillas button.on{background:var(--aurora);color:var(--ink);border-color:transparent}
+.est{font-family:"Cormorant Garamond",serif;font-size:1.55rem;line-height:1.05}
+.est span{font-family:Quicksand;font-size:.8rem;color:var(--muted);display:block;margin-top:2px}
+.corazon{width:14px;height:14px;border-radius:50%;background:var(--rosa);display:inline-block;margin-right:9px;vertical-align:middle;opacity:.3}
+.corazon.late{opacity:1;transform:scale(1.5);transition:transform .09s,opacity .09s}
+.aviso{font-size:.84rem;color:var(--muted);background:rgba(201,167,255,.07);border-left:2px solid var(--lila);border-radius:0 12px 12px 0;padding:12px 15px;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">&#10022; Lily Frequency</a><a href="miembros.html" class="small">Zona de miembros &rarr;</a></nav>
+
+  <div id="gate">
+    <h1>Conexión <em>Cielo y Tierra</em></h1>
+    <p class="muted">Una frecuencia al frente, y debajo dos latidos: el tuyo y el de la Tierra.</p>
+    <div class="box"><p class="muted">Cargando&hellip;</p></div>
+  </div>
+
+  <div id="area" hidden>
+    <h1>Conexión <em>Cielo y Tierra</em></h1>
+    <p class="muted">Tres capas que puedes subir y bajar por separado. Arriba la frecuencia, en medio un corazón humano latiendo al ritmo que elijas, y abajo el pulso de la Tierra a 7.83 por segundo.</p>
+
+    <h2>Al frente: la frecuencia</h2>
+    <div class="fila" id="frec"></div>
+
+    <h2>De fondo: el latido humano</h2>
+    <div class="fila" id="lat"></div>
+
+    <div id="panel">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+        <div class="est"><i class="corazon" id="pLuz"></i><span id="pEst">Sin empezar</span></div>
+        <div class="small muted" style="text-align:right" id="pTiempo">0:00</div>
+      </div>
+      <div class="ctr" style="margin-top:12px">
+        <button class="btn pri" id="pPlay">&#9654; Empezar</button>
+        <button class="btn" id="pStop">&#9632;</button>
+      </div>
+      <div class="ajustes">
+        <span>Frecuencia</span><input type="range" id="vFrec" min="0" max="100" value="42">
+        <span>Corazón</span><input type="range" id="vLat" min="0" max="100" value="58">
+        <span>Tierra</span><input type="range" id="vTie" min="0" max="100" value="34">
+        <span>Volumen</span><input type="range" id="aVol" min="0" max="100" value="60">
+        <span>Duración</span>
+        <div class="pastillas" id="aDur">
+          <button data-m="0" class="on">Sin límite</button>
+          <button data-m="15">15 min</button>
+          <button data-m="30">30 min</button>
+          <button data-m="45">45 min</button>
+          <button data-m="60">60 min</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="aviso">
+      El cuerpo tiende a acompasarse con el ritmo que oye, así que elige con intención: <b>Calma</b> baja revoluciones y sirve para dormir o meditar; <b>Enamorada</b> y <b>Éxtasis</b> suben el pulso y son para abrir el pecho o para mover algo, no para calmarte. Si vienes con ansiedad, empieza en Calma.
+    </div>
+
+    <div class="row" style="margin-top:22px"><button class="btn" id="out">Cerrar sesión</button></div>
+  </div>
+
+  <footer>&copy; Lily Frequency &middot; <a href="terminos.html">Términos</a> &middot; <a href="privacidad.html">Privacidad</a></footer>
+</div>
+
+<script src="lily-config.js"></script>
+<script src="lily-acceso.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+
+const FRECS=[
+ {id:"f528", n:"528 Hz", hz:528, d:"La del corazón abierto. El centro de esta sección."},
+ {id:"f639", n:"639 Hz", hz:639, d:"Vínculo y relaciones. Para trabajar con alguien en mente."},
+ {id:"f432", n:"432 Hz", hz:432, d:"Afinación serena. La más neutra de las cuatro."},
+ {id:"f963", n:"963 Hz", hz:963, d:"Alta y abierta. Tira hacia arriba, hacia el cielo."}
+];
+const LATIDOS=[
+ {id:"calma",  n:"En calma",   bpm:58,  d:"Reposo profundo. El pulso de alguien dormido o meditando."},
+ {id:"gozo",   n:"En gozo",    bpm:84,  d:"Alegría tranquila. Despierta pero sin prisa."},
+ {id:"amor",   n:"Enamorada",  bpm:104, d:"El corazón cuando alguien entra al cuarto."},
+ {id:"extasis",n:"En éxtasis", bpm:124, d:"Pico de emoción. Corto, no para una hora."},
+ {id:"sin",    n:"Sin latido", bpm:0,   d:"Solo la frecuencia y la Tierra."}
+];
+const TIERRA=7.83;
+
+let frec=FRECS[0], lat=LATIDOS[0], limite=0;
+let ctx=null,maestro=null,gFrec=null,gLat=null,gTie=null,reverb=null;
+let nFrec=[],nTie=[];
+let corriendo=false,menguando=false,t0=0,reloj=null,agenda=null,proximo=0;
+
+window.enter=function(){ $("gate").hidden=true; $("area").hidden=false; pintar(); return true; };
+
+function pintar(){
+  $("frec").innerHTML=FRECS.map((f,i)=>
+    '<button type="button" class="op'+(f.id===frec.id?' on':'')+'" data-f="'+i+'">'+
+    '<b>'+f.n+'</b><small>'+f.d+'</small></button>').join("");
+  $("lat").innerHTML=LATIDOS.map((l,i)=>
+    '<button type="button" class="op'+(l.id===lat.id?' on':'')+'" data-l="'+i+'">'+
+    '<b>'+l.n+'</b><small>'+l.d+'</small>'+(l.bpm?'<span class="bpm">'+l.bpm+' latidos por minuto</span>':'')+
+    '</button>').join("");
+  $("pEst").textContent=frec.n+" · "+lat.n;
+}
+$("frec").onclick=e=>{
+  const b=e.target.closest("[data-f]"); if(!b) return;
+  frec=FRECS[+b.dataset.f]; pintar();
+  if(corriendo){ apagarFrec(); encenderFrec() }
+};
+$("lat").onclick=e=>{
+  const b=e.target.closest("[data-l]"); if(!b) return;
+  lat=LATIDOS[+b.dataset.l]; pintar();
+  if(corriendo) proximo=ctx.currentTime+.2;
+};
+$("aDur").onclick=e=>{const b=e.target.closest("[data-m]");if(!b)return;
+  $("aDur").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));limite=+b.dataset.m*60};
+$("aVol").oninput=()=>{ if(maestro&&ctx&&!menguando) maestro.gain.setTargetAtTime($("aVol").value/100*.55,ctx.currentTime,.15) };
+$("vFrec").oninput=()=>{ if(gFrec&&ctx) gFrec.gain.setTargetAtTime($("vFrec").value/100*.17,ctx.currentTime,.12) };
+$("vLat").oninput=()=>{ if(gLat&&ctx) gLat.gain.setTargetAtTime($("vLat").value/100*.95,ctx.currentTime,.12) };
+$("vTie").oninput=()=>{ if(gTie&&ctx) gTie.gain.setTargetAtTime($("vTie").value/100*.30,ctx.currentTime,.12) };
+
+function hacerReverb(seg){
+  const sr=ctx.sampleRate,largo=Math.floor(sr*seg),b=ctx.createBuffer(2,largo,sr);
+  for(let c=0;c<2;c++){const d=b.getChannelData(c);
+    for(let i=0;i<largo;i++){const x=i/largo;d[i]=(Math.random()*2-1)*Math.pow(1-x,2.8)}}
+  const cv=ctx.createConvolver();cv.buffer=b;return cv;
+}
+function arrancarAudio(){
+  if(ctx) return;
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  maestro=ctx.createGain(); maestro.gain.value=$("aVol").value/100*.55; maestro.connect(ctx.destination);
+  gFrec=ctx.createGain(); gFrec.gain.value=$("vFrec").value/100*.17; gFrec.connect(maestro);
+  gLat =ctx.createGain(); gLat.gain.value =$("vLat").value/100*.95;  gLat.connect(maestro);
+  gTie =ctx.createGain(); gTie.gain.value =$("vTie").value/100*.30;  gTie.connect(maestro);
+  reverb=hacerReverb(4.5);
+  const rg=ctx.createGain(); rg.gain.value=.5; reverb.connect(rg); rg.connect(maestro);
+  gLat.connect(reverb);
+}
+
+function encenderFrec(){
+  const t=ctx.currentTime;
+  const o=ctx.createOscillator(), o2=ctx.createOscillator(), g2=ctx.createGain(), lfo=ctx.createOscillator(), lg=ctx.createGain(), sal=ctx.createGain();
+  o.type="sine";  o.frequency.value=frec.hz;
+  o2.type="sine"; o2.frequency.value=frec.hz*1.5; g2.gain.value=.3;
+  lfo.type="sine"; lfo.frequency.value=0.07; lg.gain.value=.22;
+  sal.gain.setValueAtTime(0.78,t);
+  lfo.connect(lg); lg.connect(sal.gain);
+  o.connect(sal); o2.connect(g2); g2.connect(sal);
+  sal.connect(gFrec); sal.connect(reverb);
+  o.start(); o2.start(); lfo.start();
+  nFrec=[o,o2,g2,lfo,lg,sal];
+}
+function apagarFrec(){ nFrec.forEach(n=>{try{n.stop&&n.stop()}catch(e){}try{n.disconnect()}catch(e){}}); nFrec=[] }
+
+function golpeCorazon(cuando, f0, dur, amp){
+  const o=ctx.createOscillator(), g=ctx.createGain();
+  o.type="sine";
+  o.frequency.setValueAtTime(f0*1.7,cuando);
+  o.frequency.exponentialRampToValueAtTime(f0*0.68,cuando+dur*0.85);
+  g.gain.setValueAtTime(0,cuando);
+  g.gain.linearRampToValueAtTime(amp,cuando+0.012);
+  g.gain.exponentialRampToValueAtTime(0.0001,cuando+dur);
+  o.connect(g); g.connect(gLat);
+  o.start(cuando); o.stop(cuando+dur+.05);
+
+  const n=ctx.createBufferSource(), nb=ctx.createBuffer(1,Math.floor(ctx.sampleRate*dur),ctx.sampleRate);
+  const nd=nb.getChannelData(0);
+  for(let i=0;i<nd.length;i++) nd[i]=(Math.random()*2-1)*Math.pow(1-i/nd.length,3.5);
+  n.buffer=nb;
+  const nf=ctx.createBiquadFilter(); nf.type="lowpass"; nf.frequency.value=180;
+  const ng=ctx.createGain(); ng.gain.value=amp*.35;
+  n.connect(nf); nf.connect(ng); ng.connect(gLat);
+  n.start(cuando);
+
+  setTimeout(()=>{[o,g,n,nf,ng].forEach(x=>{try{x.disconnect()}catch(e){}})},(dur+1)*1000);
+  const ms=Math.max(0,(cuando-ctx.currentTime)*1000);
+  setTimeout(()=>{ const l=$("pLuz"); if(!l)return; l.classList.add("late"); setTimeout(()=>l.classList.remove("late"),110) },ms);
+}
+function latir(cuando){
+  golpeCorazon(cuando, 52, 0.17, 0.85);
+  golpeCorazon(cuando+0.31, 68, 0.11, 0.52);
+}
+
+function encenderTierra(){
+  const n=ctx.createBufferSource(), largo=ctx.sampleRate*6, b=ctx.createBuffer(1,largo,ctx.sampleRate);
+  const d=b.getChannelData(0);
+  let ult=0;
+  for(let i=0;i<largo;i++){ const bl=(Math.random()*2-1); ult=(ult*0.985+bl*0.015); d[i]=ult*7 }
+  n.buffer=b; n.loop=true;
+  const f=ctx.createBiquadFilter(); f.type="lowpass"; f.frequency.value=110; f.Q.value=.8;
+  const g=ctx.createGain(); g.gain.value=.5;
+  const lfo=ctx.createOscillator(), lg=ctx.createGain();
+  lfo.type="sine"; lfo.frequency.value=TIERRA; lg.gain.value=.5;
+  lfo.connect(lg); lg.connect(g.gain);
+  const dro=ctx.createOscillator(), dg=ctx.createGain();
+  dro.type="sine"; dro.frequency.value=32.7; dg.gain.value=.5;
+  dro.connect(dg); dg.connect(g);
+  n.connect(f); f.connect(g); g.connect(gTie);
+  n.start(); lfo.start(); dro.start();
+  nTie=[n,f,g,lfo,lg,dro,dg];
+}
+function apagarTierra(){ nTie.forEach(x=>{try{x.stop&&x.stop()}catch(e){}try{x.disconnect()}catch(e){}}); nTie=[] }
+
+function planificar(){
+  if(!corriendo||!lat.bpm) return;
+  const ahora=ctx.currentTime, horizonte=ahora+1.5, paso=60/lat.bpm;
+  while(proximo<horizonte){
+    if(proximo<ahora) proximo=ahora+.05;
+    latir(proximo);
+    proximo += paso*(0.985+Math.random()*0.03);
+  }
+}
+
+async function empezar(){
+  arrancarAudio(); await ctx.resume();
+  if(corriendo) return;
+  corriendo=true; menguando=false; t0=ctx.currentTime; proximo=ctx.currentTime+.4;
+  maestro.gain.cancelScheduledValues(ctx.currentTime);
+  maestro.gain.setValueAtTime($("aVol").value/100*.55,ctx.currentTime);
+  encenderFrec(); encenderTierra();
+  $("pPlay").innerHTML="&#9834; Sonando";
+  agenda=setInterval(planificar,300);
+  reloj=setInterval(()=>{
+    const s=Math.floor(ctx.currentTime-t0);
+    if(limite){
+      const resta=limite-s;
+      $("pTiempo").textContent=Math.floor(resta/60)+":"+String(Math.max(0,resta%60)).padStart(2,"0")+" restantes";
+      if(resta<=45&&!menguando){ menguando=true; const t=ctx.currentTime;
+        maestro.gain.cancelScheduledValues(t); maestro.gain.setValueAtTime(maestro.gain.value,t);
+        maestro.gain.linearRampToValueAtTime(0.0001,t+44) }
+      if(resta<=0){ parar(); return }
+    }else{
+      $("pTiempo").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+    }
+  },1000);
+  planificar();
+}
+function parar(){
+  corriendo=false; menguando=false;
+  clearInterval(agenda); clearInterval(reloj);
+  if(maestro&&ctx){ const t=ctx.currentTime;
+    maestro.gain.cancelScheduledValues(t); maestro.gain.setValueAtTime(maestro.gain.value,t);
+    maestro.gain.linearRampToValueAtTime(0.0001,t+2) }
+  setTimeout(()=>{ apagarFrec(); apagarTierra();
+    if(maestro&&ctx&&!corriendo) maestro.gain.setValueAtTime($("aVol").value/100*.55,ctx.currentTime) },2200);
+  $("pPlay").innerHTML="&#9654; Empezar";
+  $("pTiempo").textContent="0:00";
+}
+$("pPlay").onclick=()=>corriendo?parar():empezar();
+$("pStop").onclick=parar;
+</script>
+</body>
+</html>
