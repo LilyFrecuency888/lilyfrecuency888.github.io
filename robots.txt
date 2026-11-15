@@ -18,3 +18,9 @@ Disallow: /generativa.html
 Disallow: /cuencos.html
 Disallow: /cielo-tierra.html
 Disallow: /paises.js
+Disallow: /caminos.html
+Disallow: /caminos-data.js
+Disallow: /ciclos.html
+Disallow: /ciclos-data.js
+Disallow: /familia.html
+Disallow: /familia-data.js
