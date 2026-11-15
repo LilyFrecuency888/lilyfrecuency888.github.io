@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Música viva · Lily Frequency</title>
+<title>Conexión Madre Tierra · Lily Frequency</title>
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="lily.css">
 <style>
@@ -36,13 +36,13 @@ input[type=range]{accent-color:var(--lila);width:100%}
   <nav><a class="logo" href="./">&#10022; Lily Frequency</a><a href="miembros.html" class="small">Zona de miembros &rarr;</a></nav>
 
   <div id="gate">
-    <h1>Música <em>viva</em></h1>
+    <h1>Conexión <em>Madre Tierra</em></h1>
     <p class="muted">Música que se compone sola mientras la escuchas y nunca se repite.</p>
     <div class="box"><p class="muted">Cargando&hellip;</p></div>
   </div>
 
   <div id="area" hidden>
-    <h1>Música <em>viva</em></h1>
+    <h1>Conexión <em>Madre Tierra</em></h1>
     <p class="muted">Nada de esto está grabado. Cada nota se decide en el momento, a partir de una señal que se mueve sola y nunca repite el mismo camino. Si la dejas una hora, es una hora de música que no ha existido antes y no va a volver a existir.</p>
 
     <h2>Elige el ambiente</h2>
@@ -75,6 +75,14 @@ input[type=range]{accent-color:var(--lila);width:100%}
           <button data-b="10">Alfa 10</button>
           <button data-b="7.83">Schumann</button>
         </div>
+        <span>Duración</span>
+        <div class="pastillas" id="aDur">
+          <button data-m="0" class="on">Sin límite</button>
+          <button data-m="15">15 min</button>
+          <button data-m="30">30 min</button>
+          <button data-m="45">45 min</button>
+          <button data-m="60">60 min</button>
+        </div>
       </div>
     </div>
 
@@ -103,9 +111,9 @@ const AMB=[
 ];
 const NOM=["Do","Do#","Re","Re#","Mi","Fa","Fa#","Sol","Sol#","La","La#","Si"];
 
-let amb=AMB[0], afin=432, fondoHz=0;
+let amb=AMB[0], afin=432, fondoHz=0, limite=0;
 let ctx=null, maestro=null, reverb=null, bus=null, fondo=null;
-let corriendo=false, t0=0, reloj=null, dibujo=null, agenda=null;
+let corriendo=false, menguando=false, t0=0, reloj=null, dibujo=null, agenda=null;
 let proximo=0, deriva=0, paso=0, ultimo=-1, historia=[];
 
 window.enter=function(){ $("gate").hidden=true; $("area").hidden=false; pintar(); medirLienzo(); return true; };
@@ -132,6 +140,11 @@ $("aFondo").onclick=e=>{
   $("aFondo").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
   fondoHz=+b.dataset.b;
   if(corriendo){ apagarFondo(); if(fondoHz) encenderFondo(); }
+};
+$("aDur").onclick=e=>{
+  const b=e.target.closest("[data-m]"); if(!b) return;
+  $("aDur").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  limite=+b.dataset.m*60;
 };
 $("aVol").oninput=()=>{ if(maestro&&ctx) maestro.gain.setTargetAtTime($("aVol").value/100*.5,ctx.currentTime,.15) };
 
@@ -296,9 +309,23 @@ async function empezar(){
   if(fondoHz) encenderFondo();
   agenda=setInterval(planificar,220);
   dibujo=setInterval(trazar,110);
+  menguando=false;
   reloj=setInterval(()=>{
     const s=Math.floor(ctx.currentTime-t0);
-    $("pTiempo").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+    if(limite){
+      const resta=limite-s;
+      $("pTiempo").textContent=Math.floor(resta/60)+":"+String(Math.max(0,resta%60)).padStart(2,"0")+" restantes";
+      if(resta<=45 && !menguando){
+        menguando=true;
+        const t=ctx.currentTime;
+        maestro.gain.cancelScheduledValues(t);
+        maestro.gain.setValueAtTime(maestro.gain.value,t);
+        maestro.gain.linearRampToValueAtTime(0.0001,t+44);
+      }
+      if(resta<=0){ parar(); return }
+    }else{
+      $("pTiempo").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+    }
   },1000);
   planificar();
 }
@@ -306,6 +333,9 @@ function parar(){
   corriendo=false;
   clearInterval(agenda); clearInterval(dibujo); clearInterval(reloj);
   apagarFondo();
+  if(maestro&&ctx){ maestro.gain.cancelScheduledValues(ctx.currentTime);
+    maestro.gain.setValueAtTime($("aVol").value/100*.5,ctx.currentTime); }
+  menguando=false;
   $("pPlay").innerHTML="&#9654; Empezar";
   $("pNota").firstChild.nodeValue="—";
   $("pTiempo").textContent="0:00";
