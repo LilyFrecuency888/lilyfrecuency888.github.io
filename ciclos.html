@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ciclos y tiempos · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120f1a;--s2:#251e34;--surface:#1d1730;--line:#3a2f52;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc;--ink:#2a1640}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(950px 680px at 50% -8%,#3a2563,var(--bg) 62%) fixed,var(--bg);line-height:1.6;min-height:100vh}
+a{color:var(--lila2)}
+.wrap{max-width:760px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.45rem;font-weight:600;text-decoration:none;color:var(--txt)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2rem,5.5vw,2.8rem);line-height:1.1;margin-bottom:8px}
+h1 em{font-style:italic;background:linear-gradient(90deg,var(--lila),var(--rosa),var(--menta));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.55rem;margin:30px 0 4px}
+.muted{color:var(--muted)}.small{font-size:.86rem}
+.box{background:rgba(29,23,48,.82);border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:16px}
+input[type=text]{width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--s2);color:var(--txt);font:600 1.05rem Quicksand,inherit;letter-spacing:.18em;text-transform:uppercase;text-align:center}
+input:focus{outline:0;border-color:var(--lila)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;border:1.5px solid rgba(201,167,255,.45);background:transparent;color:var(--lila2);font:700 .92rem Quicksand,inherit;cursor:pointer;text-decoration:none}
+.btn.pri{background:linear-gradient(90deg,var(--lila),var(--rosa));border:0;color:var(--ink)}
+.btn.wa{background:#25D366;border:0;color:#07301a}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.err{color:var(--rosa);font-size:.88rem;min-height:20px;margin-top:10px}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:10px;margin-top:10px}
+.card{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;color:var(--txt);font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:3px}
+.card b{font-size:.95rem}
+.card small{color:var(--muted);font-size:.78rem;line-height:1.4}
+.card .mins{color:var(--lila);font-size:.74rem;font-weight:700}
+.card.on{border-color:var(--lila);box-shadow:0 0 0 1px var(--lila) inset}
+#player{position:sticky;bottom:0;z-index:40;margin-top:24px;background:rgba(18,15,26,.97);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:20px;padding:16px}
+#player[hidden]{display:none}
+.phz{font-family:"Cormorant Garamond",serif;font-size:2rem;line-height:1}
+.phz span{font-size:.9rem;font-family:Quicksand;color:var(--muted);margin-left:4px}
+.guia{background:rgba(201,167,255,.1);border-left:2px solid var(--lila);border-radius:0 12px 12px 0;padding:10px 14px;margin:10px 0;font-size:.95rem;line-height:1.55}
+.guia[hidden]{display:none}
+.bar{height:4px;border-radius:4px;background:rgba(201,167,255,.2);overflow:hidden;margin:10px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--lila),var(--rosa));width:0;transition:width .3s}
+.ctr{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input[type=range]{flex:1;min-width:110px;accent-color:var(--lila)}
+label.chk{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
+#area[hidden]{display:none}
+</style>
+<link rel="stylesheet" href="lily.css">
+<script src="lily-config.js"></script>
+<script src="lily-acceso.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">&#10022; Lily Frequency</a><a href="miembros.html" class="small">Zona de miembros &rarr;</a></nav>
+
+  <div id="gate">
+    <h1>Ciclos <em>y tiempos</em></h1>
+    <p class="muted">Fases de la luna, los doce signos, los siete días planetarios y acompañamiento en el duelo.</p>
+    <div class="box">
+      <label for="code" class="small muted">Tu código del mes</label>
+      <input id="code" type="text" maxlength="6" autocomplete="off" placeholder="6 caracteres" style="margin-top:8px">
+      <div class="err" id="err"></div>
+      <div class="row">
+        <button class="btn pri" id="go">Entrar</button>
+        <a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/50234819870?text=Hola%2C%20quiero%20mi%20c%C3%B3digo%20del%20mes">Pedir mi código</a>
+      </div>
+      <p class="muted small" style="margin-top:14px">Es el mismo código que usas en la app y en las otras zonas. Cambia cada mes.</p>
+    </div>
+  </div>
+
+  <div id="area" hidden>
+    <h1>Ciclos <em>y tiempos</em></h1>
+    <p class="muted" id="sub"></p>
+
+    <div id="secciones"></div>
+
+    <div id="player" hidden>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+        <div><div class="phz" id="pHz">&mdash;<span>Hz</span></div>
+          <div class="small muted" id="pName"></div></div>
+        <div style="text-align:right"><div class="small" id="pStep"></div>
+          <div class="small" style="color:var(--menta)" id="pPh"></div></div>
+      </div>
+      <div class="guia" id="pG" hidden></div>
+      <div class="bar"><i id="pBar"></i></div>
+      <div class="ctr">
+        <button class="btn pri" id="pPlay">&#9654; Escuchar</button>
+        <button class="btn" id="pStop">&#9632;</button>
+        <input type="range" id="pVol" min="0" max="100" value="55" aria-label="Volumen">
+        <label class="chk"><input type="checkbox" id="pIso"> Sin audífonos</label>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:22px"><button class="btn" id="out">Cerrar sesión</button></div>
+  </div>
+
+  <footer>&copy; Lily Frequency &middot; <a href="terminos.html">Términos</a> &middot; <a href="privacidad.html">Privacidad</a> &middot; <a href="terapeutica.html">Zona terapéutica</a></footer>
+</div>
+
+<script src="ciclos-data.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ym=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+let DATA=null;
+
+async function unlock(code){
+  const now=new Date(),months=[ym(now)];
+  if(now.getDate()<=5){const p=new Date(now.getFullYear(),now.getMonth()-1,1);months.push(ym(p))}
+  const enc=new TextEncoder();
+  for(const m of months){const w=VAULT.wrap[m];if(!w)continue;
+    try{
+      const base=await crypto.subtle.importKey("raw",enc.encode(code),"PBKDF2",false,["deriveKey"]);
+      const wk=await crypto.subtle.deriveKey({name:"PBKDF2",salt:enc.encode("lily|"+m),iterations:150000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+      const K=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(w[0])},wk,b64(w[1]));
+      const kk=await crypto.subtle.importKey("raw",K,"AES-GCM",false,["decrypt"]);
+      const gz=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(VAULT.iv)},kk,b64(VAULT.ct));
+      const txt=await new Response(new Blob([gz]).stream().pipeThrough(new DecompressionStream("gzip"))).text();
+      return {data:JSON.parse(txt),m};
+    }catch(e){}}
+  return null;
+}
+async function enter(code,silent){
+  if(!silent)$("err").textContent="Verificando…";
+  $("go").disabled=true;
+  const r=await unlock(String(code||"").trim().toUpperCase());
+  $("go").disabled=false;
+  if(!r){$("err").textContent=silent?"":"Ese código no abre esta zona. Revisa que sea el del mes en curso.";return false}
+  $("err").textContent="";
+  try{localStorage.setItem("lf-cic-code",String(code).trim().toUpperCase())}catch(e){}
+  $("gate").hidden=true;$("area").hidden=false;
+  render(r.data);
+  return true;
+}
+$("go").onclick=()=>enter($("code").value);
+$("code").onkeydown=e=>{if(e.key==="Enter")enter($("code").value)};
+$("out").onclick=()=>{try{localStorage.removeItem("lf-cic-code")}catch(e){}stopAll();location.reload()};
+
+function mins(p){return Math.round(p.steps.reduce((a,s)=>a+s.dur,0)/60)}
+function render(d){
+  DATA=d;
+  const secs=[];
+  d.progs.forEach(p=>{if(secs.indexOf(p.sec)<0)secs.push(p.sec)});
+  $("sub").textContent=d.progs.length+" programas en "+secs.length+" secciones · "+
+    Math.round(d.progs.reduce((a,p)=>a+p.steps.reduce((b,s)=>b+s.dur,0),0)/3600)+" horas de contenido";
+  $("secciones").innerHTML=secs.map(s=>{
+    const items=d.progs.map((p,i)=>[p,i]).filter(x=>x[0].sec===s);
+    return '<h2>'+esc(s)+'</h2><div class="lib">'+items.map(([p,i])=>
+      '<button type="button" class="card" data-i="'+i+'"><b>'+esc(p.name)+'</b>'+
+      '<small>'+esc(p.desc)+'</small><span class="mins">'+mins(p)+' min · '+p.steps.length+' pasos</span></button>').join("")+'</div>';
+  }).join("");
+}
+$("secciones").onclick=e=>{
+  const c=e.target.closest("[data-i]");if(!c)return;
+  document.querySelectorAll(".card").forEach(x=>x.classList.toggle("on",x===c));
+  load(DATA.progs[+c.dataset.i]);play();
+};
+
+/* ---------- motor de sonido ---------- */
+let ctx,master,cur=null,idx=0,stepStart=0,voice=null,tick=null,playing=false;
+const vol=()=>$("pVol").value/100*.6;
+function ensure(){if(ctx)return;ctx=new (window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=vol();master.connect(ctx.destination)}
+$("pVol").oninput=()=>{if(master)master.gain.setTargetAtTime(vol(),ctx.currentTime,.1)};
+function effMode(s){if(s.mode!=="pure"&&!s.b)return "pure";return (s.mode==="binaural"&&$("pIso").checked)?"iso":s.mode}
+function makeVoice(s){
+  const t=ctx.currentTime,out=ctx.createGain();
+  out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(1,t+3);out.connect(master);
+  const nodes=[out],m=effMode(s);
+  if(m==="binaural"){const L=ctx.createOscillator(),R=ctx.createOscillator(),mg=ctx.createChannelMerger(2);
+    L.frequency.value=s.f;R.frequency.value=s.f+s.b;L.connect(mg,0,0);R.connect(mg,0,1);mg.connect(out);L.start();R.start();nodes.push(L,R,mg)}
+  else if(m==="iso"){const o=ctx.createOscillator(),g=ctx.createGain(),lfo=ctx.createOscillator(),lg=ctx.createGain();
+    o.frequency.value=s.f;g.gain.value=.5;lfo.frequency.value=s.b;lg.gain.value=.5;lfo.connect(lg);lg.connect(g.gain);o.connect(g);g.connect(out);o.start();lfo.start();nodes.push(o,g,lfo,lg)}
+  else{const o=ctx.createOscillator();o.frequency.value=s.f;o.connect(out);o.start();nodes.push(o)}
+  return {out,nodes};
+}
+function kill(v,fade=1.2){if(!v)return;const t=ctx.currentTime;
+  v.out.gain.cancelScheduledValues(t);v.out.gain.setValueAtTime(v.out.gain.value,t);v.out.gain.linearRampToValueAtTime(0,t+fade);
+  setTimeout(()=>v.nodes.forEach(n=>{try{n.stop&&n.stop()}catch(e){}try{n.disconnect()}catch(e){}}),(fade+.3)*1000)}
+function load(p){stopAll();cur=p;idx=0;$("player").hidden=false;show()}
+function show(){
+  if(!cur)return;const s=cur.steps[idx];
+  $("pHz").innerHTML=(+s.f).toLocaleString("es",{maximumFractionDigits:2})+"<span>Hz</span>";
+  $("pName").textContent=cur.name+(cur.steps.length>1?" — "+s.label:"");
+  $("pStep").textContent="paso "+(idx+1)+"/"+cur.steps.length;
+  $("pG").hidden=!s.g;$("pG").textContent=s.g||"";
+}
+function startStep(i){idx=i;if(voice)kill(voice);voice=makeVoice(cur.steps[i]);stepStart=ctx.currentTime;show()}
+async function play(){
+  if(!cur)return;ensure();await ctx.resume();
+  if(!playing){startStep(idx);playing=true;clearInterval(tick);tick=setInterval(upd,250)}
+  $("pPlay").innerHTML="&#9834; Sonando";
+}
+$("pPlay").onclick=()=>playing?pause():play();
+function pause(){if(!playing)return;playing=false;clearInterval(tick);if(voice)kill(voice,.4);voice=null;$("pPlay").innerHTML="&#9654; Escuchar"}
+function stopAll(){clearInterval(tick);if(voice)kill(voice,.5);voice=null;playing=false;idx=0;
+  $("pPlay").innerHTML="&#9654; Escuchar";$("pBar").style.width="0";$("pPh").textContent=""}
+$("pStop").onclick=()=>{stopAll();show()};
+function upd(){
+  if(!playing||!cur)return;
+  const s=cur.steps[idx],t=ctx.currentTime-stepStart;
+  if(t>=s.dur){
+    if(idx<cur.steps.length-1){startStep(idx+1);return}
+    stopAll();$("pPh").textContent="Sesión completa ✦";return;
+  }
+  const tot=cur.steps.reduce((a,x)=>a+x.dur,0);
+  const done=cur.steps.slice(0,idx).reduce((a,x)=>a+x.dur,0)+Math.min(t,s.dur);
+  $("pBar").style.width=(done/tot*100)+"%";
+  const left=Math.ceil(s.dur-t);
+  $("pPh").textContent=Math.floor(left/60)+":"+String(left%60).padStart(2,"0");
+}
+(async()=>{let c=null;try{c=localStorage.getItem("lf-cic-code")}catch(e){}
+  if(c)await enter(c,true);})();
+</script>
+</body>
+</html>
