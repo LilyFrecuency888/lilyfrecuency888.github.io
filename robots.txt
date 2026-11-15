@@ -14,3 +14,4 @@ Disallow: /conciencia-data.js
 Disallow: /registro.html
 Disallow: /admin.html
 Disallow: /clave.html
+Disallow: /generativa.html
