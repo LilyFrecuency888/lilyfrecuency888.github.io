@@ -24,6 +24,9 @@ input{width:100%;padding:13px 15px}
 .pin{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.78rem;font-weight:700}
 .pin.si{background:rgba(143,240,208,.16);color:var(--menta)}
 .pin.no{background:rgba(255,217,138,.16);color:var(--oro)}
+.tel{display:flex;gap:8px;align-items:stretch}
+.tel select{flex:0 0 auto;max-width:46%;padding:13px 10px;border-radius:14px;border:1px solid var(--line);background:var(--surface2,#251e3a);color:var(--txt);font:600 .95rem Quicksand,inherit;cursor:pointer}
+.tel input{flex:1 1 auto;min-width:0}
 </style>
 </head>
 <body>
@@ -45,7 +48,10 @@ input{width:100%;padding:13px 15px}
           <label for="nombre">Tu nombre</label>
           <input id="nombre" type="text" autocomplete="name" placeholder="Como quieres que te llame">
           <label for="tel">Tu WhatsApp</label>
-          <input id="tel" type="tel" autocomplete="tel" placeholder="+502 0000 0000">
+          <div class="tel">
+            <select id="pais" aria-label="Código de país"></select>
+            <input id="tel" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="0000 0000">
+          </div>
         </div>
         <label for="correo">Correo</label>
         <input id="correo" type="email" autocomplete="email" required placeholder="tucorreo@ejemplo.com">
@@ -73,6 +79,7 @@ input{width:100%;padding:13px 15px}
 </div>
 
 <script src="lily-config.js"></script>
+<script src="paises.js"></script>
 <script type="module">
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -88,6 +95,21 @@ if(!C.url||C.url.indexOf("PEGAR")===0){
 }
 const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
 const sb=createClient(C.url,C.anon,{auth:{persistSession:true,autoRefreshToken:true,storageKey:"lf-sesion"}});
+
+function opcion(p){ return '<option value="'+p[2]+'" data-cc="'+p[0]+'">'+bandera(p[0])+' '+p[1]+' +'+p[2]+'</option>'; }
+function montaPaises(){
+  const sel=$("pais"); if(!sel||typeof PAISES==="undefined") return;
+  const arriba=PAIS_FRECUENTES.map(function(cc){ return PAISES.find(function(p){return p[0]===cc}) }).filter(Boolean);
+  sel.innerHTML='<optgroup label="M\u00e1s cercanos">'+arriba.map(opcion).join("")+'</optgroup>'+
+                '<optgroup label="Todos los pa\u00edses">'+PAISES.map(opcion).join("")+'</optgroup>';
+  sel.value="502";
+}
+function telCompleto(){
+  const n=$("tel").value.replace(/\D/g,"");
+  if(!n) return "";
+  return "+"+$("pais").value+" "+n;
+}
+montaPaises();
 
 let nueva=P.get("nueva")==="1";
 function modo(n){
@@ -142,7 +164,7 @@ $("f").onsubmit=async e=>{
   try{
     if(nueva){
       const {error}=await sb.auth.signUp({email:correo,password:clave,options:{data:{
-        nombre:$("nombre").value.trim(), telefono:$("tel").value.trim()}}});
+        nombre:$("nombre").value.trim(), telefono:telCompleto()}}});
       if(error) throw error;
       const {error:e2}=await sb.auth.signInWithPassword({email:correo,password:clave});
       if(e2){ pendiente(correo,null); return }
