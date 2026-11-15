@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuencos y campanas · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="lily.css">
+<style>
+.wrap{max-width:760px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+h1{font-size:clamp(2rem,5.5vw,2.7rem);margin-bottom:8px}
+h2{font-size:1.45rem;margin:28px 0 4px}
+#area[hidden]{display:none}
+.juegos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:10px;margin-top:14px}
+.jg{text-align:left;padding:16px 17px;border-radius:20px;border:1px solid rgba(201,167,255,.16);background:linear-gradient(162deg,rgba(38,30,60,.82),rgba(22,17,38,.86));color:var(--txt);font:inherit;cursor:pointer;transition:transform .2s,border-color .2s}
+.jg:hover{transform:translateY(-2px);border-color:rgba(201,167,255,.42)}
+.jg.on{border-color:var(--lila);box-shadow:0 0 0 1px var(--lila) inset}
+.jg b{display:block;font-size:1.05rem;font-family:"Cormorant Garamond",serif;font-weight:600}
+.jg small{color:var(--muted);font-size:.81rem;line-height:1.45;display:block;margin-top:4px}
+.notas{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.nt{padding:10px 15px;border-radius:14px;border:1px solid var(--line);background:rgba(37,30,58,.55);color:var(--muted);font:700 .85rem Quicksand,inherit;cursor:pointer;min-height:44px;transition:.18s}
+.nt.on{border-color:var(--menta);background:rgba(143,240,208,.14);color:var(--menta)}
+.nt small{display:block;font-weight:400;font-size:.72rem;opacity:.85;margin-top:1px}
+#panel{position:sticky;bottom:0;z-index:40;margin-top:22px;background:rgba(18,15,26,.97);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:22px;padding:17px}
+.ctr{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ajustes{display:grid;grid-template-columns:auto 1fr;gap:9px 12px;align-items:center;margin-top:15px;font-size:.82rem;color:var(--muted)}
+input[type=range]{accent-color:var(--lila);width:100%}
+.pastillas{display:flex;gap:7px;flex-wrap:wrap}
+.pastillas button{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:700 .78rem Quicksand,inherit;cursor:pointer;min-height:36px}
+.pastillas button.on{background:var(--aurora);color:var(--ink);border-color:transparent}
+.hz{font-family:"Cormorant Garamond",serif;font-size:1.7rem;line-height:1.05}
+.hz span{font-family:Quicksand;font-size:.8rem;color:var(--muted);display:block;margin-top:2px}
+.aviso{font-size:.84rem;color:var(--muted);background:rgba(201,167,255,.07);border-left:2px solid var(--lila);border-radius:0 12px 12px 0;padding:12px 15px;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">&#10022; Lily Frequency</a><a href="miembros.html" class="small">Zona de miembros &rarr;</a></nav>
+
+  <div id="gate">
+    <h1>Cuencos <em>y campanas</em></h1>
+    <p class="muted">Un baño de sonido que se toca solo, con las frecuencias que elijas.</p>
+    <div class="box"><p class="muted">Cargando&hellip;</p></div>
+  </div>
+
+  <div id="area" hidden>
+    <h1>Cuencos <em>y campanas</em></h1>
+    <p class="muted">Cada cuenco se sintetiza en el momento, con sus armónicos propios y el batido que les da ese temblor. No hay dos golpes iguales y las colas se montan unas sobre otras, como en un baño de sonido de verdad.</p>
+
+    <h2>Elige el juego</h2>
+    <div class="juegos" id="juegos"></div>
+
+    <h2>Qué cuencos suenan</h2>
+    <p class="muted small">Apaga los que no quieras. Entre más encendidos, más densa la lluvia de campanas.</p>
+    <div class="notas" id="notas"></div>
+
+    <div id="panel">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+        <div class="hz" id="pHz">&mdash;<span id="pJg">Ninguno</span></div>
+        <div class="small muted" style="text-align:right" id="pTiempo">0:00</div>
+      </div>
+      <div class="ctr" style="margin-top:12px">
+        <button class="btn pri" id="pPlay">&#9654; Empezar</button>
+        <button class="btn" id="pStop">&#9632;</button>
+      </div>
+      <div class="ajustes">
+        <span>Densidad</span><input type="range" id="aDen" min="10" max="100" value="45">
+        <span>Cola</span><input type="range" id="aCola" min="20" max="100" value="60">
+        <span>Volumen</span><input type="range" id="aVol" min="0" max="100" value="55">
+        <span>Golpe</span>
+        <div class="pastillas" id="aModo">
+          <button data-m="bano" class="on">Baño de sonido</button>
+          <button data-m="orden">Uno a uno</button>
+        </div>
+        <span>Fondo</span>
+        <div class="pastillas" id="aFondo">
+          <button data-b="0" class="on">Sin onda</button>
+          <button data-b="4.5">Theta 4.5</button>
+          <button data-b="6">Theta 6</button>
+          <button data-b="7.83">Schumann</button>
+        </div>
+        <span>Duración</span>
+        <div class="pastillas" id="aDur">
+          <button data-m="0" class="on">Sin límite</button>
+          <button data-m="15">15 min</button>
+          <button data-m="30">30 min</button>
+          <button data-m="45">45 min</button>
+          <button data-m="60">60 min</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="aviso">
+      Con audífonos se oyen los armónicos de arriba, que es donde vive el brillo del cuenco. En parlante se siente más el cuerpo grave. Las dos formas sirven, son distintas.
+    </div>
+
+    <div class="row" style="margin-top:22px"><button class="btn" id="out">Cerrar sesión</button></div>
+  </div>
+
+  <footer>&copy; Lily Frequency &middot; <a href="terminos.html">Términos</a> &middot; <a href="privacidad.html">Privacidad</a></footer>
+</div>
+
+<script src="lily-config.js"></script>
+<script src="lily-acceso.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+
+const JUEGOS=[
+ {id:"solf", n:"Los nueve solfeggio", tim:"cuenco", cola:1.0,
+  d:"174, 285, 396, 417, 528, 639, 741, 852 y 963. El juego completo.",
+  hz:[[174,"Base"],[285,"Tejido"],[396,"Soltar"],[417,"Cambio"],[528,"Corazón"],[639,"Vínculo"],[741,"Expresión"],[852,"Intuición"],[963,"Corona"]]},
+ {id:"chak", n:"Siete chakras", tim:"cuenco", cola:1.1,
+  d:"Un cuenco por centro, de raíz a corona. El recorrido clásico.",
+  hz:[[396,"Raíz"],[417,"Sacro"],[528,"Plexo"],[639,"Corazón"],[741,"Garganta"],[852,"Entrecejo"],[963,"Corona"]]},
+ {id:"grav", n:"Cuencos graves", tim:"cuenco", cola:1.5,
+  d:"Tibetanos grandes. Se sienten en el pecho más que en el oído. Para acostarse.",
+  hz:[[68,"Tierra"],[96,"Hueso"],[110,"Cámara"],[136.1,"Om"],[174,"Base"]]},
+ {id:"camp", n:"Campanas altas", tim:"campana", cola:.8,
+  d:"Claras y brillantes, de templo. Para despejar un espacio o abrir la práctica.",
+  hz:[[432,"Centro"],[528,"Corazón"],[639,"Vínculo"],[741,"Expresión"],[852,"Intuición"],[963,"Corona"],[1074,"Luz"]]},
+ {id:"todo", n:"Todo junto", tim:"mixto", cola:1.2,
+  d:"Graves, solfeggio y campanas a la vez. Muchas campanas, mucha cola.",
+  hz:[[68,"Tierra"],[136.1,"Om"],[174,"Base"],[285,"Tejido"],[396,"Soltar"],[432,"Centro"],[528,"Corazón"],[639,"Vínculo"],[741,"Expresión"],[852,"Intuición"],[963,"Corona"],[1074,"Luz"]]}
+];
+
+let jg=JUEGOS[0], activos=[], modo="bano", fondoHz=0, limite=0, turno=0;
+let ctx=null, maestro=null, reverb=null, bus=null, fondo=null;
+let corriendo=false, menguando=false, t0=0, reloj=null, agenda=null, proximo=0;
+
+window.enter=function(){ $("gate").hidden=true; $("area").hidden=false; pintar(); return true; };
+
+function pintar(){
+  $("juegos").innerHTML=JUEGOS.map((j,i)=>
+    '<button type="button" class="jg'+(j.id===jg.id?' on':'')+'" data-i="'+i+'">'+
+    '<b>'+j.n+'</b><small>'+j.d+'</small></button>').join("");
+  activos=jg.hz.map((h,i)=>i);
+  pintarNotas();
+  $("pJg").textContent=jg.n;
+}
+function pintarNotas(){
+  $("notas").innerHTML=jg.hz.map((h,i)=>
+    '<button type="button" class="nt'+(activos.indexOf(i)>=0?' on':'')+'" data-n="'+i+'">'+
+    h[0]+' Hz<small>'+h[1]+'</small></button>').join("");
+}
+$("juegos").onclick=e=>{
+  const b=e.target.closest("[data-i]"); if(!b) return;
+  jg=JUEGOS[+b.dataset.i]; turno=0; pintar();
+};
+$("notas").onclick=e=>{
+  const b=e.target.closest("[data-n]"); if(!b) return;
+  const i=+b.dataset.n, k=activos.indexOf(i);
+  if(k>=0){ if(activos.length<2) return; activos.splice(k,1) } else activos.push(i);
+  activos.sort((a,b)=>a-b); pintarNotas();
+};
+$("aModo").onclick=e=>{const b=e.target.closest("[data-m]");if(!b)return;
+  $("aModo").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));modo=b.dataset.m;turno=0};
+$("aFondo").onclick=e=>{const b=e.target.closest("[data-b]");if(!b)return;
+  $("aFondo").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));fondoHz=+b.dataset.b;
+  if(corriendo){apagarFondo(); if(fondoHz) encenderFondo()}};
+$("aDur").onclick=e=>{const b=e.target.closest("[data-m]");if(!b)return;
+  $("aDur").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));limite=+b.dataset.m*60};
+$("aVol").oninput=()=>{ if(maestro&&ctx&&!menguando) maestro.gain.setTargetAtTime($("aVol").value/100*.5,ctx.currentTime,.15) };
+
+function hacerReverb(seg){
+  const sr=ctx.sampleRate, largo=Math.floor(sr*seg), b=ctx.createBuffer(2,largo,sr);
+  for(let c=0;c<2;c++){ const d=b.getChannelData(c);
+    for(let i=0;i<largo;i++){ const x=i/largo; d[i]=(Math.random()*2-1)*Math.pow(1-x,2.4) } }
+  const cv=ctx.createConvolver(); cv.buffer=b; return cv;
+}
+function arrancarAudio(){
+  if(ctx) return;
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  maestro=ctx.createGain(); maestro.gain.value=$("aVol").value/100*.5; maestro.connect(ctx.destination);
+  bus=ctx.createGain(); bus.gain.value=.8; bus.connect(maestro);
+  reverb=hacerReverb(6.5);
+  const rg=ctx.createGain(); rg.gain.value=.85; reverb.connect(rg); rg.connect(maestro);
+}
+
+const PARC={
+  cuenco:[[1,1],[2.74,.34],[5.42,.17],[8.95,.08]],
+  campana:[[.5,.22],[1,1],[1.19,.42],[1.56,.28],[2,.3],[2.66,.14],[3.01,.09]]
+};
+function golpe(cuando, f, tipo){
+  const colaMax=(jg.cola||1)*($("aCola").value/100)*26;
+  const dur=colaMax*(tipo==="campana"?.7:1)*(0.75+Math.random()*0.5);
+  const g=ctx.createGain();
+  g.gain.setValueAtTime(0,cuando);
+  g.connect(bus); if(reverb) g.connect(reverb);
+  const fuerza=.10+Math.random()*.06;
+  const lista=PARC[tipo]||PARC.cuenco;
+  const nodos=[g];
+
+  lista.forEach(function(par,k){
+    const ratio=par[0], amp=par[1];
+    for(let s=0;s<2;s++){
+      const o=ctx.createOscillator(), og=ctx.createGain();
+      const det=(s===0?-1:1)*(0.35+ratio*0.22)*(0.6+Math.random()*0.8);
+      o.type="sine";
+      o.frequency.value=f*ratio+det;
+      const pico=fuerza*amp*(s?0.85:1)/(1+k*0.35);
+      const vida=dur/(1+k*0.55);
+      og.gain.setValueAtTime(0,cuando);
+      og.gain.linearRampToValueAtTime(pico,cuando+0.006+k*0.004);
+      og.gain.exponentialRampToValueAtTime(.00008,cuando+vida);
+      o.connect(og); og.connect(g);
+      o.start(cuando); o.stop(cuando+vida+.1);
+      nodos.push(o,og);
+    }
+  });
+
+  const n=ctx.createBufferSource(), nb=ctx.createBuffer(1,Math.floor(ctx.sampleRate*.09),ctx.sampleRate);
+  const nd=nb.getChannelData(0);
+  for(let i=0;i<nd.length;i++) nd[i]=(Math.random()*2-1)*Math.pow(1-i/nd.length,5);
+  n.buffer=nb;
+  const nf=ctx.createBiquadFilter(); nf.type="bandpass"; nf.frequency.value=f*2.6; nf.Q.value=1.1;
+  const ng=ctx.createGain(); ng.gain.value=fuerza*.5;
+  n.connect(nf); nf.connect(ng); ng.connect(g);
+  n.start(cuando);
+  nodos.push(n,nf,ng);
+
+  g.gain.setValueAtTime(1,cuando);
+  setTimeout(()=>nodos.forEach(x=>{try{x.disconnect()}catch(e){}}),(dur+2)*1000);
+  $("pHz").firstChild.nodeValue=(+f).toLocaleString("es",{maximumFractionDigits:1})+" Hz";
+}
+
+function encenderFondo(){
+  if(!fondoHz||!ctx) return;
+  const L=ctx.createOscillator(),R=ctx.createOscillator(),m=ctx.createChannelMerger(2),g=ctx.createGain();
+  const base=136.1;
+  L.frequency.value=base; R.frequency.value=base+fondoHz;
+  g.gain.setValueAtTime(0,ctx.currentTime);
+  g.gain.linearRampToValueAtTime(.06,ctx.currentTime+5);
+  L.connect(m,0,0); R.connect(m,0,1); m.connect(g); g.connect(maestro);
+  L.start(); R.start();
+  fondo={g:g,nodos:[L,R,m,g]};
+}
+function apagarFondo(){
+  if(!fondo||!ctx) return;
+  const g=fondo.g, nodos=fondo.nodos, t=ctx.currentTime;
+  g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value,t);
+  g.gain.linearRampToValueAtTime(0,t+2);
+  setTimeout(()=>nodos.forEach(n=>{try{n.stop&&n.stop()}catch(e){}try{n.disconnect()}catch(e){}}),2400);
+  fondo=null;
+}
+
+function planificar(){
+  if(!corriendo) return;
+  const ahora=ctx.currentTime, horizonte=ahora+1.2;
+  while(proximo<horizonte){
+    if(proximo<ahora) proximo=ahora+.05;
+    if(!activos.length) return;
+    let i;
+    if(modo==="orden"){ i=activos[turno%activos.length]; turno++ }
+    else { i=activos[Math.floor(Math.random()*activos.length)] }
+    const h=jg.hz[i];
+    const tipo = jg.tim==="mixto" ? (h[0]>=600?"campana":"cuenco") : jg.tim;
+    golpe(proximo, h[0], tipo);
+
+    const den=$("aDen").value/100;
+    if(modo==="orden"){
+      proximo += (jg.cola||1)*(10-den*6);
+    }else{
+      const base=9.5-den*7.5;
+      proximo += base*(0.5+Math.random()*1.1);
+    }
+  }
+}
+
+async function empezar(){
+  arrancarAudio(); await ctx.resume();
+  if(corriendo) return;
+  corriendo=true; menguando=false; t0=ctx.currentTime; proximo=ctx.currentTime+.3; turno=0;
+  maestro.gain.cancelScheduledValues(ctx.currentTime);
+  maestro.gain.setValueAtTime($("aVol").value/100*.5,ctx.currentTime);
+  $("pPlay").innerHTML="&#9834; Sonando"; $("pJg").textContent=jg.n;
+  if(fondoHz) encenderFondo();
+  agenda=setInterval(planificar,260);
+  reloj=setInterval(()=>{
+    const s=Math.floor(ctx.currentTime-t0);
+    if(limite){
+      const resta=limite-s;
+      $("pTiempo").textContent=Math.floor(resta/60)+":"+String(Math.max(0,resta%60)).padStart(2,"0")+" restantes";
+      if(resta<=45 && !menguando){
+        menguando=true;
+        const t=ctx.currentTime;
+        maestro.gain.cancelScheduledValues(t);
+        maestro.gain.setValueAtTime(maestro.gain.value,t);
+        maestro.gain.linearRampToValueAtTime(0.0001,t+44);
+      }
+      if(resta<=0){ parar(); return }
+    }else{
+      $("pTiempo").textContent=Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+    }
+  },1000);
+  planificar();
+}
+function parar(){
+  corriendo=false; menguando=false;
+  clearInterval(agenda); clearInterval(reloj);
+  apagarFondo();
+  if(maestro&&ctx){
+    const t=ctx.currentTime;
+    maestro.gain.cancelScheduledValues(t);
+    maestro.gain.setValueAtTime(maestro.gain.value,t);
+    maestro.gain.linearRampToValueAtTime(0.0001,t+2.5);
+    setTimeout(()=>{ if(!corriendo&&maestro){ maestro.gain.setValueAtTime($("aVol").value/100*.5,ctx.currentTime) } },3000);
+  }
+  $("pPlay").innerHTML="&#9654; Empezar";
+  $("pHz").firstChild.nodeValue="—";
+  $("pTiempo").textContent="0:00";
+}
+$("pPlay").onclick=()=>corriendo?parar():empezar();
+$("pStop").onclick=parar;
+</script>
+</body>
+</html>
