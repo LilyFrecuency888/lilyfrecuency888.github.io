@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel de membresías · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="lily.css">
+<style>
+.wrap{max-width:900px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+h1{font-size:clamp(1.9rem,5vw,2.5rem)}
+.barra{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0 14px}
+.barra input{flex:1;min-width:200px;padding:11px 14px;text-align:left;letter-spacing:0;text-transform:none}
+.filtro{display:flex;gap:6px;flex-wrap:wrap}
+.filtro button{min-height:38px;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:700 .82rem Quicksand,inherit;cursor:pointer}
+.filtro button.on{background:var(--aurora);color:var(--ink);border-color:transparent}
+.m{padding:15px 17px;margin-bottom:10px;border-radius:18px}
+.m .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.m b{font-size:1rem}
+.m .c{color:var(--muted);font-size:.86rem;word-break:break-all}
+.pin{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.76rem;font-weight:700;white-space:nowrap}
+.pin.si{background:rgba(143,240,208,.16);color:var(--menta)}
+.pin.no{background:rgba(255,217,138,.16);color:var(--oro)}
+.pin.ven{background:rgba(255,159,210,.16);color:var(--rosa)}
+.acc{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.acc button,.acc input{min-height:40px;font-size:.84rem}
+.acc button{padding:8px 15px;border-radius:999px;border:1px solid rgba(201,167,255,.4);background:rgba(201,167,255,.08);color:var(--lila2);font-weight:700;cursor:pointer}
+.acc button.off{border-color:rgba(255,159,210,.45);color:var(--rosa)}
+.acc input[type=date]{padding:7px 12px;border-radius:999px}
+.cnt{color:var(--muted);font-size:.86rem;margin-bottom:10px}
+#login[hidden],#panel[hidden]{display:none}
+#login input{margin-top:8px;padding:13px 15px}
+.err{color:var(--rosa);font-size:.88rem;min-height:20px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">&#10022; Lily Frequency</a><a href="./" class="small">&larr; Volver</a></nav>
+
+  <div id="login" hidden>
+    <h1>Panel de <em>membresías</em></h1>
+    <div class="box" style="margin-top:16px">
+      <label class="small muted" for="correo">Correo</label>
+      <input id="correo" type="email" autocomplete="email">
+      <label class="small muted" for="clave" style="display:block;margin-top:12px">Contraseña</label>
+      <input id="clave" type="password" autocomplete="current-password">
+      <div class="err" id="err"></div>
+      <div class="row" style="margin-top:14px"><button class="btn pri" id="entrar">Entrar</button></div>
+    </div>
+  </div>
+
+  <div id="panel" hidden>
+    <h1>Panel de <em>membresías</em></h1>
+    <div class="barra">
+      <input id="busca" type="text" placeholder="Buscar por nombre, correo o teléfono">
+      <div class="filtro">
+        <button data-f="todos" class="on">Todos</button>
+        <button data-f="pend">Pendientes</button>
+        <button data-f="act">Activos</button>
+        <button data-f="ven">Vencidos</button>
+      </div>
+    </div>
+    <div class="cnt" id="cnt"></div>
+    <div id="lista"></div>
+    <div class="row" style="margin-top:20px"><button class="btn" id="salir">Salir</button></div>
+  </div>
+
+  <footer>&copy; Lily Frequency</footer>
+</div>
+
+<script src="lily-config.js"></script>
+<script type="module">
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const hoy=()=>new Date().toISOString().slice(0,10);
+const masDias=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
+const C=window.LF_SUPABASE||{};
+if(!C.url||C.url.indexOf("PEGAR")===0){document.querySelector(".wrap").innerHTML='<p class="muted">Falta conectar Supabase.</p>';throw new Error("sin configurar")}
+const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
+const sb=createClient(C.url,C.anon,{auth:{persistSession:true,autoRefreshToken:true,storageKey:"lf-sesion"}});
+
+let TODOS=[],filtro="todos";
+
+async function arranca(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){ $("login").hidden=false; return }
+  const {data:a}=await sb.from("admins").select("id").eq("id",session.user.id).maybeSingle();
+  if(!a){ $("login").hidden=false; $("err").textContent="Esa cuenta no es administradora."; await sb.auth.signOut(); return }
+  $("login").hidden=true; $("panel").hidden=false;
+  await cargar();
+}
+$("entrar").onclick=async()=>{
+  $("err").textContent="Un momento…";
+  const {error}=await sb.auth.signInWithPassword({email:$("correo").value.trim().toLowerCase(),password:$("clave").value});
+  if(error){ $("err").textContent=/Invalid login/i.test(error.message)?"Correo o contraseña incorrectos.":error.message; return }
+  $("err").textContent=""; arranca();
+};
+$("salir").onclick=()=>sb.auth.signOut().then(()=>location.reload());
+
+async function cargar(){
+  const {data,error}=await sb.from("miembros").select("*").order("creado",{ascending:false});
+  if(error){ $("lista").innerHTML='<p class="muted">'+esc(error.message)+'</p>'; return }
+  TODOS=data||[]; pinta();
+}
+function estado(m){
+  if(!m.activo) return "pend";
+  if(m.vence && m.vence<hoy()) return "ven";
+  return "act";
+}
+function pinta(){
+  const q=$("busca").value.trim().toLowerCase();
+  const l=TODOS.filter(m=>{
+    if(filtro!=="todos" && estado(m)!==filtro) return false;
+    if(!q) return true;
+    return [m.nombre,m.correo,m.telefono,m.notas].some(x=>String(x||"").toLowerCase().includes(q));
+  });
+  const n=k=>TODOS.filter(m=>estado(m)===k).length;
+  $("cnt").textContent=TODOS.length+" cuentas · "+n("act")+" activas · "+n("pend")+" pendientes · "+n("ven")+" vencidas";
+  if(!l.length){ $("lista").innerHTML='<p class="muted">Nada que mostrar aquí.</p>'; return }
+  $("lista").innerHTML=l.map(m=>{
+    const e=estado(m);
+    const pin=e==="act"?'<span class="pin si">Activa'+(m.vence?' · hasta '+esc(m.vence):'')+'</span>'
+            :e==="ven"?'<span class="pin ven">Venció el '+esc(m.vence)+'</span>'
+            :'<span class="pin no">Pendiente</span>';
+    return '<div class="box m" data-id="'+esc(m.id)+'">'+
+      '<div class="top"><div><b>'+esc(m.nombre||"(sin nombre)")+'</b>'+
+        (m.plan?' <span class="small muted">· '+esc(m.plan)+'</span>':'')+
+        '<div class="c">'+esc(m.correo||"")+(m.telefono?' · '+esc(m.telefono):'')+'</div></div>'+pin+'</div>'+
+      '<div class="acc">'+
+        '<button data-a="mensual">Activar mensual</button>'+
+        '<button data-a="anual">Activar anual</button>'+
+        '<button data-a="terapeuta">Terapeuta 1 año</button>'+
+        '<input type="date" data-a="fecha" value="'+esc(m.vence||"")+'" title="Cambiar la fecha de vencimiento">'+
+        (m.activo?'<button class="off" data-a="baja">Desactivar</button>':'')+
+      '</div></div>';
+  }).join("");
+}
+$("busca").oninput=pinta;
+document.querySelectorAll(".filtro button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".filtro button").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on"); filtro=b.dataset.f; pinta();
+});
+
+async function guarda(id,campos,btn){
+  const t=btn?btn.textContent:null;
+  if(btn){ btn.disabled=true; btn.textContent="…" }
+  const {error}=await sb.from("miembros").update(campos).eq("id",id);
+  if(btn){ btn.disabled=false; btn.textContent=t }
+  if(error){ alert("No se pudo guardar: "+error.message); return }
+  await cargar();
+}
+$("lista").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-a]"); if(!b) return;
+  const id=b.closest(".m").dataset.id, a=b.dataset.a;
+  if(a==="mensual")   guarda(id,{activo:true,plan:"mensual",  vence:masDias(30)},b);
+  if(a==="anual")     guarda(id,{activo:true,plan:"anual",    vence:masDias(365)},b);
+  if(a==="terapeuta") guarda(id,{activo:true,plan:"terapeuta",vence:masDias(365)},b);
+  if(a==="baja" && confirm("¿Desactivar esta membresía?")) guarda(id,{activo:false},b);
+});
+$("lista").addEventListener("change",e=>{
+  const i=e.target.closest('input[data-a="fecha"]'); if(!i) return;
+  guarda(i.closest(".m").dataset.id,{vence:i.value||null},null);
+});
+
+arranca();
+</script>
+</body>
+</html>
