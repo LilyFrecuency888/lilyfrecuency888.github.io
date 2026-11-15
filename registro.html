@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi cuenta · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="lily.css">
+<style>
+.wrap{max-width:520px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+h1{font-size:clamp(2rem,6vw,2.6rem);margin-bottom:6px}
+.tabs{display:flex;gap:6px;background:rgba(37,30,58,.7);border:1px solid var(--line);border-radius:999px;padding:5px;margin:22px 0 18px}
+.tabs button{flex:1;min-height:42px;border:0;border-radius:999px;background:transparent;color:var(--muted);font:700 .92rem Quicksand,inherit;cursor:pointer;transition:.2s}
+.tabs button.on{background:var(--aurora);color:var(--ink)}
+label{display:block;font-size:.84rem;color:var(--muted);margin:14px 0 6px}
+input{width:100%;padding:13px 15px}
+.err{color:var(--rosa);font-size:.88rem;margin-top:12px;min-height:20px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.link{background:none;border:0;color:var(--lila2);font:600 .85rem Quicksand,inherit;cursor:pointer;padding:0;text-decoration:underline}
+#panel[hidden],#hecho[hidden]{display:none}
+.dato{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(201,167,255,.12);font-size:.93rem}
+.dato:last-child{border:0}
+.pin{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.78rem;font-weight:700}
+.pin.si{background:rgba(143,240,208,.16);color:var(--menta)}
+.pin.no{background:rgba(255,217,138,.16);color:var(--oro)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">&#10022; Lily Frequency</a><a href="./" class="small">&larr; Volver</a></nav>
+
+  <div id="panel">
+    <h1>Mi <em>cuenta</em></h1>
+    <p class="muted">Tu acceso a las zonas de miembros.</p>
+
+    <div class="tabs">
+      <button type="button" id="tEntrar" class="on">Entrar</button>
+      <button type="button" id="tCrear">Crear cuenta</button>
+    </div>
+
+    <div class="box">
+      <form id="f" autocomplete="on">
+        <div id="soloNueva" hidden>
+          <label for="nombre">Tu nombre</label>
+          <input id="nombre" type="text" autocomplete="name" placeholder="Como quieres que te llame">
+          <label for="tel">Tu WhatsApp</label>
+          <input id="tel" type="tel" autocomplete="tel" placeholder="+502 0000 0000">
+        </div>
+        <label for="correo">Correo</label>
+        <input id="correo" type="email" autocomplete="email" required placeholder="tucorreo@ejemplo.com">
+        <label for="clave">Contraseña</label>
+        <input id="clave" type="password" autocomplete="current-password" required placeholder="Mínimo 8 caracteres">
+        <div class="err" id="err"></div>
+        <div class="row">
+          <button class="btn pri" id="enviar" type="submit">Entrar</button>
+        </div>
+      </form>
+      <div class="row" style="margin-top:14px">
+        <button type="button" class="link" id="olvide">Olvidé mi contraseña</button>
+      </div>
+    </div>
+
+    <p class="muted small" style="margin-top:18px">
+      Al crear tu cuenta aceptas los <a href="terminos.html">términos</a> y la
+      <a href="privacidad.html">política de privacidad</a>.
+    </p>
+  </div>
+
+  <div id="hecho" hidden></div>
+
+  <footer>&copy; Lily Frequency &middot; <a href="terminos.html">Términos</a> &middot; <a href="privacidad.html">Privacidad</a></footer>
+</div>
+
+<script src="lily-config.js"></script>
+<script type="module">
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const P=new URLSearchParams(location.search);
+const VOLVER=(P.get("volver")||"miembros.html").replace(/[^a-z0-9._-]/gi,"");
+const WA=window.LF_WA||"50234819870";
+const C=window.LF_SUPABASE||{};
+const hoy=()=>new Date().toISOString().slice(0,10);
+
+if(!C.url||C.url.indexOf("PEGAR")===0){
+  $("panel").innerHTML='<h1>Mi <em>cuenta</em></h1><div class="box"><p class="muted">El registro todavía no está conectado. Vuelve en un rato.</p></div>';
+  throw new Error("sin configurar");
+}
+const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
+const sb=createClient(C.url,C.anon,{auth:{persistSession:true,autoRefreshToken:true,storageKey:"lf-sesion"}});
+
+let nueva=P.get("nueva")==="1";
+function modo(n){
+  nueva=n;
+  $("tCrear").classList.toggle("on",n); $("tEntrar").classList.toggle("on",!n);
+  $("soloNueva").hidden=!n;
+  $("enviar").textContent=n?"Crear mi cuenta":"Entrar";
+  $("clave").setAttribute("autocomplete",n?"new-password":"current-password");
+  $("err").textContent="";
+}
+$("tCrear").onclick=()=>modo(true);
+$("tEntrar").onclick=()=>modo(false);
+modo(nueva);
+
+function tarjeta(h){ $("panel").hidden=true; $("hecho").hidden=false; $("hecho").innerHTML=h; }
+
+function pendiente(correo,m){
+  const vencida=m&&m.activo&&m.vence&&m.vence<hoy();
+  const msj=encodeURIComponent((vencida?"Hola, quiero renovar mi membresía. Mi correo es: ":"Hola, ya pagué mi membresía. Mi correo es: ")+correo);
+  tarjeta(
+    '<h1>'+(vencida?'Tu membresía <em>venció</em>':'Cuenta <em>creada</em>')+'</h1>'+
+    '<div class="box" style="margin-top:16px">'+
+      '<div class="dato"><span>Correo</span><b>'+esc(correo)+'</b></div>'+
+      '<div class="dato"><span>Estado</span><span class="pin no">'+(vencida?'Vencida el '+esc(m.vence):'Pendiente de activación')+'</span></div>'+
+      '<p class="muted" style="margin-top:14px">'+(vencida
+        ? 'Renueva tu plan y te la reactivo.'
+        : 'Ya quedó guardada tu cuenta. Falta el pago: cuando lo hagas, avísame y te la activo.')+'</p>'+
+      '<div class="row">'+
+        '<a class="btn pri" href="pagar.html">Ver los planes</a>'+
+        '<a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/'+WA+'?text='+msj+'">Avisarme por WhatsApp</a>'+
+      '</div>'+
+      '<div class="row"><button class="link" id="salir">Salir de esta cuenta</button></div>'+
+    '</div>');
+  $("salir").onclick=()=>sb.auth.signOut().then(()=>location.href="registro.html");
+}
+
+async function despues(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session) return;
+  const correo=session.user.email||"";
+  const {data:m}=await sb.from("miembros").select("activo,vence,plan,nombre").eq("id",session.user.id).maybeSingle();
+  const alDia=m&&m.activo&&(!m.vence||m.vence>=hoy());
+  if(alDia){ location.href=VOLVER; return; }
+  pendiente(correo,m);
+}
+
+$("f").onsubmit=async e=>{
+  e.preventDefault();
+  const correo=$("correo").value.trim().toLowerCase(), clave=$("clave").value;
+  if(clave.length<8){ $("err").textContent="La contraseña necesita al menos 8 caracteres."; return }
+  $("enviar").disabled=true; $("err").textContent="Un momento…";
+  try{
+    if(nueva){
+      const {error}=await sb.auth.signUp({email:correo,password:clave,options:{data:{
+        nombre:$("nombre").value.trim(), telefono:$("tel").value.trim()}}});
+      if(error) throw error;
+      const {error:e2}=await sb.auth.signInWithPassword({email:correo,password:clave});
+      if(e2){ pendiente(correo,null); return }
+    }else{
+      const {error}=await sb.auth.signInWithPassword({email:correo,password:clave});
+      if(error) throw error;
+    }
+    $("err").textContent="";
+    await despues();
+  }catch(ex){
+    const t=String(ex.message||ex);
+    $("err").textContent =
+      /already registered|already been/i.test(t) ? "Ese correo ya tiene cuenta. Cambia a «Entrar»." :
+      /Invalid login/i.test(t)                   ? "Correo o contraseña incorrectos." :
+      /Email not confirmed/i.test(t)             ? "Falta confirmar tu correo. Revisa tu bandeja." :
+      /rate limit|too many/i.test(t)             ? "Demasiados intentos. Espera un momento." :
+      t;
+  }finally{ $("enviar").disabled=false }
+};
+
+$("olvide").onclick=async()=>{
+  const correo=$("correo").value.trim().toLowerCase();
+  if(!correo){ $("err").textContent="Escribe tu correo arriba y vuelve a darle."; return }
+  const {error}=await sb.auth.resetPasswordForEmail(correo,{redirectTo:location.origin+"/clave.html"});
+  $("err").innerHTML = error ? esc(error.message)
+    : '<span style="color:var(--menta)">Te mandé un correo para cambiar tu contraseña.</span>';
+};
+
+despues();
+</script>
+</body>
+</html>
