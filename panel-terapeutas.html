@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel de terapeutas · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<!--
+  Lily Frequency · Panel de terapeutas
+  El catálogo y las reglas no van en esta página: se descargan de Supabase
+  solo para licencias de terapeuta activas (tabla contenido_terapeuta).
+  Los datos de los consultantes y la lectura de pulso no salen del navegador.
+-->
+<style>
+:root{--bg:#120f1a;--s2:#251e34;--surface:#1d1730;--line:#3a2f52;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc;--ink:#2a1640;
+  --panel:rgba(37,30,58,.55);--suave:#bfb2dc;--borde:#3a2f52;--alerta:#ff9fd2;--aviso:#ffd98a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(950px 680px at 50% -8%,#3a2563,var(--bg) 62%) fixed,var(--bg);line-height:1.6;min-height:100vh}
+a{color:var(--lila2)}
+.wrap{max-width:900px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.45rem;font-weight:600;text-decoration:none;color:var(--txt)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2rem,5.5vw,2.8rem);line-height:1.1;margin-bottom:8px}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.55rem;margin:0 0 6px}
+h3{font-size:1rem;margin:20px 0 8px;color:var(--lila2)}
+.muted{color:var(--muted)}.small{font-size:.86rem}
+.box{background:rgba(29,23,48,.82);border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;border:1.5px solid rgba(201,167,255,.45);background:transparent;color:var(--lila2);font:700 .92rem Quicksand,inherit;cursor:pointer;text-decoration:none}
+.btn.pri{background:linear-gradient(90deg,var(--lila),var(--rosa));border:0;color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+#area[hidden],[hidden]{display:none!important}
+.oculto{display:none!important}
+p.ayuda{color:var(--muted);font-size:.9rem;margin:0 0 14px}
+.paso-num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--lila),var(--rosa));color:var(--ink);font:700 .85rem Quicksand;margin-right:10px;vertical-align:4px}
+.opc-h{font:400 .82rem Quicksand;color:var(--muted);margin-left:8px}
+.aviso-previa{font-size:.85rem;color:var(--oro);border:1px solid rgba(255,217,138,.4);border-radius:14px;padding:8px 14px;margin-bottom:12px}
+
+.rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+label.campo{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.9rem}
+label.campo span.opc{font-weight:400;color:var(--muted);font-size:.8rem}
+input[type=text],input[type=email],input[type=date],input[type=time],input[type=number],select,textarea{
+  width:100%;padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(37,30,58,.9);color:var(--txt);font:600 .95rem Quicksand,inherit;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--lila);box-shadow:0 0 0 3px rgba(201,167,255,.2)}
+input:disabled{opacity:.45}
+input[type=date],input[type=time]{color-scheme:dark}
+textarea{min-height:80px;resize:vertical}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;cursor:pointer}
+.check input{margin-top:4px;accent-color:var(--lila);width:18px;height:18px;flex:none}
+.acciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;justify-content:flex-end;align-items:center}
+.error{color:var(--rosa);font-size:.9rem;font-weight:700}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:inline-block;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(37,30,58,.7);cursor:pointer;font-size:.9rem;color:var(--muted)}
+.chip input:checked+span{background:rgba(255,159,210,.18);border-color:var(--rosa);color:#ffd3ea;font-weight:700}
+.chip input:focus-visible+span{outline:2px solid var(--lila)}
+.grupo-temas h4{margin:14px 0 8px;font-size:.85rem;color:var(--muted);font-weight:600}
+.caja-alerta{border:1px solid rgba(255,159,210,.45);background:rgba(255,159,210,.07);border-radius:16px;padding:14px 16px;margin-top:20px}
+.caja-alerta h3{color:var(--rosa);margin-top:0}
+.escalas{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.escalas label{display:flex;flex-direction:column;justify-content:flex-end;gap:5px;font-size:.86rem;font-weight:700}
+.bien{display:grid;grid-template-columns:1fr 250px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line);font-size:.92rem}
+.bien:last-child{border-bottom:0}
+details.cuest{border:1px dashed rgba(201,167,255,.45);border-radius:16px;padding:12px 16px;margin-top:18px}
+details.cuest summary{cursor:pointer;font-weight:700;color:var(--lila2)}
+.preg{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.92rem}
+.preg:last-child{border-bottom:0}
+.likert{display:flex;gap:6px}
+.likert label{cursor:pointer}
+.likert input{position:absolute;opacity:0;pointer-events:none}
+.likert span{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:.82rem;font-weight:700;color:var(--muted);background:rgba(37,30,58,.7)}
+.likert input:checked+span{background:linear-gradient(135deg,var(--lila),var(--rosa));border-color:transparent;color:var(--ink)}
+.likert input:focus-visible+span{outline:2px solid var(--lila)}
+.escala{display:flex;justify-content:flex-end;gap:14px;font-size:.78rem;color:var(--muted);margin:8px 0 2px}
+.progreso{height:8px;background:rgba(201,167,255,.15);border-radius:99px;overflow:hidden;margin:10px 0}
+.progreso div{height:100%;width:0;background:linear-gradient(90deg,var(--lila),var(--rosa));transition:width .3s}
+
+/* pulso */
+.pul-zona{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;margin-top:8px}
+#pul-video{width:64px;height:64px;border-radius:50%;object-fit:cover;background:#000;border:2px solid var(--line)}
+#pul-onda{width:100%;height:90px;border-radius:14px;background:rgba(18,15,26,.7);border:1px solid var(--line)}
+.pul-dato{text-align:center;min-width:80px}
+.pul-dato span{display:block;font-family:"Cormorant Garamond",serif;font-size:2.4rem;line-height:1;color:var(--rosa)}
+.pul-dato small{color:var(--muted)}
+ol.pul-pasos{margin:0 0 10px 20px;color:var(--muted);font-size:.9rem}
+.pul-res{margin-top:12px;border-radius:16px;padding:12px 16px;background:rgba(143,240,208,.08);border:1px solid rgba(143,240,208,.4)}
+.latido{animation:lat .5s ease}
+@keyframes lat{50%{transform:scale(1.12)}}
+
+/* resultado */
+.resumen{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 16px}
+.pill{background:rgba(201,167,255,.14);color:var(--lila2);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.88rem}
+.perfil-lista{list-style:none;display:grid;gap:10px}
+.perfil-lista li{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.perfil-lista strong{color:var(--lila2);display:block;margin-bottom:2px}
+.aviso-banda{border-radius:16px;padding:12px 16px;margin-bottom:14px;font-size:.92rem}
+.aviso-banda.rojo{background:rgba(255,159,210,.1);color:#ffd3ea;border:1px solid var(--rosa)}
+.aviso-banda.ambar{background:rgba(255,217,138,.08);color:var(--oro);border:1px solid rgba(255,217,138,.5)}
+.fase{border:1px solid var(--line);border-radius:20px;margin-bottom:14px;overflow:hidden;background:rgba(29,23,48,.7)}
+.fase-cab{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;padding:12px 16px;background:linear-gradient(120deg,rgba(201,167,255,.16),rgba(255,159,210,.1))}
+.fase-cab h3{margin:0;font-size:1rem;color:var(--txt)}
+.fase-cab .fechas{font-size:.88rem;font-weight:700;color:var(--oro)}
+.fase-cab .frec{font-size:.85rem;color:var(--muted);width:100%}
+.ajustes{display:flex;flex-wrap:wrap;gap:10px 16px;padding:10px 16px;border-bottom:1px solid var(--line);font-size:.85rem}
+.ajustes label{display:flex;align-items:center;gap:6px}
+.ajustes input{width:66px;padding:5px 8px}
+table.progs{width:100%;border-collapse:collapse;font-size:.9rem}
+table.progs th{text-align:left;font-size:.76rem;color:var(--muted);font-weight:700;padding:8px 10px;border-bottom:1px solid var(--line)}
+table.progs td{padding:8px 10px;border-bottom:1px solid rgba(58,47,82,.6);vertical-align:top}
+table.progs tr.excluido td{opacity:.4}
+table.progs tr.excluido td:first-child{opacity:1}
+table.progs input[type=checkbox]{accent-color:var(--lila);width:17px;height:17px}
+table.progs select{padding:5px 8px;font-size:.85rem}
+.porque{font-size:.78rem;color:var(--muted)}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:1px}
+.tag.web{background:rgba(201,167,255,.18);color:var(--lila2)} .tag.app{background:rgba(143,240,208,.16);color:var(--menta)}
+.ses{font-weight:700;color:var(--rosa);white-space:nowrap}
+.agregar{display:flex;gap:8px;padding:10px 12px}
+.agregar select{flex:1}
+.vacio{padding:12px 16px;color:var(--muted);font-size:.88rem}
+table.seg{width:100%;border-collapse:collapse;font-size:.88rem}
+table.seg th,table.seg td{padding:7px 8px;border-bottom:1px solid rgba(58,47,82,.6);text-align:center}
+table.seg th:first-child,table.seg td:first-child{text-align:left}
+table.seg th{font-size:.76rem;color:var(--muted)}
+table.seg input{width:60px;padding:5px 6px;text-align:center}
+.mejor{color:var(--menta);font-weight:700} .peor{color:var(--rosa);font-weight:700}
+.clausula{font-size:.86rem;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:16px;background:var(--panel)}
+.firmas{display:none;grid-template-columns:1fr 1fr;gap:40px;margin-top:36px;font-size:.85rem}
+.firmas div{border-top:1px solid #333;padding-top:6px}
+.pie-legal{font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:12px;margin-top:10px}
+.solo-imp{display:none}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
+
+@media (max-width:640px){
+  .preg,.bien{grid-template-columns:1fr}
+  .pul-zona{grid-template-columns:auto 1fr}
+  .pul-zona canvas{grid-column:1/-1;order:3}
+  table.progs th:nth-child(3),table.progs td:nth-child(3){display:none}
+}
+@media print{
+  :root{--txt:#2b2140;--muted:#6b5f80;--line:#d9cdee;--lila2:#6a3fb0;--rosa:#b0306f;--oro:#8a5b00;--menta:#1f7a57;--panel:#faf6ff}
+  body{background:#fff!important;color:#2b2140}
+  body::before{display:none!important}
+  nav,footer,.no-imp,.acciones,.agregar,.ajustes,#formulario,#lf-barra,.aviso-previa{display:none!important}
+  .solo-imp{display:block}
+  .firmas{display:grid!important}
+  .wrap{padding:0;max-width:none}
+  .box{background:#fff!important;border:0!important;box-shadow:none!important;padding:0!important}
+  .box::after{display:none!important}
+  .fase{background:#fff;break-inside:avoid}
+  .fase-cab{background:#f3ecfc}
+  .clausula,.firmas,table.seg{break-inside:avoid}
+  table.progs tr.excluido{display:none}
+  table.progs td:first-child,table.progs th:first-child,table.progs td:last-child,table.progs th:last-child{display:none}
+  table.seg input{border:1px solid #999;background:#fff;color:#000}
+}
+</style>
+<link rel="stylesheet" href="lily.css">
+<script src="lily-config.js"></script>
+<script src="lily-acceso.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">✦ Lily Frequency</a><a href="miembros.html" class="small">Zona de miembros →</a></nav>
+
+  <div id="gate">
+    <h1>Panel de <em>terapeutas</em></h1>
+    <p class="muted">Perfil y protocolo de frecuencias por fases para tus consultantes. Exclusivo para licencias de terapeuta activas.</p>
+    <div class="box">
+      <p class="muted">Entra con tu cuenta para usar el panel.</p>
+      <div class="row"><a class="btn pri" href="registro.html?volver=panel-terapeutas.html">Entrar a mi cuenta</a><a class="btn" href="terapeutas.html">Ver licencias</a></div>
+    </div>
+  </div>
+
+  <div id="area" hidden>
+    <h1 class="no-imp">Panel de <em>terapeutas</em></h1>
+    <div class="aviso-previa" id="aviso-previa" hidden>Vista previa: en la página web el panel se abre solo para licencias de terapeuta activas.</div>
+
+    <div class="box" id="sin-licencia" hidden>
+      <h2>Tu membresía no incluye el panel</h2>
+      <p class="muted">El panel de terapeutas es parte de la licencia para terapeutas. Si ya la pagaste, avísame y la activo.</p>
+      <div class="row"><a class="btn pri" href="terapeutas.html">Ver licencias</a><a class="btn" target="_blank" rel="noopener" href="https://wa.me/50234819870?text=Hola%2C%20quiero%20activar%20mi%20licencia%20de%20terapeuta">Avisar por WhatsApp</a></div>
+    </div>
+
+    <div id="panel" hidden>
+      <div id="formulario">
+        <section class="box">
+          <h2><span class="paso-num">1</span>Datos de nacimiento</h2>
+          <p class="ayuda">Estos datos no salen de este navegador.</p>
+          <div class="rejilla">
+            <label class="campo" style="grid-column:1/-1">Nombre completo de nacimiento<input type="text" id="f-nombre" placeholder="Nombres y apellidos como en su acta de nacimiento"></label>
+            <label class="campo">Fecha de nacimiento<input type="date" id="f-fecha"></label>
+            <label class="campo">Hora de nacimiento<input type="time" id="f-hora"></label>
+            <label class="check" style="align-self:end;padding-bottom:12px"><input type="checkbox" id="f-sin-hora"> No sabe la hora</label>
+            <label class="campo">Lugar de nacimiento<select id="f-lugar"></select></label>
+          </div>
+          <div class="rejilla oculto" id="lugar-manual" style="margin-top:14px">
+            <label class="campo">Latitud <span class="opc">Norte +, Sur −</span><input type="number" step="0.0001" id="f-lat"></label>
+            <label class="campo">Longitud <span class="opc">Este +, Oeste −</span><input type="number" step="0.0001" id="f-lon"></label>
+            <label class="campo">Diferencia con UTC al nacer <span class="opc">Ej. Guatemala −6</span><input type="number" step="0.5" id="f-utc"></label>
+          </div>
+        </section>
+
+        <section class="box">
+          <h2><span class="paso-num">2</span>Lo que trae y lo que detectas</h2>
+          <label class="campo">Motivo de consulta<textarea id="f-motivo" placeholder="Lo que la persona cuenta con sus palabras"></textarea></label>
+          <div id="temas"></div>
+          <div class="rejilla" style="margin-top:14px">
+            <label class="campo" style="grid-column:1/-1">Lo que detectas en sesión <span class="opc">Sale en el perfil</span><textarea id="f-notas"></textarea></label>
+            <label class="campo">¿Está en tratamiento médico o psicológico?
+              <select id="f-tratamiento"><option value="">Elegir…</option><option>Sí</option><option>No</option><option>No sabe</option></select></label>
+          </div>
+          <h3>Cómo se siente hoy <span class="opc-h">0 = nada · 10 = muchísimo</span></h3>
+          <div class="escalas" id="escalas"></div>
+          <h3>Bienestar de las últimas dos semanas</h3>
+          <p class="ayuda">Recomendado: ayuda a saber si conviene derivar con un profesional.</p>
+          <div id="bienestar"></div>
+          <details class="cuest">
+            <summary>Cuestionario de centros de energía (opcional, 21 frases)</summary>
+            <p class="ayuda" style="margin-top:8px">La persona responde qué tanto se identifica con cada frase.</p>
+            <div class="escala"><span>1 = nada</span><span>3 = a veces</span><span>5 = totalmente</span></div>
+            <div id="centros-preg"></div>
+          </details>
+          <details class="cuest">
+            <summary>Cuestionario de personalidad (opcional, 36 frases)</summary>
+            <p class="ayuda" style="margin-top:8px">La persona responde qué tanto se identifica con cada frase.</p>
+            <div class="escala"><span>1 = nada</span><span>3 = a veces</span><span>5 = totalmente</span></div>
+            <div id="en-preguntas"></div>
+          </details>
+          <div class="caja-alerta">
+            <h3>Señales de alerta</h3>
+            <p class="ayuda">Si alguna aplica, el protocolo saldrá marcado para derivar primero con un profesional de salud.</p>
+            <div id="alertas" style="display:flex;flex-direction:column;gap:8px"></div>
+          </div>
+        </section>
+
+        <section class="box">
+          <h2><span class="paso-num">3</span>Lectura de pulso <span class="opc-h">opcional · con la cámara del celular</span></h2>
+          <p class="ayuda">Mide el ritmo del corazón y su variabilidad con la yema del dedo sobre la cámara, igual que un oxímetro de dedo. Es una estimación de bienestar, no una medición médica.</p>
+          <ol class="pul-pasos">
+            <li>Usa el celular, con la persona sentada y en calma.</li>
+            <li>Que cubra por completo la cámara trasera y el flash con la yema del dedo índice, sin apretar.</li>
+            <li>Sin moverse ni hablar durante 45 segundos. Si el flash no enciende, háganlo cerca de una luz.</li>
+          </ol>
+          <div class="pul-zona">
+            <video id="pul-video" playsinline muted></video>
+            <canvas id="pul-onda" width="600" height="120" aria-label="Onda del pulso"></canvas>
+            <div class="pul-dato"><span id="pul-bpm">—</span><small>latidos/min</small></div>
+          </div>
+          <div class="progreso"><div id="pul-prog"></div></div>
+          <p class="ayuda" id="pul-estado" role="status"></p>
+          <div class="acciones" style="margin-top:6px">
+            <button class="btn" type="button" id="pul-det" hidden>Detener</button>
+            <button class="btn pri" type="button" id="pul-ini">Iniciar lectura</button>
+          </div>
+          <div id="pul-res"></div>
+        </section>
+
+        <section class="box">
+          <h2><span class="paso-num">4</span>Generar</h2>
+          <div class="rejilla" style="max-width:520px">
+            <label class="campo">Fecha de inicio del protocolo<input type="date" id="f-inicio"></label>
+          </div>
+          <label class="check" style="margin-top:16px"><input type="checkbox" id="f-consent"> <span>La persona participa de forma <strong>voluntaria</strong> y <strong>otorga su permiso</strong> para usar sus datos en la elaboración de su perfil y protocolo. Fue informada de que este acompañamiento <strong>no diagnostica ni sustituye la atención médica o psicológica</strong>, y que es un <strong>soporte y apoyo secundario y complementario a su tratamiento profesional médico</strong>, el cual no debe suspender ni modificar.</span></label>
+          <div class="acciones">
+            <span class="error" id="err" role="alert"></span>
+            <label class="btn" style="display:inline-flex;align-items:center">📂 Abrir ficha guardada<input type="file" id="in-abrir" accept=".json,application/json" class="oculto"></label>
+            <button class="btn pri" type="button" id="btn-generar">Generar perfil y protocolo ✦</button>
+          </div>
+        </section>
+      </div>
+
+      <section class="box oculto" id="resultado">
+        <div class="solo-imp" style="margin-bottom:10px"><strong>Lily Frequency</strong> · Perfil y protocolo de frecuencias</div>
+        <h2 id="r-titulo"></h2>
+        <div class="resumen" id="r-resumen"></div>
+        <div id="r-avisos"></div>
+        <h3>Perfil</h3>
+        <ul class="perfil-lista" id="r-perfil"></ul>
+        <h3>Programas por fase</h3>
+        <p class="ayuda no-imp">Las casillas marcadas son las que entran. Puedes quitar, agregar o mover programas, y cambiar días y veces de cada fase.</p>
+        <div id="r-fases"></div>
+        <h3>Seguimiento</h3>
+        <p class="ayuda no-imp">Al terminar cada fase, anota cómo se siente la persona (0 a 10). La fila Cambio compara con el inicio.</p>
+        <div id="r-seg"></div>
+        <div class="clausula"><strong>Consentimiento.</strong> Declaro que participo de forma voluntaria y otorgo mi permiso para que mis datos se usen en la elaboración de este perfil y protocolo. Entiendo que este acompañamiento no diagnostica enfermedades, no sustituye la atención médica ni psicológica, y es un soporte y apoyo secundario y complementario a cualquier tratamiento profesional médico, que no debo suspender ni modificar.</div>
+        <div class="firmas"><div>Firma del consultante · Fecha</div><div>Firma del terapeuta</div></div>
+        <p class="pie-legal">Los programas de sonido son de apoyo al bienestar. No reemplazan medicamentos, tratamientos médicos o psicológicos ni la alimentación. La lectura de pulso con cámara es aproximada.</p>
+        <div class="acciones">
+          <span class="error" id="msg-res" role="status"></span>
+          <button class="btn" type="button" id="btn-editar">← Editar datos</button>
+          <button class="btn" type="button" id="btn-guardar">Guardar ficha (.json)</button>
+          <button class="btn" type="button" id="btn-nueva">Nueva ficha</button>
+          <button class="btn pri" type="button" id="btn-imprimir">Imprimir / PDF</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="row no-imp" style="margin-top:22px"><button class="btn" id="out">Cerrar sesión</button></div>
+  </div>
+
+  <footer>© Lily Frequency · <a href="terminos.html">Términos</a> · <a href="privacidad.html">Privacidad</a> · <a href="miembros.html">Miembros</a></footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js" integrity="sha384-LTVHvxfbG3XHla4Lu0C0s9U18B2sBOuzJIeOoVHm2t05SOOORvMbBMEVjXrGau9g" crossorigin="anonymous"></script>
+<script>if(!window.Astronomy)document.write('<script src="https://unpkg.com/astronomy-engine@2.1.19/astronomy.browser.min.js"><\/script>')</script>
+<script>
+"use strict";
+const CONFIG = { FORMULA_TIKUN: "fecha", MAX_POR_FASE: 6, PULSO_SEGUNDOS: 45 };
+const DATOS_EMBEBIDOS = /*__DATOS__*/null;
+const VISTA_PREVIA = /*__PREVIA__*/false;
+
+/* ==================== UTILIDADES ==================== */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const hoyISO = () => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); };
+let DATOS = null, INDICE = {}, ARMADO = false;
+
+function prepararDatos(d) {
+  DATOS = d; INDICE = {};
+  for (const [sec, progs] of Object.entries(d.catalogo))
+    for (const [nombre, web, ref] of progs) INDICE[nombre] = { seccion: sec, codigo: sec.slice(0, 2), web: !!web, ref: ref || "" };
+}
+function abrirPanel(d) {
+  prepararDatos(d);
+  if (!ARMADO) { armarPanel(); ARMADO = true; }
+  $("#gate").hidden = true; $("#area").hidden = false; $("#panel").hidden = false;
+}
+
+/* ==================== ACCESO ====================
+   lily-acceso.js revisa la cuenta y la membresía y luego llama a enter().
+   El contenido solo lo entrega Supabase a licencias de terapeuta activas. */
+window.enter = async function () {
+  const sb = window.LF_SB;
+  $("#gate").hidden = true; $("#area").hidden = false;
+  if (!sb) { $("#sin-licencia").hidden = false; return true; }
+  const { data, error } = await sb.from("contenido_terapeuta").select("datos").eq("id", "v1").maybeSingle();
+  if (error || !data) { $("#sin-licencia").hidden = false; return true; }
+  abrirPanel(data.datos);
+  return true;
+};
+$("#out").addEventListener("click", () => { if (VISTA_PREVIA) location.reload(); });
+
+/* ==================== LUGARES ==================== */
+const LUGARES = [
+  ["Ciudad de Guatemala, GT",14.6349,-90.5069,"America/Guatemala"],["Quetzaltenango, GT",14.8347,-91.5180,"America/Guatemala"],
+  ["Antigua Guatemala, GT",14.5586,-90.7295,"America/Guatemala"],["Escuintla, GT",14.3050,-90.7850,"America/Guatemala"],
+  ["Cobán, GT",15.4703,-90.3708,"America/Guatemala"],["Puerto Barrios, GT",15.7278,-88.5944,"America/Guatemala"],
+  ["Huehuetenango, GT",15.3197,-91.4709,"America/Guatemala"],["San Salvador, SV",13.6929,-89.2182,"America/El_Salvador"],
+  ["Santa Ana, SV",13.9942,-89.5597,"America/El_Salvador"],["San Miguel, SV",13.4833,-88.1833,"America/El_Salvador"],
+  ["Tegucigalpa, HN",14.0723,-87.1921,"America/Tegucigalpa"],["San Pedro Sula, HN",15.5050,-88.0250,"America/Tegucigalpa"],
+  ["Managua, NI",12.1140,-86.2362,"America/Managua"],["León, NI",12.4379,-86.8780,"America/Managua"],
+  ["San José, CR",9.9281,-84.0907,"America/Costa_Rica"],["Ciudad de Panamá, PA",8.9824,-79.5199,"America/Panama"],
+  ["Belice, BZ",17.5046,-88.1962,"America/Belize"],["Ciudad de México, MX",19.4326,-99.1332,"America/Mexico_City"],
+  ["Guadalajara, MX",20.6597,-103.3496,"America/Mexico_City"],["Monterrey, MX",25.6866,-100.3161,"America/Monterrey"],
+  ["Tapachula, MX",14.9030,-92.2575,"America/Mexico_City"],["Cancún, MX",21.1619,-86.8515,"America/Cancun"],
+  ["Bogotá, CO",4.7110,-74.0721,"America/Bogota"],["Lima, PE",-12.0464,-77.0428,"America/Lima"],
+  ["Santiago, CL",-33.4489,-70.6693,"America/Santiago"],["Buenos Aires, AR",-34.6037,-58.3816,"America/Argentina/Buenos_Aires"],
+  ["Caracas, VE",10.4806,-66.9036,"America/Caracas"],["Santo Domingo, DO",18.4861,-69.9312,"America/Santo_Domingo"],
+  ["Los Ángeles, EE. UU.",34.0522,-118.2437,"America/Los_Angeles"],["Houston, EE. UU.",29.7604,-95.3698,"America/Chicago"],
+  ["Nueva York, EE. UU.",40.7128,-74.0060,"America/New_York"],["Miami, EE. UU.",25.7617,-80.1918,"America/New_York"],
+  ["Madrid, ES",40.4168,-3.7038,"Europe/Madrid"]
+];
+
+/* ==================== CÁLCULOS INTERNOS ==================== */
+const VALORES = {A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7};
+const VOCALES = new Set(["A","E","I","O","U"]);
+const limpiarNombre = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/[^A-Z]/g, "");
+const sumaDigitos = n => String(n).split("").reduce((a, d) => a + Number(d), 0);
+function reducir(n, maestros = true) { while (n > 9 && !(maestros && (n === 11 || n === 22 || n === 33))) n = sumaDigitos(n); return n; }
+function reducirA22(n) { while (n > 22) n = sumaDigitos(n); return n; }
+function calcNumeros(nombre, fechaISO) {
+  const [y, m, d] = fechaISO.split("-").map(Number);
+  const letras = limpiarNombre(nombre).split("");
+  const suma = filtro => letras.filter(filtro).reduce((a, l) => a + VALORES[l], 0);
+  return {
+    a: reducir(reducir(d) + reducir(m) + reducir(y)),
+    b: reducir(suma(l => VOCALES.has(l))),
+    c: reducir(suma(() => true)),
+    t: CONFIG.FORMULA_TIKUN === "diaMes" ? reducirA22(d + m) : reducirA22(sumaDigitos(d) + sumaDigitos(m) + sumaDigitos(y))
+  };
+}
+const ELEMENTO = ["Fuego","Tierra","Aire","Agua"];
+const REGENTE = ["Marte","Venus","Mercurio","Luna","Sol","Mercurio","Venus","Plutón","Júpiter","Saturno","Urano","Neptuno"];
+const signoDe = lon => { const x = ((lon % 360) + 360) % 360, i = Math.floor(x / 30); return { i, grado: x % 30, elemento: ELEMENTO[i % 4] }; };
+function offsetZona(fechaUTC, zona) {
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: zona, hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" })
+    .formatToParts(fechaUTC).map(x => [x.type, x.value]));
+  return (Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute, +p.second) - fechaUTC.getTime()) / 60000;
+}
+function localAUTC(y, mo, d, h, mi, zona, utcManual) {
+  const base = Date.UTC(y, mo - 1, d, h, mi);
+  if (zona == null) return new Date(base - utcManual * 3600000);
+  let t = base;
+  for (let i = 0; i < 3; i++) t = base - offsetZona(new Date(t), zona) * 60000;
+  return new Date(t);
+}
+function calcCielo(f) {
+  const A = window.Astronomy;
+  const [y, m, d] = f.fecha.split("-").map(Number);
+  const [h, mi] = (f.sinHora ? "12:00" : f.hora).split(":").map(Number);
+  const t = A.MakeTime(localAUTC(y, m, d, h, mi, f.zona, f.utc));
+  const pos = { s: A.SunPosition(t).elon, l: A.EclipticGeoMoon(t).lon };
+  const otros = { me: "Mercury", ve: "Venus", ma: "Mars", ju: "Jupiter", sa: "Saturn" };
+  for (const [k, en] of Object.entries(otros)) pos[k] = A.Ecliptic(A.GeoVector(en, t, true)).elon;
+  const peso = { s: 2, l: 2, me: 1, ve: 1, ma: 1, ju: 1, sa: 1 };
+  const el = { Fuego: 0, Tierra: 0, Aire: 0, Agua: 0 };
+  for (const k of Object.keys(peso)) el[signoDe(pos[k]).elemento] += peso[k];
+  if (!f.sinHora) {
+    const ramc = ((A.SiderealTime(t) * 15 + f.lon) % 360 + 360) % 360;
+    const eps = 23.4392911 * Math.PI / 180, r = ramc * Math.PI / 180, fi = f.lat * Math.PI / 180;
+    el[signoDe(Math.atan2(Math.cos(r), -(Math.sin(r) * Math.cos(eps) + Math.tan(fi) * Math.sin(eps))) * 180 / Math.PI).elemento] += 2;
+  }
+  return { el, lunaEl: signoDe(pos.l).elemento, regente: REGENTE[signoDe(pos.s).i] };
+}
+function calcNacimiento(fechaISO) {
+  const [y, m, d] = fechaISO.split("-").map(Number);
+  const k = Math.round((Date.UTC(y, m - 1, d) - Date.UTC(2012, 11, 21)) / 86400000);
+  return (((19 + k) % 20) + 20) % 20;
+}
+function centrosDebiles(resp) {
+  return DATOS.centros.map((c, ci) => ({ ...c, puntos: resp[ci].every(v => v > 0) ? resp[ci].reduce((a, b) => a + b, 0) : 0 }))
+    .filter(c => c.puntos >= 10).sort((a, b) => b.puntos - a.puntos).slice(0, 2);
+}
+function calcBienestar(resp) { return resp.every(v => v !== null) ? resp.reduce((a, b) => a + b, 0) * 4 : null; }
+
+/* ==================== CUESTIONARIO DE PERSONALIDAD ==================== */
+const FRASES = [
+  [1,"Me cuesta descansar si algo no quedó bien hecho."],[2,"Me doy cuenta de lo que otros necesitan antes de que lo pidan."],[3,"Me importa mucho lograr mis metas y que se note."],
+  [4,"Siento que soy diferente y que pocas personas me entienden de verdad."],[5,"Necesito tiempo a solas para recargarme."],[6,"Suelo anticipar lo que podría salir mal."],
+  [7,"Me aburro rápido y busco experiencias nuevas."],[8,"Digo las cosas de frente aunque incomoden."],[9,"Evito los conflictos aunque tenga que ceder."],
+  [1,"Noto enseguida los errores, los míos y los de los demás."],[2,"Me cuesta decir que no cuando alguien me pide ayuda."],[3,"Me adapto rápido a lo que se espera de mí en cada lugar."],
+  [4,"Vivo mis emociones con mucha intensidad."],[5,"Prefiero observar y entender antes de actuar."],[6,"Me cuesta confiar del todo en las personas o en mis propias decisiones."],
+  [7,"Prefiero ver el lado positivo y evitar lo que duele."],[8,"No me gusta que me controlen; prefiero tener el mando."],[9,"Me cuesta saber qué quiero de verdad."],
+  [1,"Siento que debo hacer lo correcto aunque me cueste."],[2,"Me duele sentir que no valoran lo que doy."],[3,"Me cuesta parar: siento que valgo por lo que produzco."],
+  [4,"A menudo siento que me falta algo que otras personas sí tienen."],[5,"Cuido mucho mi energía, mi tiempo y mi privacidad."],[6,"Me da tranquilidad tener un plan o alguien de confianza que me respalde."],
+  [7,"Tengo muchos planes e ideas al mismo tiempo."],[8,"Protejo con fuerza a las personas que quiero."],[9,"Postergo cosas importantes y me distraigo con lo pequeño."],
+  [1,"Me molesta mucho la desorganización o que no se sigan las reglas."],[2,"Me resulta más fácil dar que recibir."],[3,"Me afecta mucho fallar delante de otras personas."],
+  [4,"Busco que lo que hago sea auténtico y tenga significado."],[5,"Me siento con más seguridad cuando sé mucho de un tema."],[6,"Dudo mucho antes de tomar decisiones importantes."],
+  [7,"Me cuesta comprometerme con una sola opción."],[8,"Me cuesta mostrarme vulnerable."],[9,"Me adapto a lo que otros prefieren para mantener la paz."]
+];
+const respuestas = () => FRASES.map((_, i) => { const v = $(`input[name="q${i}"]:checked`); return v ? Number(v.value) : 0; });
+function tipoCuestionario(r) {
+  const tot = Array(10).fill(0); let n = 0;
+  FRASES.forEach(([tipo], i) => { if (r[i]) { tot[tipo] += r[i]; n++; } });
+  if (n < 18) return "";
+  const orden = [1,2,3,4,5,6,7,8,9].sort((a, b) => tot[b] - tot[a]);
+  return tot[orden[0]] > tot[orden[1]] ? String(orden[0]) : "";
+}
+
+/* ==================== LECTURA DE PULSO (cámara) ====================
+   Fotopletismografía: con cada latido cambia la cantidad de sangre en la
+   yema del dedo y con ella el rojo que ve la cámara. */
+let PULSO = null;
+const pul = { stream: null, corriendo: false, muestras: [], tInicio: 0, ultimoAnalisis: 0, perdidas: 0 };
+const pulMsg = t => { $("#pul-estado").textContent = t; };
+
+function mediaMovil(a, w) {
+  const out = new Array(a.length), h = Math.floor(w / 2); let s = 0, n = 0, lo = 0, hi = -1;
+  for (let i = 0; i < a.length; i++) {
+    while (hi < Math.min(a.length - 1, i + h)) { hi++; s += a[hi]; n++; }
+    while (lo < i - h) { s -= a[lo]; lo++; n--; }
+    out[i] = s / n;
+  }
+  return out;
+}
+function analizarPulso(m) {
+  if (m.length < 60) return null;
+  const fs = 30, t0 = m[0].t + 2, t1 = m[m.length - 1].t;
+  if (t1 - t0 < 8) return null;
+  const x = []; let j = 0;
+  for (let t = t0; t <= t1; t += 1 / fs) {
+    while (j < m.length - 2 && m[j + 1].t < t) j++;
+    const a = m[j], b = m[j + 1], dt = (b.t - a.t) || 1;
+    x.push(a.v + (b.v - a.v) * Math.min(1, Math.max(0, (t - a.t) / dt)));
+  }
+  let y = x.map(v => -v);
+  const tend = mediaMovil(y, fs);
+  y = mediaMovil(y.map((v, i) => v - tend[i]), 4);
+  const media = y.reduce((a, b) => a + b, 0) / y.length;
+  const sd = Math.sqrt(y.reduce((a, b) => a + (b - media) ** 2, 0) / y.length) || 1;
+  const w = Math.round(0.25 * fs), picos = [];
+  for (let i = w; i < y.length - w; i++) {
+    if (y[i] < media + 0.3 * sd) continue;
+    let max = true;
+    for (let k = i - w; k <= i + w; k++) if (y[k] > y[i]) { max = false; break; }
+    if (!max) continue;
+    if (picos.length && i - picos[picos.length - 1] < Math.round(0.33 * fs)) continue;
+    const a = y[i - 1], b = y[i], c = y[i + 1], den = a - 2 * b + c;
+    picos.push(i + (den ? 0.5 * (a - c) / den : 0));
+  }
+  const ibis = []; for (let i = 1; i < picos.length; i++) ibis.push((picos[i] - picos[i - 1]) / fs * 1000);
+  const validos = ibis.filter(v => v >= 333 && v <= 1500);
+  if (validos.length < 6) return null;
+  const ord = [...validos].sort((a, b) => a - b), med = ord[Math.floor(ord.length / 2)];
+  const ok = ibis.map(v => v >= 333 && v <= 1500 && Math.abs(v - med) <= 0.25 * med);
+  const buenos = ibis.filter((_, i) => ok[i]);
+  let sum = 0, n = 0;
+  for (let i = 1; i < ibis.length; i++) if (ok[i] && ok[i - 1]) { sum += (ibis[i] - ibis[i - 1]) ** 2; n++; }
+  const prom = buenos.reduce((a, b) => a + b, 0) / buenos.length;
+  return { bpm: Math.round(60000 / prom), rmssd: n ? Math.round(Math.sqrt(sum / n)) : null, latidos: buenos.length, calidad: buenos.length / ibis.length };
+}
+function dibujarOnda() {
+  const c = $("#pul-onda"), cx = c.getContext("2d"), W = c.width, H = c.height;
+  cx.clearRect(0, 0, W, H);
+  const m = pul.muestras.slice(-150); if (m.length < 5) return;
+  const v = m.map(p => -p.v), tend = mediaMovil(v, 30), y = v.map((a, i) => a - tend[i]);
+  const mx = Math.max(...y.map(Math.abs)) || 1;
+  cx.strokeStyle = "#ff9fd2"; cx.lineWidth = 2.5; cx.beginPath();
+  y.forEach((a, i) => { const X = i / (150 - 1) * W, Y = H / 2 - a / mx * (H * 0.4); i ? cx.lineTo(X, Y) : cx.moveTo(X, Y); });
+  cx.stroke();
+}
+function detenerPulso() {
+  pul.corriendo = false;
+  if (pul.stream) pul.stream.getTracks().forEach(t => t.stop());
+  pul.stream = null; $("#pul-video").srcObject = null;
+  $("#pul-ini").hidden = false; $("#pul-det").hidden = true;
+}
+async function iniciarPulso() {
+  $("#pul-res").innerHTML = ""; $("#pul-bpm").textContent = "—"; $("#pul-prog").style.width = "0";
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { pulMsg("Este navegador no permite usar la cámara."); return; }
+  try {
+    pul.stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: { ideal: "environment" }, width: { ideal: 320 }, height: { ideal: 240 }, frameRate: { ideal: 30 } } });
+  } catch (e) {
+    pulMsg(VISTA_PREVIA ? "En la vista previa no hay cámara: pruébalo en la página web desde el celular." : "No se pudo abrir la cámara. Revisa que el navegador tenga permiso para usarla.");
+    return;
+  }
+  const track = pul.stream.getVideoTracks()[0];
+  let flash = false;
+  try { const cap = track.getCapabilities ? track.getCapabilities() : {}; if (cap.torch) { await track.applyConstraints({ advanced: [{ torch: true }] }); flash = true; } } catch (e) {}
+  const v = $("#pul-video"); v.srcObject = pul.stream;
+  try { await v.play(); } catch (e) {}
+  const lienzo = document.createElement("canvas"); lienzo.width = 40; lienzo.height = 30;
+  const cx = lienzo.getContext("2d", { willReadFrequently: true });
+  pul.muestras = []; pul.tInicio = 0; pul.ultimoAnalisis = 0; pul.perdidas = 0; pul.corriendo = true;
+  $("#pul-ini").hidden = true; $("#pul-det").hidden = false;
+  pulMsg(flash ? "Coloca la yema del dedo sobre la cámara y el flash." : "Coloca la yema del dedo sobre la cámara, cerca de una luz.");
+  const cuadro = () => {
+    if (!pul.corriendo) return;
+    if (v.readyState >= 2) {
+      cx.drawImage(v, 0, 0, 40, 30);
+      const d = cx.getImageData(0, 0, 40, 30).data; let r = 0, g = 0, b = 0;
+      for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; }
+      const n = d.length / 4; r /= n; g /= n; b /= n;
+      const ahora = performance.now() / 1000;
+      const dedo = r > 60 && r > 1.5 * g && r > 1.5 * b;
+      if (!dedo) {
+        if (pul.muestras.length) { pul.perdidas++; }
+        if (pul.perdidas > 15) { pul.muestras = []; pul.tInicio = 0; pul.perdidas = 0; $("#pul-prog").style.width = "0"; $("#pul-bpm").textContent = "—"; }
+        pulMsg("Cubre bien la cámara con la yema del dedo, sin moverte.");
+      } else {
+        pul.perdidas = 0;
+        if (!pul.tInicio) pul.tInicio = ahora;
+        pul.muestras.push({ t: ahora - pul.tInicio, v: r });
+        const trans = ahora - pul.tInicio;
+        $("#pul-prog").style.width = Math.min(100, trans / CONFIG.PULSO_SEGUNDOS * 100) + "%";
+        pulMsg(`Leyendo… quedan ${Math.max(0, Math.ceil(CONFIG.PULSO_SEGUNDOS - trans))} segundos. No te muevas.`);
+        if (trans - pul.ultimoAnalisis > 2 && trans > 10) {
+          pul.ultimoAnalisis = trans;
+          const a = analizarPulso(pul.muestras);
+          if (a) { $("#pul-bpm").textContent = a.bpm; const e = $("#pul-bpm"); e.classList.remove("latido"); void e.offsetWidth; e.classList.add("latido"); }
+        }
+        if (trans >= CONFIG.PULSO_SEGUNDOS) { terminarPulso(); return; }
+      }
+      dibujarOnda();
+    }
+    if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(cuadro); else requestAnimationFrame(cuadro);
+  };
+  if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(cuadro); else requestAnimationFrame(cuadro);
+}
+function nivelVariabilidad(rmssd) { return rmssd == null ? null : rmssd < 20 ? "baja" : rmssd < 50 ? "media" : "alta"; }
+function terminarPulso() {
+  const a = analizarPulso(pul.muestras);
+  detenerPulso();
+  $("#pul-prog").style.width = "100%";
+  if (!a || a.calidad < 0.7 || a.latidos < 15) {
+    pulMsg("La lectura no salió clara. Repítela con el dedo quieto, sin apretar, y con más luz.");
+    $("#pul-bpm").textContent = "—"; return;
+  }
+  PULSO = { bpm: a.bpm, rmssd: a.rmssd, variabilidad: nivelVariabilidad(a.rmssd), fecha: new Date().toISOString() };
+  $("#pul-bpm").textContent = a.bpm;
+  pulMsg("Lectura lista ✦");
+  pintarPulso();
+}
+function pintarPulso() {
+  if (!PULSO) { $("#pul-res").innerHTML = ""; return; }
+  $("#pul-res").innerHTML = `<div class="pul-res"><strong>${PULSO.bpm} latidos por minuto</strong> · variabilidad ${PULSO.variabilidad || "sin dato"}${PULSO.rmssd != null ? ` (${PULSO.rmssd} ms)` : ""}<div class="porque">Se suma al perfil. Puedes repetir la lectura si quieres.</div></div>`;
+}
+$("#pul-ini").addEventListener("click", iniciarPulso);
+$("#pul-det").addEventListener("click", () => { detenerPulso(); pulMsg("Lectura detenida."); });
+
+/* ==================== MOTOR ==================== */
+let PROTOCOLO = null;
+function leerFicha() {
+  const idx = $("#f-lugar").value, manual = idx === "manual", L = manual ? null : LUGARES[Number(idx)];
+  return {
+    nombre: $("#f-nombre").value.trim(), fecha: $("#f-fecha").value, hora: $("#f-hora").value, sinHora: $("#f-sin-hora").checked,
+    lugarIdx: idx, lugar: manual ? "Otro lugar" : L[0],
+    lat: manual ? Number($("#f-lat").value) : L[1], lon: manual ? Number($("#f-lon").value) : L[2], zona: manual ? null : L[3], utc: manual ? Number($("#f-utc").value) : null,
+    motivo: $("#f-motivo").value.trim(), notas: $("#f-notas").value.trim(), tratamiento: $("#f-tratamiento").value,
+    temas: $$("#temas input:checked").map(i => i.value), alertas: $$("#alertas input:checked").map(i => i.value),
+    respuestas: respuestas(), inicio: $("#f-inicio").value || hoyISO(), consent: $("#f-consent").checked,
+    escalas: DATOS.seguimiento.map((_, i) => { const v = $("#e" + i).value; return v === "" ? null : Math.min(10, Math.max(0, Number(v))); }),
+    bienestar: DATOS.bienestar.frases.map((_, i) => { const v = $("#b" + i).value; return v === "" ? null : Number(v); }),
+    centros: DATOS.centros.map((c, ci) => c.frases.map((_, k) => { const v = $(`input[name="c${ci}_${k}"]:checked`); return v ? Number(v.value) : 0; })),
+    pulso: PULSO
+  };
+}
+function validar(f) {
+  if (!f.nombre) return "Falta el nombre completo.";
+  if (!f.fecha) return "Falta la fecha de nacimiento.";
+  if (!f.sinHora && !f.hora) return "Escribe la hora o marca «No sabe la hora».";
+  if (f.lugarIdx === "manual" && ["#f-lat", "#f-lon", "#f-utc"].some(s => $(s).value === "")) return "Completa latitud, longitud y diferencia con UTC.";
+  if (!f.consent) return "Falta marcar el consentimiento.";
+  return "";
+}
+
+function generar(f) {
+  const N = calcNumeros(f.nombre, f.fecha), C = window.Astronomy ? calcCielo(f) : null, tipo = tipoCuestionario(f.respuestas);
+  const P = DATOS.pesos, puntaje = new Map(), focos = new Map(), perfil = [];
+  const sumar = (nombre, pts, razon, tema = false) => {
+    if (!INDICE[nombre]) return;
+    const r = puntaje.get(nombre) || { puntos: 0, razones: [], tema: false };
+    r.puntos += pts; if (!r.razones.includes(razon)) r.razones.push(razon); r.tema = r.tema || tema; puntaje.set(nombre, r);
+  };
+  const foco = (txt, pts, titulo) => {
+    const [et, desc] = txt; focos.set(et, (focos.get(et) || 0) + pts);
+    if (titulo && !perfil.some(p => p.et === et)) perfil.push({ titulo, et, desc });
+    return et;
+  };
+  const keyNum = n => DATOS.reglasNumero[String(n)] ? String(n) : String(reducir(n, false));
+  const aplicar = (n, peso, titulo) => { const k = keyNum(n), et = foco(DATOS.textosNumero[k], peso, titulo); DATOS.reglasNumero[k].forEach(p => sumar(p, peso, et)); };
+  aplicar(N.t, P.tikun, "Aprendizaje de vida");
+  aplicar(N.a, P.caminoDeVida, "Camino personal");
+  aplicar(N.b, P.alma, "Necesidad del alma");
+  aplicar(N.c, P.expresion, null);
+  const total = C ? Object.values(C.el).reduce((a, b) => a + b, 0) : 0;
+  if (C) for (const [el, v] of Object.entries(C.el)) {
+    const modo = v / total >= 0.4 ? "exceso" : v <= 1 ? "falta" : null; if (!modo) continue;
+    const et = foco(DATOS.textosElemento[el][modo], P.elemento, "Energía");
+    DATOS.reglasElemento[el][modo].forEach(p => sumar(p, P.elemento, et));
+  }
+  if (C) {
+    const etL = foco(DATOS.textosLuna[C.lunaEl], P.luna, "Mundo emocional");
+    DATOS.reglasLuna[C.lunaEl].forEach(p => sumar(p, P.luna, etL));
+    sumar(C.regente, P.regente, "Afinidad energética");
+  }
+  const nw = DATOS.nawales[calcNacimiento(f.fecha)];
+  const etN = foco([nw[0], nw[1]], P.nawal, "Energía de nacimiento");
+  nw[2].forEach(p => sumar(p, P.nawal, etN));
+  const cen = centrosDebiles(f.centros);
+  if (cen.length) {
+    perfil.push({ titulo: "Centros a fortalecer", et: cen.map(c => c.nombre).join(" y "), desc: cen.map(c => `${c.nombre}: ${c.tema}`).join(" · ") + "." });
+    cen.forEach(c => { focos.set(c.nombre + " (" + c.tema + ")", P.centro); c.programas.forEach(p => sumar(p, P.centro, "Centro a fortalecer: " + c.nombre)); });
+  }
+  if (tipo) { const et = foco(DATOS.textosEneatipo[tipo], P.eneatipo, "Personalidad"); DATOS.reglasEneatipo[tipo].forEach(p => sumar(p, P.eneatipo, et)); }
+  if (f.pulso && f.pulso.variabilidad) {
+    const pp = DATOS.pulso[f.pulso.variabilidad];
+    perfil.push({ titulo: "Ritmo del corazón", et: `${f.pulso.bpm} latidos/min · variabilidad ${f.pulso.variabilidad}`, desc: pp.texto });
+    if (pp.programas.length) { focos.set(pp.foco, P.pulso); pp.programas.forEach(p => sumar(p, P.pulso, pp.foco)); }
+  }
+  const bien = calcBienestar(f.bienestar);
+  for (const t of f.temas) for (const g of Object.values(DATOS.temas)) if (g[t]) g[t].forEach(p => sumar(p, P.tema, t, true));
+
+  const fases = DATOS.fases.map(x => ({ id: x.id, nombre: x.nombre, dias: x.dias, vecesDia: x.vecesDia, diasSemana: x.diasSemana, items: [] }));
+  DATOS.fases.forEach((x, i) => x.fijos.forEach(n => INDICE[n] && fases[i].items.push({ nombre: n, incluido: true, puntos: 99, razones: [], tema: false })));
+  for (const [nombre, r] of puntaje) {
+    const id = r.tema ? 3 : (DATOS.fases.find(x => x.secciones.includes(INDICE[nombre].codigo)) || { id: 2 }).id;
+    const ya = fases[id - 1].items.find(x => x.nombre === nombre);
+    if (ya) { ya.razones.push(...r.razones.filter(z => !ya.razones.includes(z))); continue; }
+    fases[id - 1].items.push({ nombre, incluido: false, puntos: r.puntos, razones: r.razones, tema: r.tema });
+  }
+  for (const fa of fases) {
+    fa.items.sort((a, b) => b.puntos - a.puntos);
+    let n = fa.items.filter(x => x.incluido).length;
+    const tope = fa.id === 3 ? CONFIG.MAX_POR_FASE + 2 : CONFIG.MAX_POR_FASE;
+    if (fa.id === 3) for (const t of f.temas) { const it = fa.items.find(x => x.razones.includes(t)); if (it && !it.incluido) { it.incluido = true; n++; } }
+    for (const it of fa.items) if (!it.incluido && n < tope) { it.incluido = true; n++; }
+  }
+  fases[1].items.filter(x => x.incluido).slice(0, 2).forEach(it => fases[4].items.push({ nombre: it.nombre, incluido: true, puntos: it.puntos, razones: ["Refuerzo"], tema: false }));
+  const focosOrden = [...focos.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(x => x[0]);
+  return { ficha: f, perfil, focos: focosOrden, fases, bien, incompleto: !C, seguimiento: fases.map(() => DATOS.seguimiento.map(() => null)) };
+}
+
+/* ==================== PINTAR ==================== */
+const fmt = d => d.toLocaleDateString("es", { day: "numeric", month: "short", year: "numeric" });
+const sumarDias = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const sesiones = fa => Math.ceil(fa.dias * Math.min(7, fa.diasSemana) / 7) * fa.vecesDia;
+const frecTxt = fa => `${fa.vecesDia === 1 ? "1 vez" : fa.vecesDia + " veces"} al día · ${fa.diasSemana >= 7 ? "todos los días" : fa.diasSemana + " días por semana"}`;
+
+function pintar() {
+  const R = PROTOCOLO, f = R.ficha;
+  $("#r-titulo").textContent = "Perfil y protocolo · " + f.nombre;
+  const inicio = new Date(f.inicio + "T12:00:00");
+  const totalDias = R.fases.reduce((a, x) => a + Number(x.dias), 0);
+  const nProg = new Set(R.fases.flatMap(x => x.items.filter(i => i.incluido).map(i => i.nombre))).size;
+  $("#r-resumen").innerHTML = `<span class="pill">📅 ${fmt(inicio)} – ${fmt(sumarDias(inicio, totalDias - 1))}</span><span class="pill">${totalDias} días · ${R.fases.length} fases</span><span class="pill">${nProg} programas</span>`;
+
+  let av = "";
+  const al = DATOS.alertas.filter(a => f.alertas.includes(a.id));
+  if (al.length) {
+    av += `<div class="aviso-banda rojo"><strong>⚠ Derivar antes de iniciar:</strong> ${al.map(a => esc(a.texto)).join(" · ")}. Debe valorarlo un profesional de salud; este protocolo solo acompaña.`;
+    if (al.some(a => a.urgente)) av += `<br><strong>Si hay riesgo inmediato, no sigas con la sesión de frecuencias:</strong> acompaña a la persona a buscar ayuda profesional o los servicios de emergencia de su país.`;
+    av += `</div>`;
+  }
+  if (R.bien !== null && R.bien <= 28) av += `<div class="aviso-banda rojo"><strong>⚠ Bienestar muy bajo en las últimas dos semanas (${R.bien}/100):</strong> recomienda una valoración con un profesional de salud mental antes de iniciar. Este protocolo solo acompaña.</div>`;
+  else if (R.bien !== null && R.bien <= 50) av += `<div class="aviso-banda ambar">Bienestar bajo en las últimas dos semanas (${R.bien}/100): da seguimiento cercano y considera derivar con un profesional.</div>`;
+  if (f.pulso && (f.pulso.bpm > 110 || f.pulso.bpm < 45)) av += `<div class="aviso-banda ambar">Pulso en reposo fuera de lo habitual (${f.pulso.bpm} latidos/min). La lectura con cámara es aproximada: sugiere una revisión médica.</div>`;
+  if (R.incompleto) av += `<div class="aviso-banda ambar">Una parte del perfil no se pudo calcular porque faltó cargar un componente. Revisa tu internet, recarga la página y genera de nuevo.</div>`;
+  if (f.tratamiento === "Sí") av += `<div class="aviso-banda ambar">Está en tratamiento: este protocolo es complementario y no reemplaza ni modifica su tratamiento.</div>`;
+  $("#r-avisos").innerHTML = av;
+
+  const items = R.perfil.map(p => `<li><strong>${esc(p.titulo)} · ${esc(p.et)}</strong>${esc(p.desc)}</li>`);
+  if (R.bien !== null) items.push(`<li><strong>Bienestar general · ${R.bien <= 50 ? "Bajo" : R.bien <= 70 ? "Medio" : "Bueno"}</strong>${R.bien} de 100 en las últimas dos semanas.</li>`);
+  if (f.temas.length || f.motivo) items.push(`<li><strong>Lo que trae</strong>${esc([f.motivo, f.temas.join(", ")].filter(Boolean).join(" — "))}</li>`);
+  if (f.notas) items.push(`<li><strong>Lo que detecta el terapeuta</strong>${esc(f.notas)}</li>`);
+  items.push(`<li><strong>Focos de trabajo</strong>${esc([...new Set(R.focos.concat(f.temas.slice(0, 3)))].join(" · "))}</li>`);
+  $("#r-perfil").innerHTML = items.join("");
+
+  let dia = new Date(inicio);
+  const todos = Object.entries(DATOS.catalogo).map(([s, ps]) => `<optgroup label="${esc(s.slice(5))}">${ps.map(p => `<option>${esc(p[0])}</option>`).join("")}</optgroup>`).join("");
+  $("#r-fases").innerHTML = R.fases.map((fa, fi) => {
+    const ini = new Date(dia); dia = sumarDias(dia, Number(fa.dias)); const finF = sumarDias(dia, -1);
+    const ses = sesiones(fa);
+    const filas = fa.items.map((it, ii) => {
+      const info = INDICE[it.nombre] || {};
+      return `<tr class="${it.incluido ? "" : "excluido"}">
+        <td><input type="checkbox" class="inc" data-f="${fi}" data-i="${ii}" ${it.incluido ? "checked" : ""} aria-label="Incluir ${esc(it.nombre)}"></td>
+        <td><strong>${esc(it.nombre)}</strong><span class="tag ${info.web ? "web" : "app"}">${info.web ? "Web" : "App"}</span>
+          ${it.razones.length ? `<div class="porque">${esc(it.razones.join(" · "))}</div>` : ""}</td>
+        <td>${esc(info.ref || "—")}</td>
+        <td class="ses">${ses} veces</td>
+        <td><select class="mover" data-f="${fi}" data-i="${ii}" aria-label="Mover de fase">${R.fases.map(x => `<option value="${x.id}" ${x.id === fa.id ? "selected" : ""}>Fase ${x.id}</option>`).join("")}</select></td></tr>`;
+    }).join("");
+    return `<div class="fase">
+      <div class="fase-cab"><h3>Fase ${fa.id} · ${esc(fa.nombre)}</h3><span class="fechas">${fmt(ini)} – ${fmt(finF)}</span>
+        <span class="frec">${fa.dias} días · ${frecTxt(fa)} · cada programa ${ses} veces en total</span></div>
+      <div class="ajustes"><label>Días <input type="number" min="1" class="aj" data-k="dias" data-f="${fi}" value="${fa.dias}"></label>
+        <label>Veces al día <input type="number" min="1" max="6" class="aj" data-k="vecesDia" data-f="${fi}" value="${fa.vecesDia}"></label>
+        <label>Días por semana <input type="number" min="1" max="7" class="aj" data-k="diasSemana" data-f="${fi}" value="${fa.diasSemana}"></label></div>
+      ${fa.items.length ? `<table class="progs"><thead><tr><th></th><th>Programa</th><th>Ref. sonora</th><th>Total</th><th>Fase</th></tr></thead><tbody>${filas}</tbody></table>` : `<div class="vacio">Sin programas en esta fase.</div>`}
+      <div class="agregar"><select class="nuevo" data-f="${fi}" aria-label="Agregar programa a la fase ${fa.id}"><option value="">+ Agregar programa a esta fase…</option>${todos}</select></div></div>`;
+  }).join("");
+  pintarSeg();
+}
+function pintarSeg() {
+  const R = PROTOCOLO, ind = DATOS.seguimiento, menosEsMejor = new Set([0, 4]);
+  const inicio = new Date(R.ficha.inicio + "T12:00:00");
+  let dia = new Date(inicio);
+  const celda = (v, r, c) => `<td><input type="number" min="0" max="10" class="sg" data-r="${r}" data-c="${c}" value="${v ?? ""}" aria-label="${esc(ind[c])}"></td>`;
+  let filas = `<tr><td><strong>Inicio</strong><div class="porque">${fmt(inicio)}</div></td>${ind.map((_, c) => celda(R.ficha.escalas[c], -1, c)).join("")}</tr>`;
+  R.fases.forEach((fa, i) => { dia = sumarDias(dia, Number(fa.dias)); filas += `<tr><td><strong>Fin fase ${fa.id}</strong><div class="porque">${fmt(sumarDias(dia, -1))}</div></td>${ind.map((_, c) => celda(R.seguimiento[i][c], i, c)).join("")}</tr>`; });
+  const cambio = ind.map((_, c) => {
+    const ini = R.ficha.escalas[c]; let ult = null;
+    R.seguimiento.forEach(r => { if (r[c] !== null) ult = r[c]; });
+    if (ini === null || ult === null) return "<td>—</td>";
+    const dif = ult - ini, bien = menosEsMejor.has(c) ? dif < 0 : dif > 0;
+    return `<td class="${dif === 0 ? "" : bien ? "mejor" : "peor"}">${dif > 0 ? "+" : ""}${dif} ${dif === 0 ? "" : bien ? "▲" : "▼"}</td>`;
+  });
+  filas += `<tr><td><strong>Cambio</strong></td>${cambio.join("")}</tr>`;
+  $("#r-seg").innerHTML = `<table class="seg"><thead><tr><th></th>${ind.map(x => `<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>${filas}</tbody></table>`;
+}
+$("#r-seg").addEventListener("change", ev => {
+  const el = ev.target; if (!el.classList.contains("sg")) return;
+  const v = el.value === "" ? null : Math.min(10, Math.max(0, Math.round(Number(el.value))));
+  const r = Number(el.dataset.r), c = Number(el.dataset.c);
+  if (r < 0) PROTOCOLO.ficha.escalas[c] = v; else PROTOCOLO.seguimiento[r][c] = v;
+  pintarSeg();
+});
+$("#r-fases").addEventListener("change", ev => {
+  const el = ev.target, fi = Number(el.dataset.f), fa = PROTOCOLO.fases[fi];
+  if (el.classList.contains("inc")) fa.items[Number(el.dataset.i)].incluido = el.checked;
+  else if (el.classList.contains("mover")) { const it = fa.items.splice(Number(el.dataset.i), 1)[0]; PROTOCOLO.fases[Number(el.value) - 1].items.push(it); }
+  else if (el.classList.contains("aj")) { const lim = { dias: 365, vecesDia: 6, diasSemana: 7 }[el.dataset.k]; fa[el.dataset.k] = Math.min(lim, Math.max(1, Math.round(Number(el.value)) || 1)); }
+  else if (el.classList.contains("nuevo") && el.value) { const ya = fa.items.find(x => x.nombre === el.value); if (ya) ya.incluido = true; else fa.items.push({ nombre: el.value, incluido: true, puntos: 0, razones: ["Agregado por el terapeuta"], tema: false }); }
+  else return;
+  pintar();
+});
+
+/* ==================== ARMAR PANEL ==================== */
+function armarPanel() {
+  $("#f-lugar").innerHTML = LUGARES.map((l, i) => `<option value="${i}">${esc(l[0])}</option>`).join("") + `<option value="manual">Otro lugar (escribir coordenadas)</option>`;
+  $("#f-lugar").addEventListener("change", () => $("#lugar-manual").classList.toggle("oculto", $("#f-lugar").value !== "manual"));
+  $("#f-sin-hora").addEventListener("change", () => { $("#f-hora").disabled = $("#f-sin-hora").checked; });
+  $("#en-preguntas").innerHTML = FRASES.map(([, txt], i) => `<div class="preg"><div>${i + 1}. ${esc(txt)}</div><div class="likert" role="radiogroup" aria-label="Frase ${i + 1}">${[1,2,3,4,5].map(v => `<label><input type="radio" name="q${i}" value="${v}"><span>${v}</span></label>`).join("")}</div></div>`).join("");
+  $("#temas").innerHTML = Object.entries(DATOS.temas).map(([g, ts]) => `<div class="grupo-temas"><h4>${esc(g)}</h4><div class="chips">${Object.keys(ts).map(t => `<label class="chip"><input type="checkbox" value="${esc(t)}"><span>${esc(t)}</span></label>`).join("")}</div></div>`).join("");
+  $("#escalas").innerHTML = DATOS.seguimiento.map((x, i) => `<label>${esc(x)}<input type="number" min="0" max="10" id="e${i}" placeholder="0–10"></label>`).join("");
+  $("#bienestar").innerHTML = DATOS.bienestar.frases.map((x, i) => `<div class="bien"><span>${i + 1}. ${esc(x)}</span><select id="b${i}" aria-label="${esc(x)}"><option value="">Elegir…</option>${DATOS.bienestar.opciones.map(o => `<option value="${o[1]}">${esc(o[0])}</option>`).join("")}</select></div>`).join("");
+  let nq = 0;
+  const frasesC = []; DATOS.centros.forEach((c, ci) => c.frases.forEach((t, k) => frasesC.push([ci, k, t])));
+  const orden = [0, 1, 2].flatMap(k => frasesC.filter(x => x[1] === k));
+  $("#centros-preg").innerHTML = orden.map(([ci, k, t]) => `<div class="preg"><div>${++nq}. ${esc(t)}</div><div class="likert" role="radiogroup" aria-label="Frase ${nq}">${[1,2,3,4,5].map(v => `<label><input type="radio" name="c${ci}_${k}" value="${v}"><span>${v}</span></label>`).join("")}</div></div>`).join("");
+  $("#alertas").innerHTML = DATOS.alertas.map(a => `<label class="check"><input type="checkbox" value="${esc(a.id)}"> ${esc(a.texto)}</label>`).join("");
+  $("#f-inicio").value = hoyISO();
+  $("#btn-generar").addEventListener("click", () => {
+    const f = leerFicha(), e = validar(f); $("#err").textContent = e; if (e) return;
+    PROTOCOLO = generar(f); verResultado();
+  });
+  $("#btn-editar").addEventListener("click", () => { $("#formulario").classList.remove("oculto"); $("#resultado").classList.add("oculto"); window.scrollTo({ top: 0 }); });
+  const enPrevia = () => { if (VISTA_PREVIA) $("#msg-res").textContent = "En la vista previa no se puede imprimir ni descargar; en tu página web sí."; return VISTA_PREVIA; };
+  $("#btn-imprimir").addEventListener("click", () => { if (!enPrevia()) window.print(); });
+  $("#btn-guardar").addEventListener("click", () => { if (!enPrevia()) guardar(); });
+  $("#in-abrir").addEventListener("change", abrir);
+  $("#btn-nueva").addEventListener("click", () => { if (VISTA_PREVIA || window.confirm("¿Empezar una ficha nueva? Guarda antes la actual si la necesitas.")) location.reload(); });
+}
+function verResultado() { pintar(); $("#formulario").classList.add("oculto"); $("#resultado").classList.remove("oculto"); window.scrollTo({ top: 0 }); }
+
+/* ==================== GUARDAR / ABRIR ==================== */
+function guardar() {
+  const datos = { version: 4, guardado: new Date().toISOString(), ficha: PROTOCOLO.ficha, fases: PROTOCOLO.fases, seguimiento: PROTOCOLO.seguimiento };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(datos, null, 2)], { type: "application/json" }));
+  const a = document.createElement("a"); a.href = url;
+  a.download = "ficha-" + PROTOCOLO.ficha.nombre.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + ".json";
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+function abrir(ev) {
+  const file = ev.target.files[0]; if (!file) return;
+  const lector = new FileReader();
+  lector.onload = () => {
+    try {
+      const d = JSON.parse(lector.result), f = d.ficha;
+      $("#f-nombre").value = f.nombre || ""; $("#f-fecha").value = f.fecha || ""; $("#f-hora").value = f.hora || "";
+      $("#f-sin-hora").checked = !!f.sinHora; $("#f-hora").disabled = !!f.sinHora;
+      $("#f-lugar").value = f.lugarIdx ?? "0"; $("#lugar-manual").classList.toggle("oculto", f.lugarIdx !== "manual");
+      if (f.lugarIdx === "manual") { $("#f-lat").value = f.lat; $("#f-lon").value = f.lon; $("#f-utc").value = f.utc; }
+      $("#f-motivo").value = f.motivo || ""; $("#f-notas").value = f.notas || ""; $("#f-tratamiento").value = f.tratamiento || "";
+      $$("#temas input").forEach(i => { i.checked = (f.temas || []).includes(i.value); });
+      $$("#alertas input").forEach(i => { i.checked = (f.alertas || []).includes(i.value); });
+      (f.respuestas || []).forEach((v, i) => { const r = $(`input[name="q${i}"][value="${v}"]`); if (r) r.checked = true; });
+      $("#f-inicio").value = f.inicio || hoyISO(); $("#f-consent").checked = !!f.consent;
+      (f.escalas || []).forEach((v, i) => { if ($("#e" + i)) $("#e" + i).value = v ?? ""; });
+      (f.bienestar || []).forEach((v, i) => { if ($("#b" + i)) $("#b" + i).value = v ?? ""; });
+      (f.centros || []).forEach((arr, ci) => arr.forEach((v, k) => { const r = $(`input[name="c${ci}_${k}"][value="${v}"]`); if (r) r.checked = true; }));
+      PULSO = f.pulso || null; pintarPulso();
+      PROTOCOLO = generar(leerFicha());
+      if (Array.isArray(d.fases)) PROTOCOLO.fases = d.fases;
+      if (Array.isArray(d.seguimiento)) PROTOCOLO.seguimiento = d.seguimiento;
+      verResultado();
+    } catch (e) { $("#err").textContent = "Ese archivo no es una ficha válida."; }
+    ev.target.value = "";
+  };
+  lector.readAsText(file);
+}
+
+/* Vista previa: abre directo con el contenido de muestra */
+if (DATOS_EMBEBIDOS) { $("#aviso-previa").hidden = false; abrirPanel(DATOS_EMBEBIDOS); }
+</script>
+</body>
+</html>

@@ -24,3 +24,4 @@ Disallow: /ciclos.html
 Disallow: /ciclos-data.js
 Disallow: /familia.html
 Disallow: /familia-data.js
+Disallow: /panel-terapeutas.html
