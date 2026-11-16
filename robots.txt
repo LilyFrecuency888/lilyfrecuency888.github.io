@@ -25,3 +25,4 @@ Disallow: /ciclos-data.js
 Disallow: /familia.html
 Disallow: /familia-data.js
 Disallow: /panel-terapeutas.html
+Disallow: /sonidos.html
