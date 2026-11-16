@@ -188,6 +188,19 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
 
     <div id="panel" hidden>
       <div id="formulario">
+        <section class="box" style="border-color:rgba(143,240,208,.45)">
+          <h2>Link para tu consultante</h2>
+          <p class="ayuda">Tu consultante llena sus datos, sus respuestas y su consentimiento desde el celular, y te envía su ficha por WhatsApp. Tú la abres aquí con «Abrir ficha guardada».</p>
+          <div class="rejilla">
+            <label class="campo">Tu nombre, como lo verá tu consultante<input type="text" id="lk-nombre" placeholder="Ej. Terapeuta Ana López"></label>
+          </div>
+          <div class="acciones">
+            <span class="error" id="lk-msg" role="status" style="color:var(--menta)"></span>
+            <button class="btn" type="button" id="lk-copiar">Copiar link</button>
+            <a class="btn pri" id="lk-wa" target="_blank" rel="noopener" href="#">Enviar por WhatsApp</a>
+          </div>
+        </section>
+
         <section class="box">
           <h2><span class="paso-num">1</span>Datos de nacimiento</h2>
           <p class="ayuda">Estos datos no salen de este navegador.</p>
@@ -288,6 +301,7 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
         <p class="ayuda no-imp">Al terminar cada fase, anota cómo se siente la persona (0 a 10). La fila Cambio compara con el inicio.</p>
         <div id="r-seg"></div>
         <div class="clausula"><strong>Consentimiento.</strong> Declaro que participo de forma voluntaria y otorgo mi permiso para que mis datos se usen en la elaboración de este perfil y protocolo. Entiendo que este acompañamiento no diagnostica enfermedades, no sustituye la atención médica ni psicológica, y es un soporte y apoyo secundario y complementario a cualquier tratamiento profesional médico, que no debo suspender ni modificar.</div>
+        <p class="small" id="r-consent-c" style="margin-top:8px;color:var(--menta)"></p>
         <div class="firmas"><div>Firma del consultante · Fecha</div><div>Firma del terapeuta</div></div>
         <p class="pie-legal">Los programas de sonido son de apoyo al bienestar. No reemplazan medicamentos, tratamientos médicos o psicológicos ni la alimentación. La lectura de pulso con cámara es aproximada.</p>
         <div class="acciones">
@@ -319,7 +333,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const hoyISO = () => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); };
-let DATOS = null, INDICE = {}, ARMADO = false;
+let DATOS = null, INDICE = {}, ARMADO = false, LUGAR_TXT = "", CONSENT_C = null;
 
 function prepararDatos(d) {
   DATOS = d; INDICE = {};
@@ -600,7 +614,7 @@ function leerFicha() {
   const idx = $("#f-lugar").value, manual = idx === "manual", L = manual ? null : LUGARES[Number(idx)];
   return {
     nombre: $("#f-nombre").value.trim(), fecha: $("#f-fecha").value, hora: $("#f-hora").value, sinHora: $("#f-sin-hora").checked,
-    lugarIdx: idx, lugar: manual ? "Otro lugar" : L[0],
+    lugarIdx: idx, lugar: manual ? (LUGAR_TXT || "Otro lugar") : L[0],
     lat: manual ? Number($("#f-lat").value) : L[1], lon: manual ? Number($("#f-lon").value) : L[2], zona: manual ? null : L[3], utc: manual ? Number($("#f-utc").value) : null,
     motivo: $("#f-motivo").value.trim(), notas: $("#f-notas").value.trim(), tratamiento: $("#f-tratamiento").value,
     temas: $$("#temas input:checked").map(i => i.value), alertas: $$("#alertas input:checked").map(i => i.value),
@@ -608,7 +622,7 @@ function leerFicha() {
     escalas: DATOS.seguimiento.map((_, i) => { const v = $("#e" + i).value; return v === "" ? null : Math.min(10, Math.max(0, Number(v))); }),
     bienestar: DATOS.bienestar.frases.map((_, i) => { const v = $("#b" + i).value; return v === "" ? null : Number(v); }),
     centros: DATOS.centros.map((c, ci) => c.frases.map((_, k) => { const v = $(`input[name="c${ci}_${k}"]:checked`); return v ? Number(v.value) : 0; })),
-    pulso: PULSO
+    pulso: PULSO, consentimiento: CONSENT_C
   };
 }
 function validar(f) {
@@ -714,6 +728,8 @@ function pintar() {
   if (R.incompleto) av += `<div class="aviso-banda ambar">Una parte del perfil no se pudo calcular porque faltó cargar un componente. Revisa tu internet, recarga la página y genera de nuevo.</div>`;
   if (f.tratamiento === "Sí") av += `<div class="aviso-banda ambar">Está en tratamiento: este protocolo es complementario y no reemplaza ni modifica su tratamiento.</div>`;
   $("#r-avisos").innerHTML = av;
+  const cc = f.consentimiento;
+  $("#r-consent-c").innerHTML = cc && cc.firma ? `Aceptado en línea por <b>${esc(cc.firma)}</b> el ${esc(new Date(cc.fecha).toLocaleDateString("es", { day: "numeric", month: "long", year: "numeric" }))}.` : "";
 
   const items = R.perfil.map(p => `<li><strong>${esc(p.titulo)} · ${esc(p.et)}</strong>${esc(p.desc)}</li>`);
   if (R.bien !== null) items.push(`<li><strong>Bienestar general · ${R.bien <= 50 ? "Bajo" : R.bien <= 70 ? "Medio" : "Bueno"}</strong>${R.bien} de 100 en las últimas dos semanas.</li>`);
@@ -785,7 +801,7 @@ $("#r-fases").addEventListener("change", ev => {
 /* ==================== ARMAR PANEL ==================== */
 function armarPanel() {
   $("#f-lugar").innerHTML = LUGARES.map((l, i) => `<option value="${i}">${esc(l[0])}</option>`).join("") + `<option value="manual">Otro lugar (escribir coordenadas)</option>`;
-  $("#f-lugar").addEventListener("change", () => $("#lugar-manual").classList.toggle("oculto", $("#f-lugar").value !== "manual"));
+  $("#f-lugar").addEventListener("change", () => { $("#lugar-manual").classList.toggle("oculto", $("#f-lugar").value !== "manual"); if ($("#f-lugar").value !== "manual") LUGAR_TXT = ""; });
   $("#f-sin-hora").addEventListener("change", () => { $("#f-hora").disabled = $("#f-sin-hora").checked; });
   $("#en-preguntas").innerHTML = FRASES.map(([, txt], i) => `<div class="preg"><div>${i + 1}. ${esc(txt)}</div><div class="likert" role="radiogroup" aria-label="Frase ${i + 1}">${[1,2,3,4,5].map(v => `<label><input type="radio" name="q${i}" value="${v}"><span>${v}</span></label>`).join("")}</div></div>`).join("");
   $("#temas").innerHTML = Object.entries(DATOS.temas).map(([g, ts]) => `<div class="grupo-temas"><h4>${esc(g)}</h4><div class="chips">${Object.keys(ts).map(t => `<label class="chip"><input type="checkbox" value="${esc(t)}"><span>${esc(t)}</span></label>`).join("")}</div></div>`).join("");
@@ -797,6 +813,19 @@ function armarPanel() {
   $("#centros-preg").innerHTML = orden.map(([ci, k, t]) => `<div class="preg"><div>${++nq}. ${esc(t)}</div><div class="likert" role="radiogroup" aria-label="Frase ${nq}">${[1,2,3,4,5].map(v => `<label><input type="radio" name="c${ci}_${k}" value="${v}"><span>${v}</span></label>`).join("")}</div></div>`).join("");
   $("#alertas").innerHTML = DATOS.alertas.map(a => `<label class="check"><input type="checkbox" value="${esc(a.id)}"> ${esc(a.texto)}</label>`).join("");
   $("#f-inicio").value = hoyISO();
+  const linkConsultante = () => {
+    const base = location.href.replace(/[^/]*$/, "") + "ficha-consultante.html";
+    const n = $("#lk-nombre").value.trim();
+    return n ? base + "?t=" + encodeURIComponent(n) : base;
+  };
+  const actualizarWa = () => { $("#lk-wa").href = "https://wa.me/?text=" + encodeURIComponent("Hola 🌸 Antes de tu sesión, llena tu ficha de bienestar aquí (toma 5 a 10 minutos) y envíame el archivo que te da al final: " + linkConsultante()); };
+  try { $("#lk-nombre").value = localStorage.getItem("lf-nombre-terapeuta") || ""; } catch (e) {}
+  actualizarWa();
+  $("#lk-nombre").addEventListener("input", () => { actualizarWa(); try { localStorage.setItem("lf-nombre-terapeuta", $("#lk-nombre").value.trim()); } catch (e) {} });
+  $("#lk-copiar").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(linkConsultante()); $("#lk-msg").textContent = "Link copiado ✦"; }
+    catch (e) { $("#lk-msg").textContent = linkConsultante(); }
+  });
   $("#btn-generar").addEventListener("click", () => {
     const f = leerFicha(), e = validar(f); $("#err").textContent = e; if (e) return;
     PROTOCOLO = generar(f); verResultado();
@@ -837,7 +866,16 @@ function abrir(ev) {
       (f.bienestar || []).forEach((v, i) => { if ($("#b" + i)) $("#b" + i).value = v ?? ""; });
       (f.centros || []).forEach((arr, ci) => arr.forEach((v, k) => { const r = $(`input[name="c${ci}_${k}"][value="${v}"]`); if (r) r.checked = true; }));
       PULSO = f.pulso || null; pintarPulso();
-      PROTOCOLO = generar(leerFicha());
+      LUGAR_TXT = f.lugarIdx === "manual" ? (f.lugar || "") : ""; CONSENT_C = f.consentimiento || null;
+      if (f.lugarIdx === "manual" && (f.lat == null || f.lon == null || f.utc == null)) {
+        $("#f-lat").value = ""; $("#f-lon").value = ""; $("#f-utc").value = "";
+        $("#err").textContent = `Ficha cargada. Nació en «${f.lugar || "otro lugar"}»: completa latitud, longitud y diferencia con UTC, y luego presiona Generar.`;
+        $("#f-lat").scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      const ff = leerFicha(), e = validar(ff);
+      if (e) { $("#err").textContent = "Ficha cargada. " + e; return; }
+      PROTOCOLO = generar(ff);
       if (Array.isArray(d.fases)) PROTOCOLO.fases = d.fases;
       if (Array.isArray(d.seguimiento)) PROTOCOLO.seguimiento = d.seguimiento;
       verResultado();
