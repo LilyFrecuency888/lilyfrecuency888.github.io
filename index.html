@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lily Frequency · Bienestar sonoro</title>
 <meta name="description" content="Lily Frequency: frecuencias, meditación guiada y respiración para tu bienestar diario.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#120f1a">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Lily Frequency">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -107,10 +115,11 @@ footer a{color:var(--lila2)}
       <p class="lead">Frecuencias, meditaciones guiadas y respiración consciente para acompañar tu día: calma, descanso, enfoque y conexión contigo.</p>
       <div class="cta">
         <a class="btn main" href="https://play.google.com/store/apps/details?id=com.lilyfrequency.app" target="_blank" rel="noopener">⬇ Descargar la app</a>
+        <a class="btn ghost" href="#instalar">📱 Instalar en iPhone</a>
         <a class="btn ghost" href="#app">✿ Conoce la app</a>
         <a class="btn ghost" href="#contacto">Pregúntame</a>
       </div>
-      <p class="soon">Disponible en Google Play para Android.</p>
+      <p class="soon">En Google Play para Android · En iPhone, instálala desde Safari.</p>
     </div>
     <div class="mandala" aria-label="Flor de la vida">
       <div class="glow"></div>
@@ -152,7 +161,7 @@ footer a{color:var(--lila2)}
     <h2>Cómo funciona</h2>
     <p class="sub">Simple y amoroso, a tu ritmo.</p>
     <div class="steps">
-      <div class="step"><h3>Instala</h3><p>Descarga Lily Frequency en tu celular Android desde <a href="https://play.google.com/store/apps/details?id=com.lilyfrequency.app" target="_blank" rel="noopener" style="color:var(--lila2)">Google Play</a>.</p></div>
+      <div class="step"><h3>Instala</h3><p>En Android, desde <a href="https://play.google.com/store/apps/details?id=com.lilyfrequency.app" target="_blank" rel="noopener" style="color:var(--lila2)">Google Play</a>. En iPhone, <a href="#instalar" style="color:var(--lila2)">agrégala a tu pantalla de inicio</a> desde Safari.</p></div>
       <div class="step"><h3>Explora gratis</h3><p>Disfruta 14 días con todos los programas abiertos.</p></div>
       <div class="step"><h3>Sigue vibrando</h3><p>Continúa con tu membresía mensual y el código que te da tu terapeuta.</p></div>
     </div>
@@ -172,6 +181,18 @@ footer a{color:var(--lila2)}
       <div class="card" style="text-align:center"><div class="ic" style="margin:0 auto 14px">🏡</div><h3>Plan Familia</h3><p style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--lila);line-height:1.1">USD 88</p><p>Al año, hasta 6 personas y sus mascotas, cada una con su perfil.</p><p style="margin-top:14px"><a class="btn ghost" href="pagar.html?plan=familia">Quiero el Plan Familia</a></p></div>
       <div class="card" style="text-align:center;border-color:var(--menta)"><div class="ic" style="margin:0 auto 14px">🌿</div><h3>¿Eres terapeuta?</h3><p>Licencias para terapeutas individuales y clínicas holísticas, desde USD 188 al año para tus primeros 11 pacientes.</p><p style="margin-top:14px"><a class="btn ghost" href="terapeutas.html">Ver licencias</a></p></div>
     </div>
+  </section>
+
+  <section id="instalar" class="reveal">
+    <h2>Instálala en tu iPhone</h2>
+    <p class="sub">Sin App Store: queda con su ícono en tu pantalla de inicio y se abre como una app.</p>
+    <div class="steps">
+      <div class="step"><h3>Abre en Safari</h3><p>Entra a <b style="color:var(--lila2)">lilyfrecuency888.github.io</b> desde Safari.</p></div>
+      <div class="step"><h3>Toca Compartir</h3><p>Es el cuadrito con una flecha hacia arriba <svg viewBox="0 0 24 24" width="20" height="20" style="vertical-align:-4px" fill="none" stroke="#e4d4ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-label="ícono Compartir"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>, abajo o arriba de la pantalla.</p></div>
+      <div class="step"><h3>Agregar a inicio</h3><p>Elige «Agregar a pantalla de inicio» y luego «Agregar». ¡Listo! ✦</p></div>
+    </div>
+    <p class="note" style="margin-top:22px">Tip: durante tus sesiones deja la pantalla encendida. En iPhone el sonido puede pausarse al bloquearla.</p>
+    <div class="cta" style="justify-content:center"><button class="btn main" id="btn-instalar" type="button" style="display:none">⬇ Instalar en este celular</button></div>
   </section>
 
   <section id="contacto" class="reveal">
@@ -241,5 +262,16 @@ setTimeout(()=>document.querySelectorAll(".reveal").forEach(e=>e.classList.add("
 document.getElementById("y").textContent=new Date().getFullYear();
 </script>
 <script id="lf-menu">(function(){var b=document.getElementById("burger"),l=document.querySelector("nav .links");if(!b||!l)return;b.addEventListener("click",function(){var o=l.classList.toggle("abierto");b.setAttribute("aria-expanded",o);b.textContent=o?"✕":"☰"});l.addEventListener("click",function(e){if(e.target.tagName==="A"){l.classList.remove("abierto");b.setAttribute("aria-expanded","false");b.textContent="☰"}})})();</script>
+<script>
+/* App instalable: guarda una copia para abrir sin conexión y ofrece instalar en Android */
+if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+(() => {
+  let aviso = null; const b = document.getElementById("btn-instalar");
+  addEventListener("beforeinstallprompt", e => { e.preventDefault(); aviso = e; if (b) b.style.display = ""; });
+  if (b) b.addEventListener("click", async () => { if (!aviso) return; aviso.prompt(); await aviso.userChoice; aviso = null; b.style.display = "none"; });
+  const instalada = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  if (instalada) document.querySelectorAll('a[href="#instalar"]').forEach(a => { a.style.display = "none"; });
+})();
+</script>
 </body>
 </html>
