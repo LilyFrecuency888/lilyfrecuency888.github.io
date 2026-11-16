@@ -10,6 +10,7 @@
   --bg:#120f1a; --bg2:#1a1430;
   --surface:#1d1730; --surface2:#251e3a;
   --line:#3a2f52;
+  --linea-campo:#6b5a96;   /* borde de campos: 3.18:1, cumple 1.4.11 */
   --lila:#c9a7ff; --lila2:#e4d4ff; --rosa:#ff9fd2; --menta:#8ff0d0; --oro:#ffd98a;
   --txt:#f4eeff; --muted:#bfb2dc; --ink:#2a1640;
   --aurora:linear-gradient(100deg,#c9a7ff,#ff9fd2 48%,#8ff0d0);
@@ -124,11 +125,13 @@ h1 em,h2 em{
 .btn.wa{background:#25d366;border:0;color:#07301a}
 
 /* --- campos --- */
-input[type=text],input[type=email],input[type=tel],textarea,select{
+input[type=text],input[type=email],input[type=tel],input[type=password],
+input[type=number],input[type=search],input[type=date],textarea,select{
+  box-sizing:border-box;
   font-family:Quicksand,inherit;
   font-size:max(16px,1rem);            /* evita el zoom automatico en el celular */
   border-radius:14px;
-  border:1px solid var(--line);
+  border:1px solid var(--linea-campo);
   background:rgba(37,30,58,.9);
   color:var(--txt);
   transition:border-color .2s ease,box-shadow .2s ease;
@@ -137,6 +140,13 @@ input:focus,textarea:focus,select:focus{
   outline:0;border-color:var(--lila);
   box-shadow:0 0 0 3px rgba(201,167,255,.2);
 }
+
+/* --- enlaces --- */
+a{color:var(--lila2)}
+nav a{display:inline-flex;align-items:center;min-height:44px}
+button.link{display:inline-flex;align-items:center;min-height:44px;background:none;border:0;
+  color:var(--lila2);font:inherit;text-decoration:underline;cursor:pointer;padding:0}
+a:hover{color:var(--lila)}
 
 /* --- accesibilidad --- */
 a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{
