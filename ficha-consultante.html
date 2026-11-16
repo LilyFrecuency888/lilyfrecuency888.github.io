@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu ficha de bienestar · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<!--
+  Lily Frequency · Ficha del consultante
+  La persona llena sus datos y su consentimiento, y envía el archivo a su
+  terapeuta. Nada se guarda en internet ni en ningún servidor.
+-->
+<style>
+:root{--bg:#120f1a;--s2:#251e34;--line:#3a2f52;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc;--ink:#2a1640}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(950px 680px at 50% -8%,#3a2563,var(--bg) 62%) fixed,var(--bg);line-height:1.6;min-height:100vh}
+a{color:var(--lila2)}
+.wrap{max-width:720px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.45rem;font-weight:600;text-decoration:none;color:var(--txt)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2rem,6vw,2.7rem);line-height:1.1;margin-bottom:8px}
+h1 em{font-style:italic;background:linear-gradient(90deg,var(--lila),var(--rosa),var(--menta));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.5rem;margin:0 0 6px}
+h3{font-size:1rem;margin:20px 0 8px;color:var(--lila2)}
+.muted{color:var(--muted)}.small{font-size:.86rem}
+.box{background:rgba(29,23,48,.82);border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:999px;border:1.5px solid rgba(201,167,255,.45);background:transparent;color:var(--lila2);font:700 .95rem Quicksand,inherit;cursor:pointer;text-decoration:none}
+.btn.pri{background:linear-gradient(90deg,var(--lila),var(--rosa));border:0;color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+[hidden]{display:none!important}
+.paso-num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--lila),var(--rosa));color:var(--ink);font:700 .85rem Quicksand;margin-right:10px;vertical-align:4px}
+p.ayuda{color:var(--muted);font-size:.92rem;margin:0 0 14px}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+label.campo{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.92rem}
+label.campo span.opc{font-weight:400;color:var(--muted);font-size:.8rem}
+input[type=text],input[type=date],input[type=time],input[type=number],select,textarea{
+  width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(37,30,58,.9);color:var(--txt);font:600 max(16px,1rem) Quicksand,inherit;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--lila);box-shadow:0 0 0 3px rgba(201,167,255,.2)}
+input:disabled{opacity:.45}
+input[type=date],input[type=time]{color-scheme:dark}
+textarea{min-height:90px;resize:vertical}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:.95rem;cursor:pointer;padding:10px 0}
+.check input{margin-top:3px;accent-color:var(--lila);width:22px;height:22px;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:inline-block;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(37,30,58,.7);cursor:pointer;font-size:.92rem;color:var(--muted)}
+.chip input:checked+span{background:rgba(255,159,210,.18);border-color:var(--rosa);color:#ffd3ea;font-weight:700}
+.chip input:focus-visible+span{outline:2px solid var(--lila)}
+.grupo-temas h4{margin:14px 0 8px;font-size:.88rem;color:var(--muted);font-weight:600}
+.escala-fila{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+.escala-fila:last-child{border-bottom:0}
+.escala-fila input[type=range]{width:100%;accent-color:var(--rosa);grid-column:1/-1}
+.escala-fila output{font-family:"Cormorant Garamond",serif;font-size:1.6rem;color:var(--rosa);min-width:36px;text-align:right}
+.escala-fila .extremos{grid-column:1/-1;display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-top:-6px}
+.bien{display:grid;grid-template-columns:1fr 240px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line);font-size:.93rem}
+.bien:last-child{border-bottom:0}
+details.cuest{border:1px dashed rgba(201,167,255,.45);border-radius:16px;padding:12px 16px;margin-top:16px}
+details.cuest summary{cursor:pointer;font-weight:700;color:var(--lila2)}
+.preg{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.93rem}
+.preg:last-child{border-bottom:0}
+.likert{display:flex;gap:6px}
+.likert label{cursor:pointer}
+.likert input{position:absolute;opacity:0;pointer-events:none}
+.likert span{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:.85rem;font-weight:700;color:var(--muted);background:rgba(37,30,58,.7)}
+.likert input:checked+span{background:linear-gradient(135deg,var(--lila),var(--rosa));border-color:transparent;color:var(--ink)}
+.likert input:focus-visible+span{outline:2px solid var(--lila)}
+.escala{display:flex;justify-content:flex-end;gap:14px;font-size:.78rem;color:var(--muted);margin:8px 0 2px}
+.consent{border:1px solid rgba(143,240,208,.4);background:linear-gradient(135deg,rgba(143,240,208,.08),rgba(201,167,255,.06))}
+.tus-datos{font-size:.86rem;color:var(--muted);border-left:3px solid var(--menta);padding:4px 0 4px 12px;margin-top:14px}
+.acciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;justify-content:flex-end;align-items:center}
+.error{color:var(--rosa);font-size:.92rem;font-weight:700}
+.listo{text-align:center}
+.listo .flor{font-size:3rem;line-height:1}
+.nota-suave{font-size:.9rem;color:var(--oro);border:1px solid rgba(255,217,138,.4);border-radius:14px;padding:10px 14px;margin-top:14px;text-align:left}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
+@media (max-width:600px){.preg,.bien{grid-template-columns:1fr}.btn{width:100%}}
+</style>
+<link rel="stylesheet" href="lily.css">
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">✦ Lily Frequency</a></nav>
+
+  <div id="formulario">
+    <h1>Tu ficha de <em>bienestar</em></h1>
+    <p class="muted" id="intro">Tu terapeuta te compartió este formulario para preparar tu acompañamiento con frecuencias de sonido. Toma de 5 a 10 minutos.</p>
+
+    <section class="box consent">
+      <h2>Antes de empezar</h2>
+      <p class="ayuda">Este formulario ayuda a preparar tu acompañamiento. Es un apoyo para tu bienestar: suma a tu cuidado, no lo reemplaza.</p>
+      <label class="check"><input type="checkbox" class="ck"> <span>Participo porque quiero, y puedo dejar de hacerlo cuando yo lo decida.</span></label>
+      <label class="check"><input type="checkbox" class="ck"> <span>Entiendo que este acompañamiento es complementario: no diagnostica ni trata enfermedades y no sustituye a mi médico, a mi psicólogo ni a mi tratamiento. Si tengo uno, lo sigo igual.</span></label>
+      <label class="check"><input type="checkbox" class="ck"> <span>Doy permiso a mi terapeuta para usar mis respuestas solo para preparar mi perfil y mis programas.</span></label>
+      <label class="check"><input type="checkbox" class="ck"> <span>Soy mayor de edad, o una persona adulta responsable me acompaña y da su permiso.</span></label>
+      <div class="tus-datos"><b>Tus datos son tuyos.</b> Tus respuestas no se guardan en internet ni en ningún servidor: se quedan en tu celular hasta que tú envías el archivo a tu terapeuta. Puedes pedirle que corrija o borre tu información cuando quieras. Este consentimiento sigue los principios internacionales de consentimiento informado y de protección de datos personales: participación libre, información clara, uso solo para el fin indicado y derecho a retirarte en cualquier momento.</div>
+    </section>
+
+    <section class="box">
+      <h2><span class="paso-num">1</span>Tus datos de nacimiento</h2>
+      <p class="ayuda">Tal como aparecen en tu acta o partida de nacimiento.</p>
+      <div class="rejilla">
+        <label class="campo" style="grid-column:1/-1">Nombre completo<input type="text" id="f-nombre" autocomplete="name" placeholder="Nombres y apellidos"></label>
+        <label class="campo">Fecha de nacimiento<input type="date" id="f-fecha"></label>
+        <label class="campo">Hora de nacimiento <span class="opc">Si la sabes</span><input type="time" id="f-hora"></label>
+        <label class="check" style="align-self:end"><input type="checkbox" id="f-sin-hora"> No sé la hora</label>
+        <label class="campo">Lugar de nacimiento<select id="f-lugar"></select></label>
+      </div>
+      <div class="rejilla" id="lugar-manual" hidden style="margin-top:14px">
+        <label class="campo" style="grid-column:1/-1">Ciudad y país<input type="text" id="f-lugar-txt" placeholder="Ej. Jalapa, Guatemala"></label>
+      </div>
+    </section>
+
+    <section class="box">
+      <h2><span class="paso-num">2</span>Cómo estás</h2>
+      <label class="campo">¿Qué te gustaría trabajar o mejorar?<textarea id="f-motivo" placeholder="Cuéntalo con tus palabras"></textarea></label>
+      <h3>Marca lo que te identifica <span class="small muted">(puedes marcar varios)</span></h3>
+      <div id="temas"></div>
+      <div class="rejilla" style="margin-top:16px">
+        <label class="campo">¿Estás en algún tratamiento médico o psicológico?
+          <select id="f-tratamiento"><option value="">Elegir…</option><option>Sí</option><option>No</option><option>No sabe</option></select></label>
+      </div>
+      <h3>Hoy, del 0 al 10…</h3>
+      <div id="escalas"></div>
+      <h3>En las últimas dos semanas…</h3>
+      <div id="bienestar"></div>
+      <details class="cuest">
+        <summary>Preguntas sobre tu energía (opcional, 21 frases)</summary>
+        <p class="ayuda" style="margin-top:8px">¿Qué tanto te identificas con cada frase?</p>
+        <div class="escala"><span>1 = nada</span><span>3 = a veces</span><span>5 = totalmente</span></div>
+        <div id="centros-preg"></div>
+      </details>
+      <details class="cuest">
+        <summary>Preguntas sobre tu forma de ser (opcional, 36 frases)</summary>
+        <p class="ayuda" style="margin-top:8px">¿Qué tanto te identificas con cada frase?</p>
+        <div class="escala"><span>1 = nada</span><span>3 = a veces</span><span>5 = totalmente</span></div>
+        <div id="en-preguntas"></div>
+      </details>
+    </section>
+
+    <section class="box">
+      <h2>Tu firma</h2>
+      <label class="campo">Escribe tu nombre completo como firma<input type="text" id="f-firma" autocomplete="name"></label>
+      <p class="small muted" style="margin-top:8px" id="fecha-firma"></p>
+      <div class="acciones">
+        <span class="error" id="err" role="alert"></span>
+        <button class="btn pri" type="button" id="btn-enviar">Enviar a mi terapeuta ✦</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="listo" hidden>
+    <div class="box listo">
+      <div class="flor">🌸</div>
+      <h2>¡Gracias!</h2>
+      <p class="muted" id="listo-txt">Tu ficha está lista. Envíala a tu terapeuta por WhatsApp o correo.</p>
+      <div id="listo-nota"></div>
+      <div class="acciones" style="justify-content:center">
+        <button class="btn pri" type="button" id="btn-compartir">Compartir mi ficha</button>
+        <button class="btn" type="button" id="btn-descargar">Descargar el archivo</button>
+      </div>
+      <p class="small muted" style="margin-top:14px">Al compartir, elige el chat de tu terapeuta y envía el archivo tal cual.</p>
+    </div>
+  </div>
+
+  <footer>© Lily Frequency · <a href="privacidad.html">Privacidad</a></footer>
+</div>
+
+<script>
+"use strict";
+const FORM = {"temas": [["Emocionales", "Cómo me siento", ["Ansiedad o nervios", "Estrés laboral", "Tristeza o duelo", "Insomnio o mal descanso", "Agotamiento", "Baja autoestima", "Miedo o inseguridad", "Enojo o irritabilidad", "Falta de concentración", "Desconexión espiritual"]], ["Relaciones", "Mis relaciones", ["Conflictos de pareja", "Ruptura o separación", "Busca pareja", "Conflictos familiares", "Temas heredados de la familia"]], ["Abundancia", "Trabajo y abundancia", ["Bloqueo económico", "Estancamiento laboral", "Emprendimiento"]], ["Físicos (complementario)", "Molestias en mi cuerpo", ["Dolor muscular", "Dolor articular", "Dolor de cabeza", "Digestión", "Alergias", "Defensas bajas / resfriados", "Piel o acné", "Ciclo menstrual", "Menopausia", "Peso", "Circulación", "Cansancio físico", "Tiroides", "Ciática"]]], "escalas": [["Estrés", "¿Cuánto estrés sientes?", "nada", "muchísimo"], ["Calidad del sueño", "¿Qué tan bien estás durmiendo?", "muy mal", "muy bien"], ["Energía", "¿Cuánta energía tienes?", "nada", "muchísima"], ["Ánimo", "¿Cómo está tu ánimo?", "muy bajo", "muy bueno"], ["Malestar del tema principal", "¿Cuánto te afecta lo que quieres trabajar?", "nada", "muchísimo"]], "bienestar": {"frases": ["Me he sentido con alegría y de buen humor.", "Me he sentido con calma y relajación.", "Me he sentido con actividad y energía.", "Me he despertado con frescura y descanso.", "Mi vida diaria ha estado llena de cosas que me interesan."], "opciones": [["Todo el tiempo", 5], ["La mayor parte del tiempo", 4], ["Más de la mitad del tiempo", 3], ["Menos de la mitad del tiempo", 2], ["De vez en cuando", 1], ["Nunca", 0]]}, "centros": [["Siento inseguridad económica o miedo al futuro.", "Me cuesta sentirme a salvo o en mi lugar.", "Me siento con poca energía física o desconexión de mi cuerpo."], ["Me cuesta disfrutar o darme permiso para el placer.", "Reprimo mis emociones o a veces me desbordan.", "Siento poca creatividad o pasión."], ["Me cuesta tomar decisiones o poner límites.", "Siento que no tengo el control de mi vida.", "Me falta confianza en mí."], ["Me cuesta perdonar o soltar heridas.", "Me cuesta dar o recibir amor.", "Siento soledad aunque esté con otras personas."], ["Me cuesta decir lo que pienso o siento.", "Siento que no me escuchan.", "Me callo para evitar conflictos."], ["Me cuesta confiar en mi intuición.", "Siento confusión sobre mi camino.", "Me cuesta concentrarme o imaginar lo que quiero."], ["Siento desconexión de lo espiritual.", "Me cuesta encontrar propósito en lo que hago.", "Me cuesta meditar o encontrar calma mental."]]};
+const LUGARES = [
+  ["Ciudad de Guatemala, GT",14.6349,-90.5069,"America/Guatemala"],["Quetzaltenango, GT",14.8347,-91.5180,"America/Guatemala"],
+  ["Antigua Guatemala, GT",14.5586,-90.7295,"America/Guatemala"],["Escuintla, GT",14.3050,-90.7850,"America/Guatemala"],
+  ["Cobán, GT",15.4703,-90.3708,"America/Guatemala"],["Puerto Barrios, GT",15.7278,-88.5944,"America/Guatemala"],
+  ["Huehuetenango, GT",15.3197,-91.4709,"America/Guatemala"],["San Salvador, SV",13.6929,-89.2182,"America/El_Salvador"],
+  ["Santa Ana, SV",13.9942,-89.5597,"America/El_Salvador"],["San Miguel, SV",13.4833,-88.1833,"America/El_Salvador"],
+  ["Tegucigalpa, HN",14.0723,-87.1921,"America/Tegucigalpa"],["San Pedro Sula, HN",15.5050,-88.0250,"America/Tegucigalpa"],
+  ["Managua, NI",12.1140,-86.2362,"America/Managua"],["León, NI",12.4379,-86.8780,"America/Managua"],
+  ["San José, CR",9.9281,-84.0907,"America/Costa_Rica"],["Ciudad de Panamá, PA",8.9824,-79.5199,"America/Panama"],
+  ["Belice, BZ",17.5046,-88.1962,"America/Belize"],["Ciudad de México, MX",19.4326,-99.1332,"America/Mexico_City"],
+  ["Guadalajara, MX",20.6597,-103.3496,"America/Mexico_City"],["Monterrey, MX",25.6866,-100.3161,"America/Monterrey"],
+  ["Tapachula, MX",14.9030,-92.2575,"America/Mexico_City"],["Cancún, MX",21.1619,-86.8515,"America/Cancun"],
+  ["Bogotá, CO",4.7110,-74.0721,"America/Bogota"],["Lima, PE",-12.0464,-77.0428,"America/Lima"],
+  ["Santiago, CL",-33.4489,-70.6693,"America/Santiago"],["Buenos Aires, AR",-34.6037,-58.3816,"America/Argentina/Buenos_Aires"],
+  ["Caracas, VE",10.4806,-66.9036,"America/Caracas"],["Santo Domingo, DO",18.4861,-69.9312,"America/Santo_Domingo"],
+  ["Los Ángeles, EE. UU.",34.0522,-118.2437,"America/Los_Angeles"],["Houston, EE. UU.",29.7604,-95.3698,"America/Chicago"],
+  ["Nueva York, EE. UU.",40.7128,-74.0060,"America/New_York"],["Miami, EE. UU.",25.7617,-80.1918,"America/New_York"],
+  ["Madrid, ES",40.4168,-3.7038,"Europe/Madrid"]
+];
+const FRASES = [
+  [1,"Me cuesta descansar si algo no quedó bien hecho."],[2,"Me doy cuenta de lo que otros necesitan antes de que lo pidan."],[3,"Me importa mucho lograr mis metas y que se note."],
+  [4,"Siento que soy diferente y que pocas personas me entienden de verdad."],[5,"Necesito tiempo a solas para recargarme."],[6,"Suelo anticipar lo que podría salir mal."],
+  [7,"Me aburro rápido y busco experiencias nuevas."],[8,"Digo las cosas de frente aunque incomoden."],[9,"Evito los conflictos aunque tenga que ceder."],
+  [1,"Noto enseguida los errores, los míos y los de los demás."],[2,"Me cuesta decir que no cuando alguien me pide ayuda."],[3,"Me adapto rápido a lo que se espera de mí en cada lugar."],
+  [4,"Vivo mis emociones con mucha intensidad."],[5,"Prefiero observar y entender antes de actuar."],[6,"Me cuesta confiar del todo en las personas o en mis propias decisiones."],
+  [7,"Prefiero ver el lado positivo y evitar lo que duele."],[8,"No me gusta que me controlen; prefiero tener el mando."],[9,"Me cuesta saber qué quiero de verdad."],
+  [1,"Siento que debo hacer lo correcto aunque me cueste."],[2,"Me duele sentir que no valoran lo que doy."],[3,"Me cuesta parar: siento que valgo por lo que produzco."],
+  [4,"A menudo siento que me falta algo que otras personas sí tienen."],[5,"Cuido mucho mi energía, mi tiempo y mi privacidad."],[6,"Me da tranquilidad tener un plan o alguien de confianza que me respalde."],
+  [7,"Tengo muchos planes e ideas al mismo tiempo."],[8,"Protejo con fuerza a las personas que quiero."],[9,"Postergo cosas importantes y me distraigo con lo pequeño."],
+  [1,"Me molesta mucho la desorganización o que no se sigan las reglas."],[2,"Me resulta más fácil dar que recibir."],[3,"Me afecta mucho fallar delante de otras personas."],
+  [4,"Busco que lo que hago sea auténtico y tenga significado."],[5,"Me siento con más seguridad cuando sé mucho de un tema."],[6,"Dudo mucho antes de tomar decisiones importantes."],
+  [7,"Me cuesta comprometerme con una sola opción."],[8,"Me cuesta mostrarme vulnerable."],[9,"Me adapto a lo que otros prefieren para mantener la paz."]
+];
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const hoy = new Date();
+const terapeuta = new URLSearchParams(location.search).get("t");
+if (terapeuta) $("#intro").textContent = `${terapeuta} te compartió este formulario para preparar tu acompañamiento con frecuencias de sonido. Toma de 5 a 10 minutos.`;
+$("#fecha-firma").textContent = "Fecha: " + hoy.toLocaleDateString("es", { day: "numeric", month: "long", year: "numeric" });
+
+/* Armar el formulario */
+$("#f-lugar").innerHTML = `<option value="">Elegir…</option>` + LUGARES.map((l, i) => `<option value="${i}">${esc(l[0])}</option>`).join("") + `<option value="otro">Otro lugar</option>`;
+$("#f-lugar").addEventListener("change", () => { $("#lugar-manual").hidden = $("#f-lugar").value !== "otro"; });
+$("#f-sin-hora").addEventListener("change", () => { $("#f-hora").disabled = $("#f-sin-hora").checked; });
+$("#temas").innerHTML = FORM.temas.map(([g, etiqueta, ts]) => `<div class="grupo-temas"><h4>${esc(etiqueta)}</h4><div class="chips">${ts.map(t => `<label class="chip"><input type="checkbox" value="${esc(t)}"><span>${esc(t)}</span></label>`).join("")}</div></div>`).join("");
+$("#escalas").innerHTML = FORM.escalas.map((x, i) => `<div class="escala-fila"><label for="e${i}"><b>${esc(x[1])}</b></label><output id="o${i}">—</output><input type="range" id="e${i}" min="0" max="10" step="1" value="5" data-tocado="0"><div class="extremos"><span>0 · ${esc(x[2])}</span><span>10 · ${esc(x[3])}</span></div></div>`).join("");
+$$("#escalas input").forEach((r, i) => r.addEventListener("input", () => { r.dataset.tocado = "1"; $("#o" + i).textContent = r.value; }));
+$("#bienestar").innerHTML = FORM.bienestar.frases.map((x, i) => `<div class="bien"><span>${esc(x)}</span><select id="b${i}" aria-label="${esc(x)}"><option value="">Elegir…</option>${FORM.bienestar.opciones.map(o => `<option value="${o[1]}">${esc(o[0])}</option>`).join("")}</select></div>`).join("");
+let nq = 0;
+const frasesC = []; FORM.centros.forEach((fr, ci) => fr.forEach((t, k) => frasesC.push([ci, k, t])));
+$("#centros-preg").innerHTML = [0, 1, 2].flatMap(k => frasesC.filter(x => x[1] === k)).map(([ci, k, t]) => `<div class="preg"><div>${++nq}. ${esc(t)}</div><div class="likert" role="radiogroup" aria-label="Frase ${nq}">${[1,2,3,4,5].map(v => `<label><input type="radio" name="c${ci}_${k}" value="${v}"><span>${v}</span></label>`).join("")}</div></div>`).join("");
+$("#en-preguntas").innerHTML = FRASES.map(([, txt], i) => `<div class="preg"><div>${i + 1}. ${esc(txt)}</div><div class="likert" role="radiogroup" aria-label="Frase ${i + 1}">${[1,2,3,4,5].map(v => `<label><input type="radio" name="q${i}" value="${v}"><span>${v}</span></label>`).join("")}</div></div>`).join("");
+
+/* Validar y armar el archivo */
+function leer() {
+  const idx = $("#f-lugar").value, otro = idx === "otro", L = otro || idx === "" ? null : LUGARES[Number(idx)];
+  return {
+    nombre: $("#f-nombre").value.trim(), fecha: $("#f-fecha").value, hora: $("#f-hora").value, sinHora: $("#f-sin-hora").checked,
+    lugarIdx: otro ? "manual" : idx, lugar: otro ? $("#f-lugar-txt").value.trim() : (L ? L[0] : ""),
+    lat: L ? L[1] : null, lon: L ? L[2] : null, zona: L ? L[3] : null, utc: null,
+    motivo: $("#f-motivo").value.trim(), notas: "", tratamiento: $("#f-tratamiento").value,
+    temas: $$("#temas input:checked").map(i => i.value), alertas: [],
+    respuestas: FRASES.map((_, i) => { const v = $(`input[name="q${i}"]:checked`); return v ? Number(v.value) : 0; }),
+    escalas: FORM.escalas.map((_, i) => { const r = $("#e" + i); return r.dataset.tocado === "1" ? Number(r.value) : null; }),
+    bienestar: FORM.bienestar.frases.map((_, i) => { const v = $("#b" + i).value; return v === "" ? null : Number(v); }),
+    centros: FORM.centros.map((fr, ci) => fr.map((_, k) => { const v = $(`input[name="c${ci}_${k}"]:checked`); return v ? Number(v.value) : 0; })),
+    pulso: null, inicio: "", consent: true,
+    consentimiento: { version: 1, firma: $("#f-firma").value.trim(), fecha: hoy.toISOString(), terapeuta: terapeuta || "",
+      puntos: $$(".ck").map(c => c.parentElement.textContent.trim()) }
+  };
+}
+function validar(f) {
+  if ($$(".ck").some(c => !c.checked)) return "Marca las cuatro casillas de «Antes de empezar» para continuar.";
+  if (!f.nombre) return "Escribe tu nombre completo.";
+  if (!f.fecha) return "Escribe tu fecha de nacimiento.";
+  if (!f.sinHora && !f.hora) return "Escribe tu hora de nacimiento o marca «No sé la hora».";
+  if (!f.lugarIdx || (f.lugarIdx === "manual" && !f.lugar)) return "Elige o escribe tu lugar de nacimiento.";
+  if (!f.consentimiento.firma) return "Escribe tu nombre como firma.";
+  return "";
+}
+let ARCHIVO = null;
+$("#btn-enviar").addEventListener("click", () => {
+  const f = leer(), e = validar(f); $("#err").textContent = e; if (e) return;
+  const datos = { version: 4, origen: "consultante", guardado: new Date().toISOString(), ficha: f };
+  const nombre = "ficha-" + f.nombre.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + ".json";
+  ARCHIVO = new File([JSON.stringify(datos, null, 2)], nombre, { type: "application/json" });
+  const b = f.bienestar.every(v => v !== null) ? f.bienestar.reduce((a, x) => a + x, 0) * 4 : null;
+  $("#listo-nota").innerHTML = b !== null && b <= 28 ? `<div class="nota-suave">Gracias por contarnos cómo te has sentido. Tu terapeuta lo tendrá en cuenta. Si sientes que necesitas apoyo ahora, habla con alguien de confianza o con un profesional de salud.</div>` : "";
+  if (terapeuta) $("#listo-txt").textContent = `Tu ficha está lista. Envíasela a ${terapeuta} por WhatsApp o correo.`;
+  $("#btn-compartir").hidden = !(navigator.canShare && navigator.canShare({ files: [ARCHIVO] }));
+  $("#formulario").hidden = true; $("#listo").hidden = false; window.scrollTo({ top: 0 });
+});
+$("#btn-compartir").addEventListener("click", async () => {
+  try { await navigator.share({ files: [ARCHIVO], title: "Mi ficha de bienestar", text: "Mi ficha de bienestar para la sesión" }); } catch (e) {}
+});
+$("#btn-descargar").addEventListener("click", () => {
+  const url = URL.createObjectURL(ARCHIVO), a = document.createElement("a");
+  a.href = url; a.download = ARCHIVO.name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+});
+</script>
+</body>
+</html>
