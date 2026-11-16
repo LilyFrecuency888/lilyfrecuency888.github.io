@@ -18,25 +18,31 @@ h2{font-size:1.45rem;margin:30px 0 4px}
 .amb.on{border-color:var(--lila);box-shadow:0 0 0 1px var(--lila) inset;background:linear-gradient(162deg,rgba(58,44,92,.9),rgba(30,22,52,.9))}
 .amb b{display:block;font-size:1rem;font-family:"Cormorant Garamond",serif;font-weight:600}
 .amb small{color:var(--muted);font-size:.78rem;line-height:1.42;display:block;margin-top:3px}
-.amb i{position:absolute;top:12px;right:13px;font-style:normal;font-size:.95rem;opacity:.35}
+.amb i{position:absolute;top:12px;right:13px;font-style:normal;font-size:.95rem;opacity:.6}
 .amb.on i{opacity:1}
 #mezcla{margin-top:18px}
 .pista{display:grid;grid-template-columns:1fr 130px auto;gap:11px;align-items:center;padding:9px 13px;border:1px solid var(--line);border-radius:14px;margin-bottom:7px;background:rgba(18,15,26,.5)}
 .pista b{font-weight:600;font-size:.92rem}
-.pista button{background:none;border:0;color:var(--muted);font:inherit;cursor:pointer;font-size:1.1rem;line-height:1;padding:4px 6px}
+.pista button{background:none;border:0;color:var(--txt);font:inherit;cursor:pointer;font-size:1.25rem;line-height:1;min-width:44px;min-height:44px}
 #lienzo{width:100%;height:92px;display:block;margin-top:16px;border-radius:18px;border:1px solid var(--line);background:rgba(18,15,26,.6)}
 #panel{position:sticky;bottom:0;z-index:40;margin-top:20px;background:rgba(18,15,26,.97);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:22px;padding:17px}
 .ctr{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.ajustes{display:grid;grid-template-columns:auto 1fr;gap:9px 12px;align-items:center;margin-top:15px;font-size:.82rem;color:var(--muted)}
+.ajustes{margin-top:16px}
+.ajuste{margin-bottom:14px}
+.ajuste>span{display:block;font-size:.82rem;color:var(--muted);margin-bottom:7px}
+#panel .vol{display:flex;align-items:center;gap:11px;margin-top:13px;font-size:.82rem;color:var(--muted)}
+#panel .ctr .btn{width:auto}
+#pPlay{flex:1}
+#pStop{flex:0 0 auto;width:56px;padding:0}
 input[type=range]{accent-color:var(--lila);width:100%}
 .pastillas{display:flex;gap:7px;flex-wrap:wrap}
-.pastillas button{padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:700 .78rem Quicksand,inherit;cursor:pointer;min-height:36px}
+.pastillas button{padding:10px 15px;border-radius:999px;border:1px solid var(--linea-campo);background:transparent;color:var(--txt);font:700 .82rem Quicksand,inherit;cursor:pointer;min-height:44px}
 .pastillas button.on{background:var(--aurora);color:var(--ink);border-color:transparent}
 .nota{font-family:"Cormorant Garamond",serif;font-size:1.5rem;line-height:1.1}
 .nota span{font-family:Quicksand;font-size:.8rem;color:var(--muted);display:block;margin-top:2px}
 .aviso{font-size:.84rem;color:var(--muted);background:rgba(201,167,255,.07);border-left:2px solid var(--lila);border-radius:0 12px 12px 0;padding:12px 15px;margin-top:18px}
 .recetas{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.recetas button{padding:8px 14px;border-radius:999px;border:1px dashed rgba(201,167,255,.35);background:transparent;color:var(--txt);font:600 .8rem Quicksand,inherit;cursor:pointer}
+.recetas button{padding:11px 16px;min-height:44px;border-radius:999px;border:1px dashed rgba(201,167,255,.35);background:transparent;color:var(--txt);font:600 .8rem Quicksand,inherit;cursor:pointer}
 .recetas button:hover{border-style:solid;border-color:var(--lila)}
 </style>
 </head>
@@ -52,7 +58,7 @@ input[type=range]{accent-color:var(--lila);width:100%}
 
   <div id="area" hidden>
     <h1>Sonidos para <em>dormir</em></h1>
-    <p class="muted">Ninguno de estos sonidos es una grabación. Se fabrican en tu teléfono mientras suenan, así que no se repiten, no se descargan y no se acaban. Toca los que quieras y súbelos o bájalos hasta que la mezcla sea tuya.</p>
+    <p class="muted">Toca los que quieras y mézclalos. Nada está grabado: se fabrica en tu teléfono mientras suena, así que no se repite y no se acaba.</p>
 
     <div class="recetas" id="recetas"></div>
 
@@ -62,36 +68,41 @@ input[type=range]{accent-color:var(--lila);width:100%}
     <h2>Tu mezcla</h2>
     <div id="mezcla"><p class="muted small">Todavía no has elegido nada. Toca un ambiente de arriba.</p></div>
 
+    <div class="ajustes">
+      <div class="ajuste"><span id="lFondo">Onda de fondo</span>
+        <div class="pastillas" id="aFondo" role="group" aria-labelledby="lFondo">
+          <button type="button" data-b="0" class="on" aria-pressed="true">Ninguna</button>
+          <button type="button" data-b="2" aria-pressed="false">Delta 2</button>
+          <button type="button" data-b="3.5" aria-pressed="false">Delta 3.5</button>
+          <button type="button" data-b="6" aria-pressed="false">Theta 6</button>
+          <button type="button" data-b="7.83" aria-pressed="false">Schumann</button>
+        </div>
+      </div>
+      <div class="ajuste"><span id="lDur">Se apaga en</span>
+        <div class="pastillas" id="aDur" role="group" aria-labelledby="lDur">
+          <button type="button" data-m="0" aria-pressed="false">Sin límite</button>
+          <button type="button" data-m="15" aria-pressed="false">15 min</button>
+          <button type="button" data-m="30" aria-pressed="false">30 min</button>
+          <button type="button" data-m="60" class="on" aria-pressed="true">1 hora</button>
+          <button type="button" data-m="120" aria-pressed="false">2 horas</button>
+          <button type="button" data-m="480" aria-pressed="false">Toda la noche</button>
+        </div>
+      </div>
+    </div>
+
     <canvas id="lienzo" aria-label="La forma del sonido que está saliendo"></canvas>
 
     <div id="panel">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
-        <div class="nota" id="pTit">&mdash;<span id="pSub">Sin mezcla</span></div>
+        <div class="nota" id="pTit">Elige un sonido<span id="pSub">Nada sonando todavía</span></div>
         <div class="small muted" style="text-align:right" id="pTiempo">0:00</div>
       </div>
       <div class="ctr" style="margin-top:12px">
         <button class="btn pri" id="pPlay">&#9654; Empezar</button>
-        <button class="btn" id="pStop">&#9632;</button>
+        <button class="btn" id="pStop" aria-label="Detener">&#9632;</button>
       </div>
-      <div class="ajustes">
-        <span>Volumen</span><input type="range" id="aVol" min="0" max="100" value="60">
-        <span>Onda de fondo</span>
-        <div class="pastillas" id="aFondo">
-          <button data-b="0" class="on">Ninguna</button>
-          <button data-b="2">Delta 2</button>
-          <button data-b="3.5">Delta 3.5</button>
-          <button data-b="6">Theta 6</button>
-          <button data-b="7.83">Schumann</button>
-        </div>
-        <span>Se apaga en</span>
-        <div class="pastillas" id="aDur">
-          <button data-m="0">Sin límite</button>
-          <button data-m="15">15 min</button>
-          <button data-m="30">30 min</button>
-          <button data-m="60" class="on">1 hora</button>
-          <button data-m="120">2 horas</button>
-          <button data-m="480">Toda la noche</button>
-        </div>
+      <div class="vol"><span id="lVol">Volumen</span>
+        <input type="range" id="aVol" min="0" max="100" value="60" aria-labelledby="lVol">
       </div>
     </div>
 
@@ -187,7 +198,8 @@ window.enter=function(){
 
 function pintarAmb(){
   $("ambientes").innerHTML=AMB.map(a=>
-    '<button type="button" class="amb" data-id="'+a.id+'"><i>&#43;</i>'+
+    '<button type="button" class="amb" data-id="'+a.id+'" aria-pressed="false">'+
+    '<i aria-hidden="true">&#43;</i>'+
     '<b>'+a.n+'</b><small>'+a.d+'</small></button>').join("");
 }
 function pintarRecetas(){
@@ -226,18 +238,19 @@ function refrescar(){
   document.querySelectorAll(".amb").forEach(b=>{
     const on=!!capas[b.dataset.id];
     b.classList.toggle("on",on);
+    b.setAttribute("aria-pressed",on?"true":"false");
     b.querySelector("i").innerHTML=on?"&#10003;":"&#43;";
   });
   if(!ids.length){
     $("mezcla").innerHTML='<p class="muted small">Todavía no has elegido nada. Toca un ambiente de arriba.</p>';
-    $("pTit").firstChild.nodeValue="—"; $("pSub").textContent="Sin mezcla";
+    $("pTit").firstChild.nodeValue="Elige un sonido"; $("pSub").textContent="Nada sonando todavía";
     return;
   }
   $("mezcla").innerHTML=ids.map(id=>{
     const a=receta(id);
     return '<div class="pista"><b>'+a.n+'</b>'+
-      '<input type="range" min="0" max="100" value="'+Math.round(capas[id].vol*100)+'" data-v="'+id+'">'+
-      '<button type="button" data-x="'+id+'" title="Quitar">&times;</button></div>';
+      '<input type="range" min="0" max="100" value="'+Math.round(capas[id].vol*100)+'" data-v="'+id+'" aria-label="Volumen de '+a.n+'">'+
+      '<button type="button" data-x="'+id+'" aria-label="Quitar '+a.n+'">&times;</button></div>';
   }).join("");
   $("pTit").firstChild.nodeValue=ids.length===1?receta(ids[0]).n:ids.length+" sonidos";
   $("pSub").textContent=ids.map(id=>receta(id).n).join(" + ");
@@ -441,13 +454,15 @@ function apagarFondo(){
 }
 $("aFondo").onclick=e=>{
   const b=e.target.closest("[data-b]"); if(!b) return;
-  $("aFondo").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  $("aFondo").querySelectorAll("button").forEach(x=>{
+    x.classList.toggle("on",x===b); x.setAttribute("aria-pressed",x===b?"true":"false")});
   fondoHz=parseFloat(b.dataset.b);
   if(corriendo) ponerFondo();
 };
 $("aDur").onclick=e=>{
   const b=e.target.closest("[data-m]"); if(!b) return;
-  $("aDur").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  $("aDur").querySelectorAll("button").forEach(x=>{
+    x.classList.toggle("on",x===b); x.setAttribute("aria-pressed",x===b?"true":"false")});
   limite=+b.dataset.m;
   if(corriendo){ t0=ctx.currentTime; menguando=false;
     maestro.gain.cancelScheduledValues(ctx.currentTime);
