@@ -27,6 +27,8 @@ input{width:100%;padding:14px;border-radius:14px;border:1.5px solid var(--line);
 .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .err{color:var(--rosa);margin-top:10px;min-height:1.4em}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:14px}
+.csec{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:1.2rem;color:var(--lila2);margin:22px 0 2px}
+.csec+.ctxt{color:var(--muted);font-size:.84rem;margin:0}
 .card{text-align:left;background:var(--s2);border:1px solid var(--line);border-radius:18px;padding:14px;cursor:pointer;color:var(--txt);font:inherit}
 .card:hover,.card.on{border-color:var(--rosa)}
 .card b{display:block;margin-bottom:2px}
@@ -79,7 +81,7 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
     <h2>Mente de cura</h2>
     <p class="muted">Acompaña tu tratamiento con calma, visualización y afirmación. Usa audífonos para los tonos binaurales.</p>
     <div class="notice">Esto <b>no sustituye</b> la indicación de tu médico ni tu tratamiento: lo acompaña. Si piensas en hacerte daño, busca ayuda de inmediato con un profesional, una línea de crisis o emergencias.</div>
-    <div class="grid" id="list"></div>
+    <div id="list"></div>
 
     <h2>Frecuencias de los alimentos</h2>
     <div class="box ref" id="ref"></div>
@@ -196,8 +198,44 @@ try{const c=localStorage.getItem("lf-web-code");if(c)enter(c,true)}catch{}
 
 let DATA=null;
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+/* Mente de cura agrupada, igual que Manifestacion */
+const CURA_SEC=[
+ ["Metabólico y corazón","Lo que se lleva con control y constancia.",
+  ["Diabetes","Presión alta","Tiroides","Hígado graso","Enfermedad del corazón","Enfermedad renal"]],
+ ["Dolor y articulaciones","Para los días en que el cuerpo no da tregua.",
+  ["Artritis","Fibromialgia","Migraña","Dolor crónico"]],
+ ["Digestivo y respiratorio","Donde los nervios se sienten primero.",
+  ["Gastritis y colitis","Colon irritable","Asma","Alergias"]],
+ ["Defensas y piel","Cuando el cuerpo reacciona contra sí mismo.",
+  ["Lupus y enfermedades autoinmunes","Psoriasis y dermatitis","Infecciones y parásitos","Recuperación de gripe o covid"]],
+ ["Tratamientos fuertes y cirugía","Para los días más duros. Acompañan, no reemplazan nada.",
+  ["Cáncer (en tratamiento)","Días de quimio o radioterapia","Antes de una cirugía","Recuperación de cirugía"]],
+ ["Ánimo y descanso","Lo que pesa por dentro también se trata.",
+  ["Trastorno de ansiedad","Depresión","Insomnio"]],
+ ["Etapas de la mujer","Cambios que piden otro ritmo.",
+  ["Menopausia","Tratamiento de fertilidad"]],
+ ["Hábitos que cuestan","Para sostener la decisión cuando el cuerpo pide lo otro.",
+  ["Cuidar tu peso","Dejar de fumar","Recuperación de adicciones"]],
+ ["Para quien acompaña","Cuidar a alguien también desgasta.",
+  ["Para quien cuida a un enfermo","Memoria y demencia (acompañante)"]]
+];
+function tarjetaCura(p,i){
+  return `<button class="card" data-i="${i}"><b>${esc(p.name)}</b><small>${Math.round(p.steps.reduce((a,s)=>a+s.dur,0)/60)} min · ${p.steps.length} pasos</small></button>`;
+}
 function render(d){DATA=d;
-  $("list").innerHTML=d.cura.map((p,i)=>`<button class="card" data-i="${i}"><b>${esc(p.name)}</b><small>${Math.round(p.steps.reduce((a,s)=>a+s.dur,0)/60)} min · ${p.steps.length} pasos</small></button>`).join("");
+  const pos=new Map(); d.cura.forEach((p,i)=>pos.set(p.name,i));
+  const puestos=new Set(); let h="";
+  for(const [sec,pie,nombres] of CURA_SEC){
+    const ids=nombres.filter(n=>pos.has(n)).map(n=>pos.get(n));
+    if(!ids.length) continue;
+    ids.forEach(i=>puestos.add(i));
+    h+=`<h3 class="csec">${esc(sec)}</h3><p class="ctxt">${esc(pie)}</p>`+
+       `<div class="grid">${ids.map(i=>tarjetaCura(d.cura[i],i)).join("")}</div>`;
+  }
+  const resto=d.cura.map((p,i)=>i).filter(i=>!puestos.has(i));
+  if(resto.length) h+=`<h3 class="csec">Otros</h3><p class="ctxt">&nbsp;</p>`+
+     `<div class="grid">${resto.map(i=>tarjetaCura(d.cura[i],i)).join("")}</div>`;
+  $("list").innerHTML=h;
   $("ref").innerHTML=d.ref;
 }
 $("list").onclick=e=>{const c=e.target.closest("[data-i]");if(!c)return;document.querySelectorAll(".card").forEach(x=>x.classList.toggle("on",x===c));load(DATA.cura[+c.dataset.i]);play()};
