@@ -85,10 +85,11 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
       <label class="t"><input type="checkbox" id="pIso" style="width:auto"> Sin audífonos (pulsos por parlante)</label>
     </div>
 
-    <h2>Mente de cura</h2>
-    <p class="muted">Acompaña tu tratamiento con calma, visualización y afirmación. Usa audífonos para los tonos binaurales.</p>
-    <div class="notice">Esto <b>no sustituye</b> la indicación de tu médico ni tu tratamiento: lo acompaña. Si piensas en hacerte daño, busca ayuda de inmediato con un profesional, una línea de crisis o emergencias.</div>
-    <div id="list"></div>
+    <div class="box" style="border-color:var(--rosa);background:linear-gradient(135deg,rgba(255,159,210,.14),rgba(201,167,255,.08));margin-bottom:18px">
+      <h2 style="margin-top:0">Mente de cura</h2>
+      <p class="muted">32 programas en 9 secciones: metabólico y corazón, dolor y articulaciones, digestivo y respiratorio, defensas y piel, tratamientos fuertes y cirugía, ánimo y descanso, etapas de la mujer, hábitos que cuestan y para quien acompaña. Cada uno con su decreto. No sustituye tu tratamiento: lo acompaña.</p>
+      <div class="row"><a class="btn pri" href="cura.html">Entrar a Mente de cura →</a></div>
+    </div>
 
     <h2>Frecuencias de los alimentos</h2>
     <div class="box ref" id="ref"></div>
@@ -242,10 +243,10 @@ function render(d){DATA=d;
   const resto=d.cura.map((p,i)=>i).filter(i=>!puestos.has(i));
   if(resto.length) h+=`<h3 class="csec">Otros</h3><p class="ctxt">&nbsp;</p>`+
      `<div class="grid">${resto.map(i=>tarjetaCura(d.cura[i],i)).join("")}</div>`;
-  $("list").innerHTML=h;
+  const L=$("list"); if(L) L.innerHTML=h;
   $("ref").innerHTML=d.ref;
 }
-$("list").onclick=e=>{const c=e.target.closest("[data-i]");if(!c)return;document.querySelectorAll(".card").forEach(x=>x.classList.toggle("on",x===c));load(DATA.cura[+c.dataset.i]);play()};
+if($("list")) $("list").onclick=e=>{const c=e.target.closest("[data-i]");if(!c)return;document.querySelectorAll(".card").forEach(x=>x.classList.toggle("on",x===c));load(DATA.cura[+c.dataset.i]);play()};
 
 /* motor de sonido */
 let ctx,master,cur=null,idx=0,stepStart=0,voice=null,tick=null,playing=false;
