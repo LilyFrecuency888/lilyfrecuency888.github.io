@@ -26,3 +26,7 @@ Disallow: /familia.html
 Disallow: /familia-data.js
 Disallow: /panel-terapeutas.html
 Disallow: /sonidos.html
+Disallow: /amor.html
+Disallow: /amor-data.js
+Disallow: /cura.html
+Disallow: /cura-data.js
