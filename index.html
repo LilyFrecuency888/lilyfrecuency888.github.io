@@ -1,277 +1,992 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lily Frequency · Bienestar sonoro</title>
-<meta name="description" content="Lily Frequency: frecuencias, meditación guiada y respiración para tu bienestar diario.">
-<link rel="manifest" href="manifest.webmanifest">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lily Frequency</title>
+<meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#120f1a">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Lily Frequency">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-:root{--bg:#120f1a;--bg2:#1c1630;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(1200px 800px at 50% -10%,#3a2563 0%,var(--bg) 60%) fixed,var(--bg);line-height:1.65;overflow-x:hidden}
-a{color:inherit}
-.stars{position:fixed;inset:0;pointer-events:none;z-index:0}
-.stars i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.0;animation:tw 4s ease-in-out infinite}
-@keyframes tw{0%,100%{opacity:0;transform:scale(.6)}50%{opacity:.9;transform:scale(1)}}
-main,header,footer{position:relative;z-index:1}
-nav{display:flex;justify-content:space-between;align-items:center;max-width:1080px;margin:0 auto;padding:22px 22px}
-.logo{display:flex;align-items:center;gap:10px;font-family:"Cormorant Garamond",serif;font-size:1.55rem;font-weight:600;letter-spacing:.02em;text-decoration:none}
-.logo svg{width:34px;height:34px}
-nav .links a{margin-left:20px;text-decoration:none;color:var(--muted);font-weight:600;font-size:.95rem}
-nav .links a:hover{color:var(--lila)}
-.hero{max-width:1080px;margin:0 auto;padding:30px 22px 60px;display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
-.eyebrow{display:inline-block;padding:6px 14px;border-radius:999px;background:rgba(201,167,255,.14);border:1px solid rgba(201,167,255,.35);color:var(--lila2);font-weight:600;font-size:.85rem;letter-spacing:.06em}
-h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.02;margin:18px 0 16px}
-h1 em{font-style:italic;background:linear-gradient(90deg,var(--lila),var(--rosa),var(--menta));-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{font-size:1.15rem;color:var(--muted);max-width:520px}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:999px;font-weight:700;text-decoration:none;transition:transform .2s,box-shadow .2s}
-.btn:hover{transform:translateY(-2px)}
-.btn.main{background:linear-gradient(90deg,var(--lila),var(--rosa));color:#2a1640;box-shadow:0 10px 30px -8px rgba(255,159,210,.6)}
-.btn.ghost{border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)}
-.soon{font-size:.85rem;color:var(--muted);margin-top:12px}
-.mandala{position:relative;aspect-ratio:1;max-width:480px;width:100%;margin:0 auto}
-.mandala svg{width:100%;height:100%;overflow:visible}
-.spin{transform-origin:50% 50%;animation:spin 90s linear infinite}
-.spin.rev{animation-duration:140s;animation-direction:reverse}
-@keyframes spin{to{transform:rotate(360deg)}}
-.pulse{animation:pulse 6s ease-in-out infinite;transform-origin:50% 50%}
-@keyframes pulse{0%,100%{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1.02)}}
-.glow{position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle,rgba(201,167,255,.45),rgba(255,159,210,.12) 55%,transparent 70%);filter:blur(20px);animation:pulse 6s ease-in-out infinite}
-.wave{max-width:1080px;margin:0 auto;padding:0 22px}
-.wave svg{width:100%;height:90px;display:block}
-.wave path{fill:none;stroke-width:2;stroke-linecap:round}
-section{max-width:1080px;margin:0 auto;padding:70px 22px}
-h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2rem,4vw,2.9rem);text-align:center;margin-bottom:10px}
-.sub{text-align:center;color:var(--muted);max-width:640px;margin:0 auto 40px}
-.freqs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px}
-.freq{position:relative;padding:22px 16px;border-radius:24px;text-align:center;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid rgba(201,167,255,.22);overflow:hidden;transition:transform .25s,border-color .25s}
-.freq:hover{transform:translateY(-4px);border-color:var(--rosa)}
-.freq svg{width:58px;height:58px;margin-bottom:8px}
-.freq b{display:block;font-family:"Cormorant Garamond",serif;font-size:2rem;line-height:1}
-.freq b small{font-size:1rem;color:var(--lila)}
-.freq span{font-size:.92rem;color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-.card{padding:26px;border-radius:26px;background:rgba(28,22,48,.75);border:1px solid rgba(201,167,255,.18);backdrop-filter:blur(6px)}
-.card .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;margin-bottom:14px;background:linear-gradient(135deg,rgba(201,167,255,.35),rgba(255,159,210,.25));font-size:1.4rem}
-.card h3{font-size:1.15rem;margin-bottom:6px}
-.card p{color:var(--muted);font-size:.97rem}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;counter-reset:s}
-.step{position:relative;padding:28px 24px 24px;border-radius:26px;border:1px dashed rgba(201,167,255,.4);text-align:center}
-.step:before{counter-increment:s;content:counter(s);position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#2a1640;background:linear-gradient(135deg,var(--lila),var(--rosa))}
-.step h3{margin:6px 0}
-.step p{color:var(--muted);font-size:.97rem}
-.modes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px}
-.modes span{padding:8px 16px;border-radius:999px;background:rgba(143,240,208,.12);border:1px solid rgba(143,240,208,.35);color:var(--menta);font-weight:600;font-size:.9rem}
-.contact{text-align:center;padding:50px 26px;border-radius:34px;background:linear-gradient(135deg,rgba(201,167,255,.18),rgba(255,159,210,.12));border:1px solid rgba(201,167,255,.3);position:relative;overflow:hidden}
-.contact .seed{position:absolute;right:-60px;top:-60px;width:240px;opacity:.18}
-.contact .seed.l{left:-60px;right:auto;top:auto;bottom:-60px}
-.note{max-width:760px;margin:0 auto;text-align:center;font-size:.9rem;color:var(--muted);padding:0 22px 40px}
-footer{border-top:1px solid rgba(201,167,255,.15);padding:28px 22px;text-align:center;color:var(--muted);font-size:.9rem}
-footer a{color:var(--lila2)}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s,transform .9s}
-.reveal.in{opacity:1;transform:none}
-#burger{display:none;background:rgba(201,167,255,.1);border:1px solid rgba(201,167,255,.38);color:var(--lila2);width:46px;height:46px;border-radius:14px;font-size:1.15rem;line-height:1;cursor:pointer}
-@media (max-width:820px){.hero{grid-template-columns:1fr;text-align:center;padding-top:6px}.lead{margin:0 auto}.cta{justify-content:center}.mandala{max-width:290px;order:-1;overflow:hidden}.mandala svg{overflow:hidden}.mandala .glow{display:none}#burger{display:inline-flex;align-items:center;justify-content:center}nav .links{display:none;position:absolute;top:74px;left:16px;right:16px;flex-direction:column;gap:2px;background:rgba(26,20,48,.97);backdrop-filter:blur(12px);border:1px solid rgba(201,167,255,.3);border-radius:20px;padding:10px;z-index:60;box-shadow:0 24px 50px -24px rgba(0,0,0,.95)}nav .links.abierto{display:flex}nav .links a{margin:0;padding:13px 15px;border-radius:12px;font-size:1rem;color:var(--lila2)}nav .links a:hover{background:rgba(201,167,255,.14)}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+/* Layout: app móvil de una columna — cristal reproductor arriba, contenido por pestañas, barra inferior fija */
+:root{
+  --bg:#120f1a; --surface:#1b1626; --surface2:#251e34; --line:#352b4a;
+  --fg:#f4eeff; --muted:#a698c2; --lila:#c9a7ff; --rosa:#ff9fd2; --menta:#8ff0d0; --warn:#ffcf8a; --ink:#1a1225;
+  --display:"Quicksand","Nunito",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;min-height:100vh;
+  background-image:radial-gradient(50rem 26rem at 85% -10%,rgba(201,167,255,.15),transparent 60%),radial-gradient(36rem 22rem at -10% 105%,rgba(255,159,210,.08),transparent 60%);
+  background-attachment:fixed}
+.wrap{max-width:720px;margin:0 auto;padding-top:calc(14px + env(safe-area-inset-top,0px));padding-bottom:calc(96px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px}
+.gem{width:34px;height:34px;border-radius:11px;background:conic-gradient(from 210deg,#2a2140,var(--lila),#2a2140,var(--rosa),#2a2140);box-shadow:0 0 18px rgba(201,167,255,.45);display:grid;place-items:center;font-size:18px}
+h1{font-family:var(--display);font-size:1.35rem;margin:0}
+h1 small{display:block;font-family:var(--body);font-size:.7rem;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.badge{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.badge.vip{background:linear-gradient(135deg,var(--lila),var(--rosa));color:var(--ink);border:none}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:16px}
+.crystal{position:relative;aspect-ratio:16/11;max-width:100%;border-radius:18px;overflow:hidden;background:radial-gradient(circle at 50% 50%,#231b33,#120f1a 72%)}
+canvas{width:100%;height:100%;display:block}
+.readout{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;text-align:center;padding:12px}
+.hz{font-family:var(--display);font-weight:700;font-size:clamp(2.2rem,11vw,3.4rem);line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 0 24px rgba(201,167,255,.6)}
+.hz span{font-size:.4em;color:var(--lila);margin-left:4px}
+.beat{margin-top:6px;font-family:var(--mono);font-size:.8rem;color:var(--rosa)}
+.pname{margin-top:8px;font-weight:700;font-size:.92rem;max-width:86%}
+.intent{margin-top:12px;padding:10px 12px;border-radius:14px;background:var(--surface2);border:1px dashed var(--lila);font-size:.88rem}
+.intent b{color:var(--lila)}
+.guide{margin-top:12px;padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(201,167,255,.14),rgba(255,159,210,.08));border:1px solid var(--line);font-size:1rem;line-height:1.5;text-align:center}
+.guide .ph{display:block;font-family:var(--display);font-weight:700;font-size:1.25rem;color:var(--menta);margin-bottom:4px}
+.progress{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.bar{height:8px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--lila),var(--rosa));transition:width .3s linear}
+.times{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.76rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.controls{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:12px}
+button{font:inherit;cursor:pointer;border:none;color:inherit;background:none}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--rosa);outline-offset:2px}
+.round{width:46px;height:46px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);display:grid;place-items:center;font-size:1rem}
+.play{width:66px;height:66px;background:linear-gradient(135deg,var(--lila),var(--rosa));color:var(--ink);font-size:1.45rem;border:none;box-shadow:0 6px 24px rgba(201,167,255,.35)}
+.vol{display:flex;align-items:center;gap:10px;margin-top:12px;color:var(--muted);font-size:.84rem}
+input[type=range]{flex:1;accent-color:var(--lila)}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.chip{padding:3px 10px;border-radius:999px;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--line);color:var(--muted)}
+.chip.on{color:var(--ink);background:var(--lila);border-color:var(--lila)}
+.toggle{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.84rem;margin-top:10px;justify-content:center}
+.toggle input{accent-color:var(--lila);width:18px;height:18px}
+.steps{margin-top:10px;display:flex;flex-direction:column;gap:4px;max-height:170px;overflow:auto}
+.step{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:8px;align-items:center;padding:6px 10px;border-radius:10px;font-size:.84rem;color:var(--muted)}
+.step.cur{background:var(--surface2);color:var(--fg)}
+.step.done{opacity:.5}
+.step b{font-family:var(--mono);font-weight:500;font-size:.74rem}
+h2{font-family:var(--display);font-size:1.1rem;margin:0 0 10px}
+h3{font-size:.95rem;margin:14px 0 8px}
+p{margin:0}
+.muted{color:var(--muted);font-size:.86rem}
+.cats{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;padding-bottom:2px}
+.cats button{flex:none;padding:6px 12px;border-radius:999px;background:var(--surface2);border:1px solid var(--line);font-size:.82rem;font-weight:600;color:var(--muted)}
+.cats button[aria-pressed=true]{background:var(--lila);color:var(--ink);border-color:var(--lila)}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:10px}
+.card{text-align:left;background:var(--surface2);border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.card.active{border-color:var(--rosa);box-shadow:0 0 0 1px var(--rosa) inset}
+.card.locked{opacity:.62}
+.card .t{font-weight:700;font-size:.94rem;display:flex;justify-content:space-between;gap:6px}
+.card .d{font-size:.8rem;color:var(--muted)}
+.card .m{font-family:var(--mono);font-size:.7rem;color:var(--lila)}
+.fav{color:var(--muted);font-size:1rem;line-height:1}
+.fav.on{color:var(--rosa)}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.form .full{grid-column:1/-1}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.f input,.f select,.f textarea{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--fg);font:inherit;font-size:.95rem;width:100%;min-width:0;text-transform:none;letter-spacing:0}
+.f textarea{min-height:70px;resize:vertical}
+.btn{padding:11px 14px;border-radius:12px;background:var(--surface2);border:1px solid var(--line);font-weight:700;font-size:.88rem}
+.btn.pri{background:var(--lila);color:var(--ink);border-color:var(--lila)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.list{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.it{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:.85rem}
+.it .acts{display:flex;gap:6px}
+.it .acts button{padding:6px 10px;border-radius:9px;background:var(--surface2);font-size:.8rem;font-weight:700}
+.code{font-family:var(--mono);font-size:1.6rem;letter-spacing:.18em;color:var(--lila);text-align:center;padding:10px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.share{font-family:var(--mono);font-size:.72rem;word-break:break-all;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;max-height:120px;overflow:auto;user-select:all}
+.notice{font-size:.8rem;color:var(--muted);line-height:1.45}
+.notice strong{color:var(--warn)}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--navbg);backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+nav.tabs .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
+nav.tabs button{padding:10px 2px 12px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.72rem;font-weight:700;color:var(--muted)}
+nav.tabs button .ic{font-size:1.15rem;line-height:1}
+nav.tabs button[aria-selected=true]{color:var(--lila)}
+.overlay{position:fixed;inset:0;z-index:40;background:rgba(10,8,16,.86);display:grid;place-items:center;padding:20px}
+.overlay .box{max-width:420px;width:100%;background:var(--surface);border:1px solid var(--lila);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--surface2);border:1px solid var(--lila);padding:10px 16px;border-radius:12px;font-size:.88rem;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1}
+.empty{color:var(--muted);font-size:.85rem}
+.target{aspect-ratio:16/10;max-width:100%;border-radius:18px;display:grid;place-items:center;font-family:var(--display);font-size:3.2rem;font-weight:700;border:1px solid var(--line);background:var(--surface2);transition:background .4s;margin-top:12px;text-align:center}
+.target small{display:block;font-size:.9rem;font-family:var(--body);font-weight:600;color:var(--fg);opacity:.85}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.choice{min-height:64px;border-radius:16px;font-weight:700;font-size:1rem;border:2px solid transparent;display:flex;align-items:center;justify-content:center;gap:8px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px;text-align:center}
+.stats div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:8px}
+.stats b{display:block;font-family:var(--mono);font-size:1.2rem;color:var(--lila);font-variant-numeric:tabular-nums}
+.food{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:0}
+.food summary{list-style:none;cursor:pointer;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
+.food summary::-webkit-details-marker{display:none}
+.food summary b{font-size:.95rem}
+.food summary .tg{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.food .bd{padding:0 12px 12px;display:grid;gap:6px;font-size:.86rem}
+.food .bd dt{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lila)}
+.food .bd dd{margin:0 0 4px}
+.foryou{background:linear-gradient(135deg,rgba(201,167,255,.16),rgba(255,159,210,.10));border:1px solid var(--lila);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.foryou .num{font-family:var(--display);font-weight:700;font-size:2rem;line-height:1;color:var(--lila)}
+.foryou .top{display:flex;gap:12px;align-items:center}
+.pchips{display:flex;gap:6px;flex-wrap:wrap}
+.pchips button{padding:7px 12px;border-radius:999px;background:var(--surface2);border:1px solid var(--line);font-size:.82rem;font-weight:700}
+.ref{margin-top:12px;border:1px dashed var(--warn);border-radius:14px;padding:12px;font-size:.85rem}
+.ref table{width:100%;border-collapse:collapse;margin:8px 0;font-variant-numeric:tabular-nums}
+.ref td{padding:4px 0;border-bottom:1px solid var(--line)}
+.ref td:last-child{text-align:right;font-family:var(--mono);color:var(--warn)}
+.stats span{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== Tema claro estilo lavanda (por defecto) ===== */
+:root{--navbg:rgba(18,15,26,.94);--edge:var(--line);--headbg:transparent}
+:root[data-theme="light"]{
+  --bg:#eceef7;--surface:#ffffff;--surface2:#f3effb;--line:#ddd6ec;--edge:#17131f;
+  --fg:#17131f;--muted:#5f5872;--lila:#6f4bc4;--rosa:#b8407f;--menta:#16856a;--warn:#8a5300;--ink:#ffffff;
+  --navbg:rgba(255,255,255,.96);--headbg:#ffffff;color-scheme:light}
+:root[data-theme="light"] body{background-color:var(--bg);background-image:
+  repeating-linear-gradient(112deg,transparent 0 16px,rgba(60,62,110,.10) 16px 18px),
+  radial-gradient(60rem 30rem at 85% -10%,rgba(150,120,230,.16),transparent 60%);background-attachment:fixed}
+:root[data-theme="light"] .panel{border:2px solid var(--edge);border-radius:20px}
+:root[data-theme="light"] .card{background:#fff}
+:root[data-theme="light"] .gem{color:#fff}
+.crystal{--fg:#f4eeff;--lila:#c9a7ff;--rosa:#ff9fd2;color:#f4eeff}
+header.top{background:var(--headbg);margin:calc(-14px - env(safe-area-inset-top,0px)) calc(-1*max(16px,env(safe-area-inset-right,0px))) 0 calc(-1*max(16px,env(safe-area-inset-left,0px)));
+  padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line)}
+.hright{display:flex;align-items:center;gap:6px}
+.linkbtn{font-weight:700;font-size:.95rem;padding:8px 6px}
+.burger{width:40px;height:40px;display:grid;place-items:center;font-size:1.4rem}
+.steps3{display:flex;flex-direction:column;gap:14px}
+.stepcard{background:var(--surface);border:2px solid var(--edge);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.stepcard .n{width:42px;height:42px;border-radius:50%;background:color-mix(in srgb,var(--lila) 18%,transparent);color:var(--lila);display:grid;place-items:center;font-weight:700;font-size:1.1rem}
+.stepcard h3{margin:4px 0 0;font-size:1.15rem}
+.stepcard p{color:var(--muted);line-height:1.6}
+.overlay.sheet{place-items:start center;overflow:auto;background:color-mix(in srgb,var(--bg) 92%,transparent)}
+.overlay.sheet .box{background:transparent;border:none;padding:calc(20px + env(safe-area-inset-top,0px)) 0 30px;max-width:560px}
+.ask{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:30;padding:14px 16px;border-radius:999px;background:var(--lila);color:var(--ink);font-weight:700;box-shadow:0 6px 20px rgba(60,30,120,.35)}
+.avatar{width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid var(--lila);flex:none}
+.crystal .avatar{position:absolute;left:12px;top:12px;width:46px;height:46px;opacity:.9}
+.faq details{border-bottom:1px solid var(--line);padding:10px 0}
+.faq summary{font-weight:700;cursor:pointer}
+.faq p{margin-top:6px;color:var(--muted)}
 </style>
-<link rel="stylesheet" href="lily.css">
 </head>
 <body>
-<div class="stars" id="stars" aria-hidden="true"></div>
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a7ff"/><stop offset=".55" stop-color="#ff9fd2"/><stop offset="1" stop-color="#8ff0d0"/></linearGradient>
-    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8ff0d0"/><stop offset=".5" stop-color="#c9a7ff"/><stop offset="1" stop-color="#ff9fd2"/></linearGradient>
-    <!-- Semilla de la vida: 7 círculos -->
-    <symbol id="seed" viewBox="-60 -60 120 120"><g fill="none" stroke="url(#g1)" stroke-width="2">
-      <circle r="20"/><circle cx="20" r="20"/><circle cx="-20" r="20"/><circle cx="10" cy="17.32" r="20"/><circle cx="-10" cy="17.32" r="20"/><circle cx="10" cy="-17.32" r="20"/><circle cx="-10" cy="-17.32" r="20"/><circle r="40"/></g></symbol>
-  </defs>
-</svg>
-
-<header>
-  <nav>
-    <a class="logo" href="#"><svg viewBox="-60 -60 120 120"><use href="#seed" x="-60" y="-60" width="120" height="120"/></svg>Lily Frequency</a>
-    <div class="links"><a href="#frecuencias">Frecuencias</a><a href="#app">La app</a><a href="#como">Cómo funciona</a><a href="#membresia">Membresía</a><a href="terapeutas.html">Terapeutas</a><a href="colabora.html">Colabora</a><a href="#contacto">Contacto</a><a href="miembros.html">Miembros ✦</a></div>
-  <button id="burger" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
-  </nav>
-  <div class="hero">
-    <div>
-      <span class="eyebrow">✦ Bienestar sonoro ✦</span>
-      <h1>Vibra en <em>armonía</em> con tu frecuencia</h1>
-      <p class="lead">Frecuencias, meditaciones guiadas y respiración consciente para acompañar tu día: calma, descanso, enfoque y conexión contigo.</p>
-      <div class="cta">
-        <a class="btn main" href="https://play.google.com/store/apps/details?id=com.lilyfrequency.app" target="_blank" rel="noopener">⬇ Descargar la app</a>
-        <a class="btn ghost" href="#instalar">📱 Instalar en iPhone</a>
-        <a class="btn ghost" href="#app">✿ Conoce la app</a>
-        <a class="btn ghost" href="#contacto">Pregúntame</a>
-      </div>
-      <p class="soon">En Google Play para Android · En iPhone, instálala desde Safari.</p>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="gem" aria-hidden="true">✿</div><h1>Lily Frequency<small>Bienestar sonoro</small></h1></div>
+    <div class="hright">
+      <button type="button" class="linkbtn" id="accesoBtn">Acceso</button>
+      <button type="button" class="burger" id="menuBtn" aria-label="Menú">☰</button>
     </div>
-    <div class="mandala" role="img" aria-label="Flor de la vida">
-      <div class="glow"></div>
-      <svg viewBox="-200 -200 400 400" id="flor">
-        <g class="spin rev" id="rings"></g>
-        <g class="spin" id="flower"></g>
-        <g class="pulse" id="core"></g>
-      </svg>
+  </header>
+  <div style="display:flex;justify-content:flex-end;margin-top:-6px"><span class="badge" id="memberBadge">Gratis</span></div>
+
+  <section class="panel" aria-label="Reproductor">
+    <div class="crystal">
+      <canvas id="viz" width="640" height="440"></canvas>
+        <img class="avatar" id="crystalPhoto" alt="" hidden>
+      <div class="readout">
+        <div class="hz" id="hz">528<span>Hz</span></div>
+        <div class="beat" id="beat">listo</div>
+        <div class="pname" id="pname">Elige un programa</div>
+      </div>
+    </div>
+    <div class="intent" id="intent" hidden></div>
+    <div class="guide" id="guide" hidden><span class="ph" id="breathPh"></span><span id="guideTx"></span></div>
+    <div class="chips"><span class="chip" id="modeChip">Modo</span><span class="chip" id="stateChip">Detenido</span></div>
+    <div class="progress">
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="times"><span id="tEl">00:00</span><span id="tStep">paso –</span><span id="tTot">00:00</span></div>
+    </div>
+    <div class="controls">
+      <button class="round" id="stopBtn" aria-label="Detener">■</button>
+      <button class="round play" id="playBtn" aria-label="Reproducir">▶</button>
+      <button class="round" id="nextBtn" aria-label="Siguiente paso">⏭</button>
+    </div>
+    <div class="vol"><span>Volumen</span><input type="range" id="vol" min="0" max="100" value="35"><span id="volV">35%</span></div>
+    <label class="toggle" for="noHeadphones"><input type="checkbox" id="noHeadphones"> Sin audífonos (binaural → pulsos)</label>
+    <div class="steps" id="steps"></div>
+  </section>
+
+  <!-- Programas -->
+  <section class="panel" data-view="programas">
+    <div class="foryou" id="today" hidden style="margin-bottom:14px"></div>
+    <h2>Programas</h2>
+    <div class="cats" id="cats"></div>
+    <div class="lib" id="lib"></div>
+  </section>
+
+  <!-- Libre -->
+  <section class="panel" data-view="libre" hidden>
+    <h2>Frecuencia libre</h2>
+    <div class="form">
+      <label class="f" for="cF">Frecuencia (Hz)<input id="cF" type="number" inputmode="decimal" min="20" max="20000" step="0.01" value="432"></label>
+      <label class="f" for="cB">Pulso (Hz)<input id="cB" type="number" inputmode="decimal" min="0" max="45" step="0.01" value="7.83"></label>
+      <label class="f" for="cM">Modo<select id="cM"><option value="binaural">Binaural</option><option value="iso">Isocrónico</option><option value="pure">Tono puro</option></select></label>
+      <label class="f" for="cD">Minutos<input id="cD" type="number" inputmode="decimal" min="0.5" max="120" step="0.5" value="10"></label>
+      <label class="f full" for="cL">Nombre del paso<input id="cL" type="text" placeholder="Ej. Soltar, Corazón, Anclar"></label>
+    </div>
+    <div class="row">
+      <button class="btn pri" id="cPlay">Tocar ahora</button>
+      <button class="btn" id="cAdd">Agregar a la secuencia</button>
+    </div>
+    <h3>Secuencia en construcción</h3>
+    <div class="list" id="seq"></div>
+    <div class="row">
+      <button class="btn pri" id="seqPlay">Reproducir secuencia</button>
+      <button class="btn" id="seqSave">Guardar en Mis programas</button>
+      <button class="btn" id="seqClear">Vaciar</button>
+    </div>
+    <h3>Mis programas</h3>
+    <div class="list" id="myProgs"></div>
+  </section>
+
+  <!-- Sesiones -->
+  <section class="panel" data-view="sesiones" hidden>
+    <h2>Sesiones a distancia</h2>
+    <p class="muted">Tu terapeuta te envía un código de sesión. Pégalo aquí y escúchalo con audífonos a la hora acordada.</p>
+    <div class="form" style="margin-top:12px">
+      <label class="f full" for="rxCode">Código de sesión<textarea id="rxCode" placeholder="LILY1.…"></textarea></label>
+    </div>
+    <div class="row"><button class="btn pri" id="rxOpen">Abrir sesión</button></div>
+    <h3>Sesiones recibidas</h3>
+    <div class="list" id="rxList"></div>
+
+    <div id="therapist" hidden>
+      <h3 style="margin-top:22px">Crear sesión para un cliente</h3>
+      <p class="muted">Usa la secuencia que armaste en <b>Libre</b> o elige un programa base.</p>
+      <div class="form" style="margin-top:10px">
+        <label class="f" for="txClient">Cliente<input id="txClient" type="text" placeholder="Nombre"></label>
+        <label class="f" for="txBase">Programa base<select id="txBase"></select></label>
+        <label class="f full" for="txIntent">Intención o decreto<textarea id="txIntent" placeholder="Ej. Suelto lo que ya no me pertenece y recibo calma."></textarea></label>
+        <label class="f full" for="txWhen">Cuándo escucharla<input id="txWhen" type="text" placeholder="Ej. Hoy 9:00 pm, acostada, con audífonos"></label>
+      </div>
+      <div class="row"><button class="btn pri" id="txMake">Generar código</button></div>
+      <div id="txOut" hidden style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+        <div class="share" id="txCode"></div>
+        <div class="row" style="margin-top:0"><button class="btn pri" id="txCopy">Copiar código</button><button class="btn" id="txTest">Probar</button></div>
+        <p class="muted">Envíalo por WhatsApp. Tu cliente lo pega en Sesiones.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:22px">Historial</h3>
+    <div class="list" id="history"></div>
+  </section>
+
+  <!-- Intuición -->
+  <section class="panel" data-view="intuicion" hidden>
+    <h2>Entrenamiento de intuición</h2>
+    <p class="muted">Ejercicio de percepción con ojos cerrados o vendados. Pon de fondo el programa <b>Intuición</b> o <b>Visión Remota</b>, respira tres veces y siente la respuesta antes de tocar.</p>
+    <div class="cats" id="intMode" style="margin-top:12px">
+      <button type="button" data-m="color" aria-pressed="true">Colores</button>
+      <button type="button" data-m="forma" aria-pressed="false">Formas</button>
+      <button type="button" data-m="carta" aria-pressed="false">Rojo o negro</button>
+    </div>
+    <div class="cats" id="intStage">
+      <button type="button" data-s="aprender" aria-pressed="false">1 · Aprender</button>
+      <button type="button" data-s="probar" aria-pressed="true">2 · Probar</button>
+    </div>
+    <div class="target" id="intTarget">?</div>
+    <p class="muted" id="intHint" style="margin-top:10px;text-align:center"></p>
+    <div class="choices" id="intChoices"></div>
+    <div class="row" style="justify-content:center"><button class="btn pri" id="intNext">Nueva ronda</button><button class="btn" id="intReset">Reiniciar marcador</button></div>
+    <div class="stats"><div><b id="stTries">0</b><span>Intentos</span></div><div><b id="stHits">0</b><span>Aciertos</span></div><div><b id="stPct">–</b><span id="stChance">Azar 25%</span></div></div>
+    <p class="notice" style="margin-top:12px">Compara tu porcentaje con el azar. Por encima del azar, después de muchas rondas, es tu progreso real.</p>
+  </section>
+
+  <!-- Alimentación -->
+  <section class="panel" data-view="comida" hidden>
+    <h2>Electro alimentación</h2>
+    <p class="muted">Cada alimento según la medicina tradicional china (naturaleza, órgano y emoción) y según la nutrición (nutrientes y qué apoyan). Toca un alimento para ver el detalle.</p>
+    
+    <div class="form" style="margin-top:12px">
+      <label class="f full" for="foodQ">Buscar alimento, órgano o emoción<input id="foodQ" type="search" placeholder="Ej. hígado, tristeza, aguacate"></label>
+    </div>
+    <div class="cats" id="foodCats" style="margin-top:10px"></div>
+    <div class="list" id="foodList"></div>
+    <p class="notice" style="margin-top:12px">La energética china es una tradición y sus fuentes varían. Los nutrientes vienen de la nutrición convencional. Si tienes una condición de salud, embarazo o tomas medicamentos, consulta tus cambios de alimentación con tu médico o nutricionista.</p>
+  </section>
+
+  <!-- Cuenta -->
+  <section class="panel" data-view="cuenta" hidden>
+    <h2>Mi perfil</h2>
+    <p class="muted">Opcional. Se guarda solo en tu teléfono y sirve para recomendarte programas según tu número personal.</p>
+    <div class="form" style="margin-top:10px">
+      <label class="f full" for="pfName">Nombre<input id="pfName" type="text" autocomplete="given-name" placeholder="Cómo quieres que te llame"></label>
+      <label class="f full" for="pfBirth">Fecha de nacimiento<input id="pfBirth" type="date"></label>
+      <label class="f full" for="pfPhoto">Tu foto (opcional, queda solo en tu teléfono)<input id="pfPhoto" type="file" accept="image/*"></label>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:8px" id="pfPhotoRow" hidden><img class="avatar" id="pfPhotoImg" alt="Tu foto"><button type="button" class="btn" id="pfPhotoDel">Quitar foto</button></div>
+    <div class="row"><button class="btn pri" id="pfSave">Guardar perfil</button><button class="btn" id="pfDel">Borrar perfil</button></div>
+    <div class="foryou" id="pfCard" hidden style="margin-top:12px"></div>
+
+    <h2 style="margin-top:22px">Membresía</h2>
+    <p class="muted" id="memberText"></p>
+    <div class="form" style="margin-top:12px" id="unlockForm">
+      <label class="f full" for="accCode">Código del mes<input id="accCode" type="text" autocomplete="off" placeholder="6 caracteres" style="text-transform:uppercase;letter-spacing:.15em;font-family:var(--mono)"></label>
+    </div>
+    <div class="row"><button class="btn pri" id="accBtn">Activar</button></div>
+
+    <h3 style="margin-top:22px">Modo terapeuta</h3>
+    <div id="adminLogin">
+      <div class="form"><label class="f full" for="pin">PIN de terapeuta<input id="pin" type="password" inputmode="numeric" autocomplete="off"></label></div>
+      <div class="row"><button class="btn" id="pinBtn">Entrar</button></div>
+    </div>
+    <div id="adminPanel" hidden>
+      <p class="muted">Código para tus miembros este mes (<span id="ymNow"></span>):</p>
+      <div class="code" id="codeNow" style="margin-top:8px">––––––</div>
+      <p class="muted" style="margin-top:10px">Próximo mes (<span id="ymNext"></span>):</p>
+      <div class="code" id="codeNext" style="margin-top:8px;font-size:1.2rem">––––––</div>
+      <div class="row"><button class="btn" id="copyCode">Copiar código del mes</button><button class="btn" id="pinOut">Salir</button></div>
+    </div>
+
+    <h3 style="margin-top:22px">Aviso</h3>
+    <p class="notice">Lily Frequency es una herramienta de <strong>apoyo y bienestar</strong> con sonido: relajación, meditación y acompañamiento. No diagnostica ni trata enfermedades y no sustituye atención médica o psicológica. Empieza con volumen bajo. No la uses mientras manejas ni si tienes epilepsia sensible a estímulos sin consultar a tu médico.</p>
+    <p class="notice" style="margin-top:8px">Privacidad: la app no recopila datos. Todo se guarda solo en tu teléfono.</p>
+  </section>
+</div>
+
+<nav class="tabs" aria-label="Secciones"><div class="in" role="tablist">
+  <button role="tab" data-tab="programas" aria-selected="true"><span class="ic">✿</span>Programas</button>
+  <button role="tab" data-tab="libre" aria-selected="false"><span class="ic">∿</span>Libre</button>
+  <button role="tab" data-tab="intuicion" aria-selected="false"><span class="ic">◉</span>Intuición</button>
+  <button role="tab" data-tab="comida" aria-selected="false"><span class="ic">❦</span>Comida</button>
+  <button role="tab" data-tab="sesiones" aria-selected="false"><span class="ic">✉</span>Sesiones</button>
+  <button role="tab" data-tab="cuenta" aria-selected="false"><span class="ic">♛</span>Cuenta</button>
+</div></nav>
+
+<div class="overlay sheet" id="welcome" hidden>
+  <div class="box">
+    <h2 style="text-align:center;font-size:1.8rem;margin:6px 0 18px">Cómo funciona</h2>
+    <div class="steps3">
+      <div class="stepcard"><div class="n">1</div><h3>Elige tu programa</h3><p>Explora 555 programas en 57 categorías. Tienes <b id="trialTxt">14 días gratis</b> con todo abierto. Después continúas con tu membresía mensual y el código que te da tu terapeuta.</p></div>
+      <div class="stepcard"><div class="n">2</div><h3>Crea tu perfil y sube tu foto</h3><p>Tu nombre y fecha de nacimiento sirven para recomendarte programas según tu número personal. Tu foto aparece en tus sesiones como recordatorio de tu intención y se queda solo en tu teléfono.</p></div>
+      <div class="stepcard"><div class="n">3</div><h3>Comienza tu sesión</h3><p>Ponte audífonos, busca un momento tranquilo y escucha. También puedes recibir sesiones personalizadas de tu terapeuta, con su intención para ti.</p></div>
+      <p class="notice" style="text-align:center">Lily Frequency es una herramienta de <strong>apoyo y bienestar</strong>. No sustituye atención médica. Empieza con volumen bajo.</p>
+      <button class="btn pri" id="welcomeOk" style="padding:14px">Empezar</button>
     </div>
   </div>
-  <div class="wave" aria-hidden="true"><svg viewBox="0 0 1000 90" preserveAspectRatio="none"><path id="w1" stroke="url(#g2)"/><path id="w2" stroke="#c9a7ff" opacity=".45"/><path id="w3" stroke="#ff9fd2" opacity=".3"/></svg></div>
-</header>
-
-<main>
-  <section id="frecuencias" class="reveal">
-    <h2>Frecuencias que te acompañan</h2>
-    <p class="sub">Tonos tradicionales del mundo del sonido y la meditación, para crear tu momento de pausa.</p>
-    <div class="freqs" id="freqs"></div>
-  </section>
-
-  <section id="app" class="reveal">
-    <h2>Todo en una app</h2>
-    <p class="sub">Más de 150 programas organizados para cada momento del día. Sin registro, sin anuncios y sin recopilar tus datos.</p>
-    <div class="cards">
-      <div class="card"><div class="ic">🌙</div><h3>Sueño y calma</h3><p>Programas para soltar el día, relajarte y preparar tu descanso.</p></div>
-      <div class="card"><div class="ic">🧘‍♀️</div><h3>Meditación guiada</h3><p>Respiraciones con indicaciones en pantalla: 4‑7‑8, cuadrada, coherencia del corazón y más.</p></div>
-      <div class="card"><div class="ic">🌈</div><h3>Chakras y Solfeggio</h3><p>Recorre los centros de energía y las frecuencias Solfeggio y planetarias.</p></div>
-      <div class="card"><div class="ic">✨</div><h3>Intuición</h3><p>Entrena tu intuición con colores, formas y cartas, con tu propio marcador.</p></div>
-      <div class="card"><div class="ic">🎚️</div><h3>Frecuencia libre</h3><p>Crea tus propias secuencias de frecuencias y guárdalas para usarlas cuando quieras.</p></div>
-      <div class="card"><div class="ic">✡</div><h3>Geometría sagrada</h3><p>Modo inmersivo con la flor de la vida y la merkaba que respiran contigo, con voz guiada y vibración suave.</p></div>
-      <div class="card"><div class="ic">♡</div><h3>Mi pulso</h3><p>Mide tu ritmo antes y después de tu sesión con la cámara del teléfono, sin aparatos.</p></div>
-      <div class="card"><div class="ic">🌧️</div><h3>Ambientes y descanso</h3><p>Mezcla lluvia, mar, viento y cuencos; temporizador para dormir, diario y recordatorio diario.</p></div>
-      <div class="card"><div class="ic">💌</div><h3>Sesiones a distancia</h3><p>Tu terapeuta te envía un código con tu sesión personalizada y su intención para ti.</p></div>
+</div>
+<div class="overlay sheet" id="menu" hidden>
+  <div class="box">
+    <div class="steps3">
+      <div class="stepcard">
+        <h3>Menú</h3>
+        <div class="list" id="menuList">
+          <button type="button" class="btn" data-go="programas">✿ Programas</button>
+          <button type="button" class="btn" data-go="libre">∿ Frecuencia libre</button>
+          <button type="button" class="btn" data-go="intuicion">◉ Intuición</button>
+          <button type="button" class="btn" data-go="comida">❦ Electro alimentación</button>
+          <button type="button" class="btn" data-go="sesiones">✉ Sesiones a distancia</button>
+          <button type="button" class="btn" data-go="cuenta">♛ Mi cuenta y perfil</button>
+          <button type="button" class="btn" id="howBtn">? Cómo funciona</button>
+          <button type="button" class="btn" id="themeBtn">◐ Cambiar a modo obsidiana</button>
+        </div>
+        <button type="button" class="btn pri" id="menuClose" style="margin-top:8px">Cerrar</button>
+      </div>
     </div>
-    <div class="modes"><span>Tono puro</span><span>Binaural · con audífonos</span><span>Isocrónico · con parlante</span></div>
-  </section>
-
-  <section id="como" class="reveal">
-    <h2>Cómo funciona</h2>
-    <p class="sub">Simple y amoroso, a tu ritmo.</p>
-    <div class="steps">
-      <div class="step"><h3>Instala</h3><p>En Android, desde <a href="https://play.google.com/store/apps/details?id=com.lilyfrequency.app" target="_blank" rel="noopener" style="color:var(--lila2)">Google Play</a>. En iPhone, <a href="#instalar" style="color:var(--lila2)">agrégala a tu pantalla de inicio</a> desde Safari.</p></div>
-      <div class="step"><h3>Explora gratis</h3><p>Disfruta 14 días con todos los programas abiertos.</p></div>
-      <div class="step"><h3>Sigue vibrando</h3><p>Continúa con tu membresía mensual y el código que te da tu terapeuta.</p></div>
+  </div>
+</div>
+<div class="overlay sheet" id="faq" hidden>
+  <div class="box">
+    <div class="stepcard faq">
+      <h3>Pregúntame</h3>
+      <details><summary>¿Cómo escucho un programa?</summary><p>Elige un programa y toca ▶. Los binaurales necesitan audífonos. Si no tienes, activa “Sin audífonos”.</p></details>
+      <details><summary>¿Cuánto dura la prueba gratis?</summary><p id="faqTrial">14 días con todos los programas abiertos. Después ingresa el código del mes en Cuenta.</p></details>
+      <details><summary>¿Cómo recibo una sesión de mi terapeuta?</summary><p>Ella te envía un código que empieza con LILY1. Pégalo en Sesiones y toca Abrir sesión.</p></details>
+      <details><summary>¿Para qué es mi foto?</summary><p>Aparece en tus sesiones como recordatorio de tu intención. Se guarda solo en tu teléfono, no se envía a ningún lado.</p></details>
+      <details><summary>¿Sustituye a mi médico?</summary><p>No. Lily acompaña tu bienestar y tu tratamiento, nunca lo reemplaza.</p></details>
+      <p class="muted" id="faqContact" style="margin-top:10px"></p>
+      <button type="button" class="btn pri" id="faqClose" style="margin-top:10px">Cerrar</button>
     </div>
-  </section>
+  </div>
+</div>
+<button type="button" class="ask" id="askBtn">Pregúntame</button>
+<div class="toast" id="toast" role="status"></div>
 
-  <section id="membresia" class="reveal">
-    <h2>Membresía</h2>
-    <p class="sub">Empieza con 14 días gratis en la app. Después elige tu plan y recibe tu código de acceso.</p>
-    <div class="cards">
-      <div class="card" style="text-align:center"><div class="ic" style="margin:0 auto 14px">🌙</div><h3>Mensual</h3><p style="font-family:'Cormorant Garamond',serif;font-size:2.6rem;color:var(--lila);line-height:1.1">USD 8.88</p><p>30 días con todos los programas, la zona de miembros y los descargables.</p><p style="margin-top:14px"><a class="btn ghost" href="pagar.html?plan=mensual">Quiero el mensual</a></p></div>
-      <div class="card" style="text-align:center;border-color:var(--rosa)"><div class="ic" style="margin:0 auto 14px">✦</div><h3>Anual · Precio fundadoras</h3><p style="font-family:'Cormorant Garamond',serif;font-size:2.6rem;color:var(--oro);line-height:1.1">USD 28.88</p><p><s>USD 38.88</s> · solo para las primeras 100 fundadoras.</p><p>Un año completo con todo incluido.</p><p style="margin-top:14px"><a class="btn main" href="pagar.html?plan=anual">Quiero ser fundadora</a></p></div>
-      <div class="card" style="text-align:center"><div class="ic" style="margin:0 auto 14px">📥</div><h3>Incluye descargables</h3><p>Materiales PDF complementarios en la zona de miembros, solo para membresías pagadas activas. No están disponibles durante los 14 días de prueba.</p><p style="margin-top:14px"><a class="btn ghost" href="miembros.html">Zona de miembros</a></p></div>
-    </div>
-    <p class="sub" style="margin:26px auto 0">Tu membresía es personal: incluye tu perfil con tu foto y <b>una mascota</b>. ¿Quieres sumar a tu familia?</p>
-    <div class="cards">
-      <div class="card" style="text-align:center"><div class="ic" style="margin:0 auto 14px">👩‍👧</div><h3>Familiar adicional</h3><p style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--lila);line-height:1.1">USD 18.88</p><p>Al año, por cada persona extra con su propio perfil y foto.</p><p style="margin-top:14px"><a class="btn ghost" href="pagar.html?plan=familiar">Agregar familiar</a></p></div>
-      <div class="card" style="text-align:center"><div class="ic" style="margin:0 auto 14px">🏡</div><h3>Plan Familia</h3><p style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--lila);line-height:1.1">USD 88</p><p>Al año, hasta 6 personas y sus mascotas, cada una con su perfil.</p><p style="margin-top:14px"><a class="btn ghost" href="pagar.html?plan=familia">Quiero el Plan Familia</a></p></div>
-      <div class="card" style="text-align:center;border-color:var(--menta)"><div class="ic" style="margin:0 auto 14px">🌿</div><h3>¿Eres terapeuta?</h3><p>Licencias para terapeutas individuales y clínicas holísticas, desde USD 188 al año para tus primeros 11 pacientes.</p><p style="margin-top:14px"><a class="btn ghost" href="terapeutas.html">Ver licencias</a></p></div>
-    </div>
-  </section>
-
-  <section id="instalar" class="reveal">
-    <h2>Instálala en tu iPhone</h2>
-    <p class="sub">Sin App Store: queda con su ícono en tu pantalla de inicio y se abre como una app.</p>
-    <div class="steps">
-      <div class="step"><h3>Abre en Safari</h3><p>Entra a <b style="color:var(--lila2)">lilyfrecuency888.github.io</b> desde Safari.</p></div>
-      <div class="step"><h3>Toca Compartir</h3><p>Es el cuadrito con una flecha hacia arriba <svg viewBox="0 0 24 24" width="20" height="20" style="vertical-align:-4px" fill="none" stroke="#e4d4ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-label="ícono Compartir"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>, abajo o arriba de la pantalla.</p></div>
-      <div class="step"><h3>Agregar a inicio</h3><p>Elige «Agregar a pantalla de inicio» y luego «Agregar». ¡Listo! ✦</p></div>
-    </div>
-    <p class="note" style="margin-top:22px">Tip: durante tus sesiones deja la pantalla encendida. En iPhone el sonido puede pausarse al bloquearla.</p>
-    <div class="cta" style="justify-content:center"><button class="btn main" id="btn-instalar" type="button" style="display:none">⬇ Instalar en este celular</button></div>
-  </section>
-
-  <section id="contacto" class="reveal">
-    <div class="contact">
-      <svg class="seed" viewBox="-60 -60 120 120" aria-hidden="true"><use href="#seed" x="-60" y="-60" width="120" height="120"/></svg>
-      <svg class="seed l" viewBox="-60 -60 120 120" aria-hidden="true"><use href="#seed" x="-60" y="-60" width="120" height="120"/></svg>
-      <h2>¿Tienes preguntas?</h2>
-      <p class="sub" style="margin-bottom:24px">Escríbeme y con gusto te acompaño a elegir tus programas o tu membresía.</p>
-      <div class="cta" style="justify-content:center"><a class="btn main" href="https://play.google.com/store/apps/details?id=com.lilyfrequency.app" target="_blank" rel="noopener">⬇ Descargar en Google Play</a><a class="btn ghost" href="https://wa.me/50234819870" target="_blank" rel="noopener">💬 Escríbeme por WhatsApp</a><a class="btn ghost" href="miembros.html">✦ Zona de miembros</a></div>
-    </div>
-  </section>
-
-  <section id="colabora" class="reveal">
-    <div class="contact" style="background:linear-gradient(135deg,rgba(143,240,208,.14),rgba(201,167,255,.10));border-color:rgba(143,240,208,.4)">
-      <h2>Colabora con nosotras</h2>
-      <p class="sub" style="margin-bottom:22px">¿Tienes una idea para la app, quieres un programa hecho para ti, o creas material holístico que quisieras vender en nuestra plataforma? Aquí tienes tu lugar.</p>
-      <a class="btn main" href="colabora.html">✿ Quiero colaborar</a>
-    </div>
-  </section>
-
-  <p class="note">Lily Frequency es una herramienta de apoyo y relajación. No diagnostica, trata ni cura enfermedades y no sustituye atención médica o psicológica. Usa volumen bajo y no la uses mientras manejas.</p>
-</main>
-
-<footer>
-  © <span id="y"></span> Lily Frequency · <a href="terminos.html">Términos y reembolsos</a> · <a href="privacidad.html">Política de privacidad</a> · <a href="promotoras.html">Sé promotora ✿</a> · <a href="colabora.html">Colabora ✦</a>
-</footer>
-
+<script src="perfiles-core.js"></script>
 <script>
-const NS="http://www.w3.org/2000/svg";
-function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e}
-// Flor de la vida: 19 círculos en red hexagonal + borde
-(function(){
-  const r=40,f=document.getElementById("flower"),rings=document.getElementById("rings"),core=document.getElementById("core");
-  const pts=[];
-  for(let q=-2;q<=2;q++)for(let s=-2;s<=2;s++){const t=-q-s;if(Math.abs(t)>2)continue;pts.push([r*(q+s/2),r*s*Math.sqrt(3)/2])}
-  pts.forEach(([x,y],i)=>el("circle",{cx:x,cy:y,r:r,fill:"none",stroke:"url(#g1)","stroke-width":1.6,opacity:.9},f));
-  el("circle",{r:r*3,fill:"none",stroke:"#c9a7ff","stroke-width":2,opacity:.8},f);
-  el("circle",{r:r*3+8,fill:"none",stroke:"#ff9fd2","stroke-width":1,opacity:.5},f);
-  // anillos exteriores con puntos (como notas de frecuencia)
-  for(let k=0;k<3;k++){const R=150+k*16;el("circle",{r:R,fill:"none",stroke:"#c9a7ff","stroke-width":.6,"stroke-dasharray":k===1?"2 6":"1 10",opacity:.55},rings)}
-  for(let i=0;i<12;i++){const a=i*Math.PI/6;el("circle",{cx:Math.cos(a)*166,cy:Math.sin(a)*166,r:i%3?2.4:4,fill:i%2?"#ff9fd2":"#8ff0d0"},rings)}
-  // hexagrama central
-  const hex=(rot)=>{let d="";for(let i=0;i<3;i++){const a=rot+i*2*Math.PI/3;d+=(i?"L":"M")+Math.cos(a)*r*1.73+","+Math.sin(a)*r*1.73}return d+"Z"};
-  el("path",{d:hex(-Math.PI/2),fill:"none",stroke:"#ffd98a","stroke-width":1.4,opacity:.85},core);
-  el("path",{d:hex(Math.PI/2),fill:"none",stroke:"#ffd98a","stroke-width":1.4,opacity:.85},core);
-  el("circle",{r:6,fill:"#fff",opacity:.9},core);
-})();
-// Tarjetas de frecuencias con su onda
-const F=[["432","Hz","Armonía y calma",1.2],["528","Hz","Amor y renovación",1.6],["7.83","Hz","Resonancia Schumann",.6],["396","Hz","Soltar y liberar",1],["639","Hz","Conexión y vínculos",2],["963","Hz","Conexión espiritual",2.6]];
-document.getElementById("freqs").innerHTML=F.map(([n,u,t,k],i)=>{let d="";for(let x=0;x<=100;x+=2){const y=29+14*Math.sin(x/100*Math.PI*2*k*2)*Math.sin(x/100*Math.PI);d+=(x?"L":"M")+x*0.58+","+y.toFixed(1)}
-  return `<div class="freq"><svg viewBox="0 0 58 58"><circle cx="29" cy="29" r="27" fill="none" stroke="url(#g1)" stroke-width="1.2" opacity=".6"/><path d="${d}" fill="none" stroke="${["#c9a7ff","#ff9fd2","#8ff0d0"][i%3]}" stroke-width="2" stroke-linecap="round"/></svg><b>${n} <small>${u}</small></b><span>${t}</span></div>`}).join("");
-// Ondas animadas
-(function(){
-  const w=[["w1",22,3,.0018],["w2",16,5,.0026],["w3",12,2,.0012]].map(([id,a,k,s])=>({p:document.getElementById(id),a,k,s}));
-  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function frame(t){w.forEach(o=>{let d="";for(let x=0;x<=1000;x+=10){const y=45+o.a*Math.sin(x/1000*Math.PI*2*o.k+t*o.s)*Math.sin(x/1000*Math.PI);d+=(x?"L":"M")+x+","+y.toFixed(1)}o.p.setAttribute("d",d)});if(!reduce)requestAnimationFrame(frame)}
-  frame(0);
-})();
-// Estrellas
-(function(){const s=document.getElementById("stars");for(let i=0;i<70;i++){const e=document.createElement("i");e.style.left=Math.random()*100+"%";e.style.top=Math.random()*100+"%";e.style.animationDelay=(Math.random()*4)+"s";const z=Math.random()<.2?4:2;e.style.width=e.style.height=z+"px";e.style.background=["#fff","#c9a7ff","#ff9fd2","#8ff0d0"][i%4];s.appendChild(e)}})();
-// Aparición suave
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
-document.querySelectorAll(".reveal").forEach(e=>io.observe(e));
-setTimeout(()=>document.querySelectorAll(".reveal").forEach(e=>e.classList.add("in")),2500);
-// Promotoras: ?ref=CODIGO se agrega al mensaje de WhatsApp
-(function(){let ref=(new URLSearchParams(location.search).get("ref")||"").replace(/[^A-Za-z0-9_-]/g,"").slice(0,20).toUpperCase();try{if(ref)localStorage.setItem("lf-ref",ref);else ref=localStorage.getItem("lf-ref")||""}catch{}if(!ref)return;document.querySelectorAll('a[href^="https://wa.me/"]').forEach(l=>{try{const u=new URL(l.href);const t=u.searchParams.get("text")||"Hola, quiero información de Lily Frequency";u.searchParams.set("text",t+" · Me recomendó: "+ref);l.href=u.toString()}catch{}})})();
-document.getElementById("y").textContent=new Date().getFullYear();
+/* ================= CONFIGURACIÓN (cambiar antes de publicar) ================= */
+const CONFIG={
+  secret:"Me amo y vibro en arminia divina",   // frase con la que se generan los códigos mensuales
+  adminPin:"551322",                           // PIN para entrar al modo terapeuta
+  free:[],                                     // ninguno abierto: todo requiere membresia o prueba
+  trialDays:14,                              // días de prueba gratis con todo abierto
+  whatsapp:"50234819870"                                // tu número con código de país, ej. "50255555555"
+};
+/* ============================================================================ */
+
+const S=(f,b,mode,min,label)=>({f,b,mode,dur:min*60,label});
+const P=(id,cat,name,desc,st)=>({id,cat,name,desc,steps:st.map(a=>Array.isArray(a)?S(...a):a)});
+const B="binaural",I="iso",T="pure";
+const G=(min,label,text,br,f=432,b=6,mode=B)=>({f,b,mode,dur:min*60,label,g:text,br});
+/* Tarareo: tono de referencia para cantar encima; ph = nombres de las fases de respiración */
+const H=(min,label,text,br,ph,f,mu=null,tv=.5)=>({f,b:0,mode:T,dur:min*60,label,g:text,br,ph,mu,tv});
+/* Música propia: mu = {root, scale, bpm}; tv = volumen del tono base */
+const M=(min,label,text,mu,f=432,b=0,mode=T,tv=.18)=>({f,b,mode:b?mode:T,dur:min*60,label,g:text,mu,tv});
+const MAJ=[1,9/8,5/4,3/2,5/3],MIN=[1,6/5,4/3,3/2,9/5];
+const VOC=[["Raíz","UUU",128],["Bajo vientre","OOO",144],["Plexo solar","AAA",162],["Corazón","AH-JAA",171.2],["Garganta","EEE",192],["Entrecejo","III",216],["Coronilla","MMM",242.5]];
+const HUM=[
+ P("hum-abeja","Tarareo","Respiración de la abeja","Exhala tarareando “mmm” para calmar la mente",[
+  H(1,"Preparar","Siéntate cómoda. Escucha el tono: es la nota en la que vas a tararear.",null,null,196),
+  H(6,"Abeja","Inhala por la nariz. Al exhalar, con la boca cerrada, tararea “mmm” en la nota del tono. Siente cómo vibra tu cara y tu pecho.",[4,0,8,1],["Inhala","","Tararea mmm","Pausa"],196),
+  H(2,"Silencio","Respira normal y siente la vibración que queda en tu cuerpo.",null,null,196,null,.25)]),
+ P("hum-om","Tarareo","OM vibracional","Canta OM sobre 136.1 Hz",[
+  H(1,"Preparar","Escucha el tono OM. Respira profundo.",null,null,136.1),
+  H(8,"OM","Inhala profundo. Al exhalar canta “Ooo…” y cierra en “mmm” hasta vaciar el aire.",[4,0,10,1],["Inhala","","Canta Ooo-mmm","Pausa"],136.1),
+  H(2,"Escuchar","Quédate en silencio escuchando el eco interior.",null,null,136.1,null,.25)]),
+ P("hum-vocales","Tarareo","Vocales de los centros","Una vocal y una nota para cada centro de energía",[
+  ...VOC.map(([n,v,f])=>H(2,n+" · "+v,"Pon la atención en tu "+n.toLowerCase()+" y entona “"+v+"” en la nota del tono. Siente vibrar esa zona.",[4,0,8,1],["Inhala","","Entona "+v,"Pausa"],f)),
+  H(2,"Integrar","Respira y siente todo tu cuerpo vibrando junto.",null,null,256,{root:128,scale:MAJ,bpm:40},.2)]),
+ P("hum-animo","Tarareo","Sube tu ánimo","Tararea tu propia melodía sobre música alegre",[
+  M(2,"Escuchar","Escucha la música y deja que tu cuerpo se mueva un poco.",{root:216,scale:MAJ,bpm:72}),
+  H(6,"Tu melodía","Sonríe y tararea lo que nazca de ti, sin pensar. No hay notas incorrectas.",null,null,216,{root:216,scale:MAJ,bpm:72},.15),
+  H(3,"Más alto","Sube un poco el volumen de tu voz y abre la boca: “la la la”.",null,null,216,{root:216,scale:MAJ,bpm:80},.15),
+  M(2,"Recibir","Calla y siente la alegría en el pecho.",{root:216,scale:MAJ,bpm:60})]),
+ P("hum-vibracion","Tarareo","Eleva tu vibración","Tarareo sobre 528 Hz con música propia",[
+  H(3,"Conectar","Lleva la mano al pecho. Tararea “mmm” suave sobre el tono.",[4,0,8,1],["Inhala","","Tararea mmm","Pausa"],264,{root:132,scale:MAJ,bpm:48},.35),
+  H(6,"Gratitud","Mientras tarareas, piensa en tres cosas por las que agradeces.",[4,0,8,1],["Inhala","","Tararea y agradece","Pausa"],264,{root:132,scale:MAJ,bpm:48},.35),
+  M(3,"Recibir","Escucha y deja que la vibración se quede contigo.",{root:132,scale:MAJ,bpm:40},528,7.83,B,.2)]),
+ P("hum-sanar-voz","Tarareo","Suelta con tu voz","Sonido libre para soltar emociones guardadas",[
+  H(2,"Suspirar","Inhala profundo y suelta un suspiro largo con sonido: “aaah”.",[4,0,6,1],["Inhala","","Suspira aaah","Pausa"],174),
+  H(5,"Soltar","Deja salir el sonido que tu cuerpo necesite: grave, agudo, largo o corto.",null,null,174,{root:87,scale:MIN,bpm:36},.3),
+  H(3,"Calmar","Termina tarareando “mmm” muy suave.",[4,0,8,1],["Inhala","","mmm suave","Pausa"],174,{root:87,scale:MIN,bpm:30},.3)]),
+ P("mus-amanecer","Música","Amanecer lila","Música propia brillante en 432",[M(15,"Amanecer",{root:216,scale:MAJ,bpm:60})]),
+ P("mus-cristal","Música","Lluvia de cristal","Campanitas suaves para trabajar o leer",[M(20,"Cristal",{root:288,scale:MAJ,bpm:84},432,10,B)]),
+ P("mus-noche","Música","Noche lila","Música lenta para dormir con delta",[M(30,"Noche",{root:144,scale:MIN,bpm:24},174,2,B,.25)]),
+ P("mus-corazon","Música","Corazón 528","Música en 528 con pulso Schumann",[M(15,"Corazón",{root:132,scale:MAJ,bpm:44},528,7.83,B)]),
+ P("mus-meditar","Música","Templo interior","Música para meditar en theta",[M(20,"Templo",{root:108,scale:MIN,bpm:30},432,6,B)]),
+];
+const CENTROS=[["Base de la columna","la base de tu columna",396,194.18],["Bajo vientre","tu bajo vientre",417,210.42],["Plexo solar","la boca del estómago",528,126.22],["Corazón","el centro de tu pecho",639,136.1],["Garganta","tu garganta",741,141.27],["Entrecejo","el espacio entre tus cejas",852,221.23],["Centro de la cabeza","el centro de tu cabeza",963,172.06],["Sobre la cabeza","el espacio encima de tu cabeza",963,207.36]];
+const GUIDED=[
+ P("pineal","Guiadas","Activación del tercer ojo","Respiración ascendente y atención al centro de la cabeza con 852 y 963 Hz",[
+  G(2,"Llegar","Cierra los ojos. Respira lento y deja que el cuerpo se afloje.",[4,0,6,0],256,10),
+  G(4,"Respiración ascendente","Al inhalar, contrae el suelo pélvico, luego el abdomen y el pecho, y sube la energía por la columna hasta la coronilla. Sostén apretando suave. Suelta al exhalar.",[4,8,6,2],528,18.1),
+  G(5,"El espacio","Siente el espacio entre tus cejas. Luego el espacio detrás de los ojos. Luego el espacio en el centro de la cabeza.",null,852,6),
+  G(6,"Luz interior","Imagina una luz pequeña en el centro de tu cabeza que se hace más brillante con cada exhalación.",[4,2,6,0],963,5),
+  G(4,"Quietud","Quédate en la nada. Sin pensar, solo percibir.",null,963,4),
+  G(2,"Regresar","Agradece. Vuelve a sentir el cuerpo y abre los ojos cuando quieras.",null,256,10)]),
+ P("resp-ascendente","Guiadas","Respiración ascendente","Llevar la energía de la base de la columna a la cabeza",[
+  G(2,"Postura","Siéntate con la espalda recta y los ojos cerrados. Relaja la cara y los hombros.",null,256,10),
+  G(8,"Subir la energía","Inhala contrayendo base, abdomen y pecho; lleva el aire por la columna hasta la coronilla. Sostén apretando suave. Suelta y exhala.",[4,8,6,2],528,18.1),
+  G(5,"Quietud","Respira normal. Deja la atención en el centro de la cabeza y observa lo que surge.",null,852,6),
+  G(2,"Regresar","Mueve suavemente manos y pies. Abre los ojos.",null,256,10)]),
+ P("nuevo-yo","Guiadas","Nuevo yo","Soltar al yo de siempre y ensayar al que quieres ser",[
+  G(3,"Inducción","Siente el espacio alrededor de tu cuerpo. Luego el espacio de toda la habitación.",[4,0,6,0],256,8),
+  G(5,"Reconocer","¿Qué emoción repites cada día? Nómbrala sin juzgarte y decide soltarla.",null,396,6),
+  G(6,"Elevar","Siente gratitud, alegría o amor como si lo que deseas ya fuera real.",null,528,7.83),
+  G(6,"Ensayar","Visualiza un día de tu nueva vida: cómo despiertas, qué haces, cómo te sientes.",null,639,6),
+  G(3,"Entregar","Suelta el cómo. Confía y agradece.",null,963,6),
+  G(2,"Regresar","Lleva esa emoción contigo a tu día. Abre los ojos.",null,256,10)]),
+ P("centros","Guiadas","Bendición de los centros","Atención y gratitud en cada centro de energía",[
+  G(2,"Llegar","Cierra los ojos y respira lento.",[4,0,6,0],256,10),
+  ...CENTROS.map(([n,z,f,pl])=>G(2,n,"Pon tu atención en "+z+". Siente el espacio en esa zona y envíale gratitud.",[4,0,6,0],pl,7.83)),
+  G(2,"Regresar","Siente todo tu cuerpo encendido. Agradece y abre los ojos.",null,256,10)]),
+ P("coherencia","Guiadas","Coherencia del corazón","Respirar desde el corazón con emoción elevada",[
+  G(1,"Llegar","Lleva la atención al centro del pecho.",null,639,10),
+  G(5,"Respirar desde el corazón","Imagina que el aire entra y sale por tu corazón.",[5.5,0,5.5,0],639,7.83),
+  G(4,"Emoción elevada","Mientras respiras, siente gratitud por algo concreto de tu vida.",[5.5,0,5.5,0],528,7.83)]),
+ P("resp-478","Guiadas","Respiración 4-7-8","Para calmar y dormir",[G(6,"4-7-8","Inhala por la nariz en 4, sostén en 7, exhala por la boca en 8.",[4,7,8,0],396,8)]),
+ P("resp-cuadrada","Guiadas","Respiración cuadrada","Equilibrio y foco",[G(6,"Cuadrada","Inhala en 4, sostén en 4, exhala en 4, sostén en 4.",[4,4,4,4],432,10)]),
+ P("resp-energia","Guiadas","Respiración de energía","Para activarte. Evítala en embarazo, hipertensión o si te mareas.",[
+  G(1,"Preparar","Siéntate recto. Si te mareas, para y respira normal.",null,417,12),
+  G(2,"Fuego","Inhala y exhala rápido por la nariz; el abdomen empuja el aire.",[1,0,1,0],417,16),
+  G(1,"Retener","Inhala profundo y sostén. Siente la energía.",[4,15,6,0],528,10),
+  G(2,"Fuego","Otra ronda.",[1,0,1,0],417,16),
+  G(1,"Retener","Inhala profundo y sostén.",[4,15,6,0],528,10),
+  G(2,"Integrar","Respira normal y siente el cuerpo.",null,432,8)]),
+];
+const PROGRAMS=[
+ ...GUIDED,
+ ...HUM,
+ /* Solfeggio */
+ ...[[174,"Alivio y anclaje"],[285,"Restaurar el bienestar"],[396,"Soltar miedo y culpa"],[417,"Facilitar el cambio"],[528,"Transformación y amor"],[639,"Relaciones y armonía"],[741,"Expresión y limpieza"],[852,"Intuición"],[963,"Conexión espiritual"]]
+   .map(([f,d])=>P("sol"+f,"Solfeggio",f+" Hz",d,[[f,0,T,10,d]])),
+ P("sol-full","Solfeggio","Escalera Solfeggio","Las 9 frecuencias, 3 min cada una",[[174,0,T,3,"174"],[285,0,T,3,"285"],[396,0,T,3,"396"],[417,0,T,3,"417"],[528,0,T,3,"528"],[639,0,T,3,"639"],[741,0,T,3,"741"],[852,0,T,3,"852"],[963,0,T,3,"963"]]),
+ /* Chakras */
+ ...[["raiz","Raíz","Seguridad y arraigo",396,194.18],["sacro","Sacro","Creatividad y disfrute",417,210.42],["plexo","Plexo solar","Poder personal",528,126.22],["corazon","Corazón","Amor y compasión",639,136.1],["garganta","Garganta","Expresión y verdad",741,141.27],["tercer","Tercer ojo","Intuición y visión",852,221.23],["corona","Corona","Conexión y propósito",963,172.06]]
+   .map(([id,n,d,f,pl])=>P("ch-"+id,"Chakras","Chakra "+n,d,[[f,0,T,6,n+" · Solfeggio"],[pl,7.83,B,6,n+" · tono planetario"]])),
+ P("chakras","Chakras","Alineación de chakras","Raíz → corona, 3 min cada uno",[[396,0,T,3,"Raíz"],[417,0,T,3,"Sacro"],[528,0,T,3,"Plexo solar"],[639,0,T,3,"Corazón"],[741,0,T,3,"Garganta"],[852,0,T,3,"Tercer ojo"],[963,0,T,3,"Corona"]]),
+ P("chakras-down","Chakras","Bajar a tierra","Corona → raíz para cerrar el día",[[963,0,T,3,"Corona"],[852,0,T,3,"Tercer ojo"],[741,0,T,3,"Garganta"],[639,0,T,3,"Corazón"],[528,0,T,3,"Plexo"],[417,0,T,3,"Sacro"],[396,0,T,4,"Raíz"]]),
+ /* Ondas cerebrales */
+ P("schumann","Ondas","Resonancia Schumann","Pulso 7.83 Hz sobre tono 136.1",[[136.1,7.83,B,20,"Schumann 7.83"]]),
+ P("delta","Ondas","Delta · sueño profundo","2 Hz",[[174,2,B,30,"Delta 2 Hz"]]),
+ P("delta-05","Ondas","Delta profundo","0.5 a 1.5 Hz",[[136.1,1.5,B,10,"Delta 1.5"],[136.1,1,B,10,"Delta 1"],[136.1,.5,B,10,"Delta 0.5"]]),
+ P("theta","Ondas","Theta · meditación","6 Hz",[[432,6,B,20,"Theta 6 Hz"]]),
+ P("theta-4","Ondas","Theta profundo","4 Hz, umbral del sueño",[[210.42,4,B,25,"Theta 4 Hz"]]),
+ P("alpha","Ondas","Alfa · calma alerta","10 Hz",[[256,10,B,20,"Alfa 10 Hz"]]),
+ P("smr","Ondas","SMR · calma enfocada","13 Hz",[[220,13,B,20,"SMR 13 Hz"]]),
+ P("beta","Ondas","Beta · concentración","18 Hz",[[220,18,B,25,"Beta 18 Hz"]]),
+ P("gamma","Ondas","Gamma · claridad","40 Hz en pulsos",[[200,40,I,15,"Gamma 40 Hz"]]),
+ P("ondas-tour","Ondas","Viaje por las ondas","Beta → alfa → theta → delta",[[220,18,B,5,"Beta"],[256,10,B,7,"Alfa"],[432,6,B,8,"Theta"],[174,2,B,10,"Delta"]]),
+ /* Mente */
+ P("superhumano","Mente","Superhumano","Beta, theta y delta con pulso 18.1 Hz para enfoque y expansión",[[528,18.1,B,8,"Activación · beta 18.1"],[432,6,B,8,"Expansión · theta"],[174,2,B,6,"Integración · delta"],[528,18.1,B,8,"Regreso · beta 18.1"],[200,40,I,3,"Destello · gamma"]]),
+ P("recarga","Mente","Recarga 18.1","Energía y enfoque con pulso de 18.1 Hz",[[528,10,B,5,"Preparar · alfa"],[528,18.1,B,15,"Recarga · 18.1"],[741,18.1,B,5,"Claridad · 18.1"],[432,10,B,3,"Integrar · alfa"]]),
+ P("vision-remota","Mente","Visión Remota","Meditación de visualización e intuición en theta",[[256,10,B,5,"Relajar · alfa"],[221.23,7,B,8,"Abrir · theta 7"],[852,5,B,12,"Percibir · theta 5"],[963,4,B,8,"Ver · theta 4"],[200,40,I,2,"Anotar · gamma"],[256,12,B,3,"Regresar · alfa"]]),
+ P("intuicion","Mente","Intuición","852 Hz en theta",[[852,6,B,20,"Intuición · theta"]]),
+ P("enfoque","Mente","Enfoque de trabajo","Bloque de concentración",[[220,14,B,15,"Entrar en foco"],[220,18,B,25,"Foco sostenido"],[256,10,B,5,"Pausa alfa"]]),
+ P("concentracion2","Mente","Mejora tu concentración 2","Bloque de 38 min: alfa → SMR → beta 16 → beta 18.1 → gamma → alfa",[[256,10,B,3,"Preparar · alfa 10"],[220,13,B,7,"Calma enfocada · SMR 13"],[220,16,B,10,"Concentración · beta 16"],[528,18.1,B,10,"Foco profundo · beta 18.1"],[200,40,I,5,"Claridad · gamma 40"],[256,10,B,3,"Integrar · alfa 10"]]),
+ P("estudio","Mente","Estudio y memoria","Alfa-beta para aprender",[[256,12,B,10,"Preparar"],[220,15,B,20,"Aprender"],[256,10,B,5,"Fijar"]]),
+ P("creatividad","Mente","Creatividad","Theta-alfa para ideas",[[417,8,B,10,"Soltar"],[417,7,B,15,"Crear · theta"]]),
+ P("claridad","Mente","Claridad mental","Gamma suave y 741",[[741,10,B,8,"Ordenar"],[200,40,I,10,"Claridad · gamma"]]),
+ P("decisiones","Mente","Tomar decisiones","Calma y foco",[[396,10,B,8,"Calmar"],[528,14,B,10,"Ver opciones"]]),
+ P("lucidos","Mente","Sueños lúcidos","Theta 4-5 antes de dormir",[[210.42,5,B,15,"Theta 5"],[210.42,4,B,15,"Theta 4"]]),
+ P("telepatia","Mente","Conexión a distancia","Meditación para sintonizar con alguien",[[639,7.83,B,10,"Corazón · Schumann"],[852,6,B,15,"Sintonía · theta"]]),
+ /* Emociones */
+ P("calma","Emociones","Calma","396 y 528 en alfa/theta",[[396,10,B,10,"Soltar · alfa"],[528,8,B,10,"Armonizar"],[432,6,B,10,"Paz · theta"]]),
+ P("ansiedad","Emociones","Pausa de ansiedad","10 minutos para bajar revoluciones",[[396,10,B,5,"Respirar"],[432,8,B,5,"Aterrizar"]]),
+ P("soltar","Emociones","Soltar","396 Hz con theta",[[396,6,B,20,"Soltar · theta"]]),
+ P("autoestima","Emociones","Autoestima","Plexo solar y corazón",[[528,10,B,10,"Poder personal"],[639,8,B,10,"Aceptarme"]]),
+ P("amor-propio","Emociones","Amor propio","639 y 528",[[639,7.83,B,10,"Abrir"],[528,7.83,B,10,"Recibir"]]),
+ P("perdon","Emociones","Perdón","639 en theta",[[639,6,B,20,"Perdonar"]]),
+ P("alegria","Emociones","Alegría","Alfa alto",[[417,12,B,10,"Mover"],[528,12,B,10,"Sonreír"]]),
+ P("consuelo","Emociones","Consuelo","Para momentos de pérdida",[[396,8,B,10,"Sostener"],[639,7,B,10,"Abrazar"],[174,5,B,10,"Descansar"]]),
+ P("valentia","Emociones","Valentía","Raíz y plexo",[[396,14,B,10,"Arraigo"],[528,16,B,10,"Avanzar"]]),
+ P("estres","Emociones","Fin del estrés","Para después del trabajo",[[220,12,B,5,"Soltar el día"],[256,10,B,10,"Alfa"],[432,6,B,10,"Theta"]]),
+ P("ira","Emociones","Enfriar el enojo","Bajar de beta a alfa",[[396,14,B,5,"Reconocer"],[396,10,B,10,"Enfriar"],[639,8,B,5,"Volver al corazón"]]),
+ /* Sueño */
+ P("sueno","Sueño","Dormir","Theta que baja a delta",[[174,6,B,10,"Soltar · theta 6"],[174,4,B,10,"Descenso · 4"],[136.1,2,B,20,"Delta · 2"]]),
+ P("insomnio","Sueño","Noche larga","Cuando cuesta conciliar el sueño",[[396,8,B,10,"Calmar"],[174,4,B,15,"Descender"],[136.1,1,B,35,"Delta"]]),
+ P("siesta","Sueño","Siesta de 20","Descanso corto y despertar",[[256,8,B,5,"Bajar"],[174,4,B,10,"Descansar"],[256,12,B,5,"Despertar"]]),
+ P("despertar","Sueño","Despertar suave","De delta a alfa",[[174,3,B,5,"Delta"],[256,8,B,5,"Theta-alfa"],[417,12,B,5,"Alfa"]]),
+ P("reparador","Sueño","Descanso reparador","Sueño profundo largo",[[136.1,3,B,15,"Entrar"],[136.1,1.5,B,30,"Delta profundo"],[136.1,2,B,15,"Mantener"]]),
+ /* Energía */
+ P("energia","Energía","Energía de mañana","Sube de alfa a beta",[[417,12,B,7,"Despertar"],[528,16,B,7,"Activar"],[741,20,B,6,"Claridad"]]),
+ P("vitalidad","Energía","Vitalidad","Plexo solar con beta",[[528,15,B,15,"Vitalidad"]]),
+ P("tarde","Energía","Bajón de la tarde","15 minutos de impulso",[[256,12,B,5,"Despejar"],[220,18,B,10,"Impulso"]]),
+ P("motivacion","Energía","Motivación","Beta y gamma",[[417,16,B,10,"Querer"],[200,40,I,5,"Hacer"]]),
+ P("deporte","Energía","Antes de entrenar","Beta alto",[[528,20,B,10,"Activar"]]),
+ /* Cuerpo */
+ P("relax-muscular","Cuerpo","Relajación muscular","Alfa-theta para soltar tensión",[[174,10,B,10,"Soltar hombros"],[174,6,B,10,"Soltar cuerpo"]]),
+ P("respiracion","Cuerpo","Respiración guiada","Pulso lento para respirar",[[432,6,B,10,"Respirar"]]),
+ P("post-ejercicio","Cuerpo","Después del ejercicio","Bajar pulsaciones",[[285,10,B,10,"Bajar"],[174,6,B,10,"Recuperar"]]),
+ P("cuerpo-calma","Cuerpo","Cuerpo en calma","285 y 174 en theta",[[285,6,B,15,"Calma"],[174,5,B,15,"Descanso"]]),
+ P("escaneo","Cuerpo","Escaneo corporal","Recorrer el cuerpo con atención",[[194.18,8,B,5,"Pies y piernas"],[210.42,8,B,5,"Abdomen"],[136.1,8,B,5,"Pecho"],[221.23,8,B,5,"Cabeza"]]),
+ /* Acompañamiento: visualización por sistema del cuerpo (complementa, no sustituye tratamiento) */
+ ...[["digestivo","Sistema digestivo",528,210.42],["higado","Hígado",528,183.58],["rinones","Riñones",417,221.23],["corazon-f","Corazón físico",639,136.1],["pulmones","Pulmones y respiración",639,141.27],["piel","Piel",528,221.23],["huesos","Huesos y articulaciones",174,147.85],["inmune","Sistema inmune",528,126.22],["nervioso","Sistema nervioso",432,136.1],["hormonal","Equilibrio hormonal",417,210.42],["cabeza","Cabeza y descanso mental",852,194.18],["celulas","Visualización celular",528,136.1]]
+   .map(([id,n,f,pl])=>P("ac-"+id,"Acompañamiento",n,"Visualización para acompañar tu proceso. Complementa tu tratamiento, no lo sustituye.",[[256,10,B,4,"Relajar · alfa"],[f,6,B,12,"Enfocar la atención en "+n.toLowerCase()],[pl,4,B,8,"Visualizar luz y calma"],[256,10,B,3,"Agradecer y regresar"]])),
+ /* Espiritual */
+ P("meditacion","Espiritual","Meditación","432 Hz en theta",[[432,6,B,20,"Meditar"]]),
+ P("conexion","Espiritual","Conexión","963 Hz con theta",[[963,6,B,20,"Conectar"]]),
+ P("gratitud","Espiritual","Gratitud","528 y 639",[[528,8,B,10,"Agradecer"],[639,8,B,10,"Recibir"]]),
+ P("abund","Espiritual","Abundancia y decretos","Para acompañar afirmaciones",[[528,7.83,B,10,"Corazón abierto"],[639,6,B,10,"Recibir"],[963,8,B,5,"Agradecer"]]),
+ P("proteccion","Espiritual","Protección energética","Raíz y corona",[[396,7.83,B,10,"Raíz"],[963,7.83,B,10,"Corona"]]),
+ P("limpieza","Espiritual","Limpieza energética","Solfeggio descendente",[[741,0,T,5,"Limpiar"],[396,0,T,5,"Soltar"],[285,0,T,5,"Restaurar"],[174,0,T,5,"Anclar"]]),
+ P("hogar","Espiritual","Armonizar el espacio","Para la casa o consultorio, con parlante",[[528,0,T,10,"528"],[432,0,T,10,"432"]]),
+ P("ancestros","Espiritual","Linaje y ancestros","Theta profundo con 396",[[396,5,B,20,"Linaje"]]),
+ P("432","Espiritual","432 Hz natural","Afinación armónica",[[432,0,T,15,"432 Hz"]]),
+ P("om","Espiritual","OM 136.1","Tono del año terrestre",[[136.1,0,T,15,"OM"]]),
+ /* Planetarias */
+ ...[["tierra-dia","Tierra (día)",194.18,"Arraigo y vitalidad"],["sol","Sol",126.22,"Centro y confianza"],["luna","Luna",210.42,"Emociones y ciclos"],["mercurio","Mercurio",141.27,"Comunicación"],["venus","Venus",221.23,"Amor y belleza"],["marte","Marte",144.72,"Acción y fuerza"],["jupiter","Júpiter",183.58,"Expansión y abundancia"],["saturno","Saturno",147.85,"Estructura y disciplina"],["urano","Urano",207.36,"Cambio e innovación"],["neptuno","Neptuno",211.44,"Sueños e intuición"],["pluton","Plutón",140.25,"Transformación profunda"]]
+   .map(([id,n,f,d])=>P("pl-"+id,"Planetarias",n+" · "+f+" Hz",d,[[f,0,T,10,n]])),
+];
+const CATS=["Todos","Favoritos","Guiadas","Tarareo","Música","Mente","Ondas","Emociones","Sueño","Energía","Cuerpo","Acompañamiento","Espiritual","Chakras","Solfeggio","Planetarias"];
+const MODE_NAME={binaural:"Binaural",iso:"Isocrónico",pure:"Tono puro",lr:"Hemisferios ⇄"};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+let favs=new Set(store.get("lf-favs",[])),seq=store.get("lf-seq",[]),myProgs=store.get("lf-my",[]),received=store.get("lf-rx",[]),history=store.get("lf-hist",[]),cat="Todos";
+$("noHeadphones").checked=store.get("lf-nohp",false);
+
+function toast(t){const el=$("toast");el.textContent=t;el.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),2400)}
+const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+":"+String(m).padStart(2,"0"):String(m).padStart(2,"0"))+":"+String(x).padStart(2,"0")};
+const total=p=>p.steps.reduce((a,s)=>a+s.dur,0);
+async function copyText(t,fallbackEl){try{await navigator.clipboard.writeText(t);toast("Copiado")}catch{if(fallbackEl){const r=document.createRange();r.selectNodeContents(fallbackEl);const s=getSelection();s.removeAllRanges();s.addRange(r)}toast("Mantén presionado para copiar")}}
+
+/* ---------- Membresía (código mensual) ---------- */
+function ym(d=new Date()){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")}
+function nextYm(){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()+1);return ym(d)}
+function prevYm(){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-1);return ym(d)}
+function monthCode(m){let h=2166136261;const s=CONFIG.secret+"|"+m;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0}
+  const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789";let out="";for(let i=0;i<6;i++){out+=A[h%A.length];h=Math.floor(h/A.length)^Math.imul(h,2654435761)>>>0;h>>>=0}return out}
+function trialLeft(){let f=store.get("lf-first",null);if(!f){f=Date.now();store.set("lf-first",f)}return Math.max(0,CONFIG.trialDays-Math.floor((Date.now()-f)/864e5))}
+function isMember(){if(trialLeft()>0)return true;const u=store.get("lf-member",null);if(!u)return false;if(u===ym())return true;return u===prevYm()&&new Date().getDate()<=5}
+let admin=false;
+function canPlay(p){return isMember()||admin||!p.cat||CONFIG.free.includes(p.id)}
+function renderMember(){
+  const m=isMember()||admin;const paid=(()=>{const u=store.get("lf-member",null);return u===ym()||(u===prevYm()&&new Date().getDate()<=5)})(),tl=trialLeft();$("memberBadge").textContent=admin?"Terapeuta":paid?"Miembro ✦":tl>0?"Prueba gratis · "+tl+(tl===1?" día":" días"):"Gratis";$("memberBadge").classList.toggle("vip",m);
+  $("memberText").textContent=admin?"Modo terapeuta activo: todos los programas abiertos.":paid?"Tu membresía está activa este mes. Todos los programas están abiertos.":tl>0?"Estás en tu prueba gratis: te quedan "+tl+" días con todo abierto. Después ingresa el código del mes que te da tu terapeuta.":"Con la versión gratis tienes "+CONFIG.free.length+" programas. Ingresa el código del mes que te da tu terapeuta para abrir todos.";
+  $("therapist").hidden=!admin;$("adminLogin").hidden=admin;$("adminPanel").hidden=!admin;
+  if(admin){$("ymNow").textContent=ym();$("ymNext").textContent=nextYm();$("codeNow").textContent=monthCode(ym());$("codeNext").textContent=monthCode(nextYm())}
+  renderLib();if(typeof renderProfile==="function"&&$("pfCard"))try{renderProfile()}catch{}
+}
+$("accBtn").onclick=()=>{const c=$("accCode").value.trim().toUpperCase();
+  if(c===monthCode(ym())){store.set("lf-member",ym());toast("Membresía activada ✦");$("accCode").value=""}
+  else if(c===monthCode(prevYm())&&new Date().getDate()<=5){store.set("lf-member",prevYm());toast("Membresía activada ✦")}
+  else toast("Código no válido para este mes. Pídele el código actual a tu terapeuta.");renderMember()};
+$("pinBtn").onclick=()=>{if($("pin").value===CONFIG.adminPin){admin=true;store.set("lf-admin",true);$("pin").value="";toast("Modo terapeuta activo")}else toast("PIN incorrecto");renderMember()};
+$("pinOut").onclick=()=>{admin=false;store.set("lf-admin",false);renderMember()};
+$("copyCode").onclick=()=>copyText(monthCode(ym()),$("codeNow"));
+admin=store.get("lf-admin",false);
+
+/* ---------- Pestañas ---------- */
+function showTab(t){document.querySelectorAll("[data-view]").forEach(s=>s.hidden=s.dataset.view!==t);document.querySelectorAll("[data-tab]").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));store.set("lf-tab",t)}
+document.querySelector("nav.tabs").onclick=e=>{const b=e.target.closest("[data-tab]");if(b)showTab(b.dataset.tab)};
+
+/* ---------- Biblioteca ---------- */
+function renderCats(){$("cats").innerHTML=CATS.map(c=>`<button type="button" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("")}
+$("cats").onclick=e=>{const b=e.target.closest("button");if(!b)return;cat=b.dataset.c;renderCats();renderLib()};
+function renderLib(){
+  const list=PROGRAMS.filter(p=>cat==="Todos"||(cat==="Favoritos"?favs.has(p.id):p.cat===cat));
+  $("lib").innerHTML=list.length?list.map(p=>{const lock=!canPlay(p);return `<button type="button" class="card ${cur&&cur.id===p.id?"active":""} ${lock?"locked":""}" data-id="${p.id}">
+    <span class="t">${lock?"🔒 ":""}${p.name}<span class="fav ${favs.has(p.id)?"on":""}" data-fav="${p.id}" role="button" aria-label="Favorito">♥</span></span>
+    <span class="d">${p.desc}</span>
+    <span class="m">${MODE_NAME[p.steps[0].mode]} · ${p.steps.length>1?p.steps.length+" pasos · ":""}${Math.round(total(p)/60)} min</span></button>`}).join("")
+   :`<p class="empty">Toca ♥ en un programa para guardarlo aquí.</p>`;
+  const sel=$("txBase");if(sel&&!sel.options.length){sel.innerHTML=`<option value="__seq">Mi secuencia (Libre)</option>`+myProgs.map((p,i)=>`<option value="my${i}">${esc(p.name)}</option>`).join("")+PROGRAMS.map(p=>`<option value="${p.id}">${p.name}</option>`).join("")}
+}
+$("lib").onclick=e=>{
+  const f=e.target.closest("[data-fav]");
+  if(f){e.stopPropagation();const id=f.dataset.fav;favs.has(id)?favs.delete(id):favs.add(id);store.set("lf-favs",[...favs]);renderLib();return}
+  const c=e.target.closest(".card");if(!c)return;const p=PROGRAMS.find(p=>p.id===c.dataset.id);
+  if(!canPlay(p)){toast("Programa de miembros. Activa tu código en Cuenta.");return}
+  load(p,true);window.scrollTo({top:0,behavior:"smooth"});
+};
+
+/* ---------- Motor de audio ---------- */
+let ctx,master,analyser,voice=null,cur=null,idx=0,stepStart=0,elapsedBefore=0,playing=false,paused=false,pausedAt=0,tick=null,wake=null;
+const volLevel=()=>$("vol").value/100*.6;
+function ensureCtx(){if(ctx)return;ctx=new (window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=volLevel();analyser=ctx.createAnalyser();analyser.fftSize=2048;master.connect(analyser);analyser.connect(ctx.destination)}
+function effMode(s){if(s.mode!=="pure"&&!s.b)return "pure";return (s.mode==="binaural"&&$("noHeadphones").checked)?"iso":s.mode}
+function makeVoice(s){
+  const t=ctx.currentTime,out=ctx.createGain(),tone=ctx.createGain();out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(1,t+3);out.connect(master);tone.gain.value=s.tv??1;tone.connect(out);
+  const nodes=[out],mode=effMode(s);
+  if(mode==="lr"){
+    /* alterna el sonido entre el oído derecho y el izquierdo, para hemisferios */
+    const L=ctx.createOscillator(),R=ctx.createOscillator(),gL=ctx.createGain(),gR=ctx.createGain(),
+          m=ctx.createChannelMerger(2),lfo=ctx.createOscillator(),aL=ctx.createGain(),aR=ctx.createGain();
+    L.frequency.value=s.f;R.frequency.value=s.f+(s.b||0);
+    gL.gain.value=.5;gR.gain.value=.5;
+    lfo.type="sine";lfo.frequency.value=s.lr||.2;
+    const d=(s.dir===-1?-1:1)*.48;
+    aL.gain.value=d;aR.gain.value=-d;
+    lfo.connect(aL);aL.connect(gL.gain);
+    lfo.connect(aR);aR.connect(gR.gain);
+    L.connect(gL);R.connect(gR);
+    gL.connect(m,0,0);gR.connect(m,0,1);m.connect(tone);
+    L.start();R.start();lfo.start();
+    nodes.push(L,R,gL,gR,m,lfo,aL,aR)}
+  else if(mode==="binaural"){const L=ctx.createOscillator(),R=ctx.createOscillator(),m=ctx.createChannelMerger(2);L.frequency.value=s.f;R.frequency.value=s.f+s.b;L.connect(m,0,0);R.connect(m,0,1);m.connect(tone);L.start();R.start();nodes.push(L,R,m)}
+  else if(mode==="iso"){const o=ctx.createOscillator(),g=ctx.createGain(),lfo=ctx.createOscillator(),lg=ctx.createGain();o.frequency.value=s.f;g.gain.value=.5;lfo.frequency.value=s.b;lg.gain.value=.5;lfo.connect(lg);lg.connect(g.gain);o.connect(g);g.connect(tone);o.start();lfo.start();nodes.push(o,g,lfo,lg)}
+  else{const o=ctx.createOscillator();o.frequency.value=s.f;o.connect(tone);o.start();nodes.push(o)}
+  let breath=null;
+  if(s.br){const bo=ctx.createOscillator(),bg=ctx.createGain();bo.frequency.value=s.f*1.5;bg.gain.value=0;bo.connect(bg);bg.connect(out);bo.start();nodes.push(bo,bg);breath=bg}
+  let timer=null;
+  if(s.mu){
+    const mu=s.mu,mg=ctx.createGain();mg.gain.value=.55;mg.connect(out);
+    const dl=ctx.createDelay(2),fb=ctx.createGain();dl.delayTime.value=.42;fb.gain.value=.35;dl.connect(fb);fb.connect(dl);dl.connect(mg);nodes.push(mg,dl,fb);
+    [0,2,4].forEach((k,j)=>{const f=mu.root*mu.scale[k]*(j===2?1:1);[0,1.5].forEach(det=>{const o=ctx.createOscillator(),g=ctx.createGain(),l=ctx.createOscillator(),lg=ctx.createGain();o.type=det?"triangle":"sine";o.frequency.value=f;o.detune.value=det;g.gain.value=.045;l.frequency.value=.07+j*.03;lg.gain.value=.025;l.connect(lg);lg.connect(g.gain);o.connect(g);g.connect(mg);o.start();l.start();nodes.push(o,g,l,lg)})});
+    const bell=()=>{if(!ctx)return;const n=ctx.currentTime,deg=mu.scale[Math.floor(Math.random()*mu.scale.length)],oct=[2,2,4][Math.floor(Math.random()*3)],o=ctx.createOscillator(),g=ctx.createGain();
+      o.frequency.value=mu.root*deg*oct;g.gain.setValueAtTime(0,n);g.gain.linearRampToValueAtTime(.12,n+.015);g.gain.exponentialRampToValueAtTime(.0008,n+3.2);o.connect(g);g.connect(mg);g.connect(dl);o.start(n);o.stop(n+3.3)};
+    const beat=60/(mu.bpm||60)*1000;timer=setInterval(()=>{if(Math.random()<.7)bell()},beat);
+  }
+  return {out,nodes,breath,timer};
+}
+function killVoice(v,fade=1.5){if(!v)return;if(v.timer)clearInterval(v.timer);const t=ctx.currentTime;v.out.gain.cancelScheduledValues(t);v.out.gain.setValueAtTime(v.out.gain.value,t);v.out.gain.linearRampToValueAtTime(0,t+fade);setTimeout(()=>v.nodes.forEach(n=>{try{n.stop&&n.stop()}catch{}try{n.disconnect()}catch{}}),fade*1000+100)}
+function startStep(i){idx=i;killVoice(voice);voice=makeVoice(cur.steps[i]);stepStart=ctx.currentTime;elapsedBefore=cur.steps.slice(0,i).reduce((a,x)=>a+x.dur,0);showStep()}
+function load(p,autoplay){
+  stop(true);cur=p;idx=0;elapsedBefore=0;
+  $("intent").hidden=!p.intent&&!p.when;$("intent").innerHTML=(p.from?`<b>De ${esc(p.from)}${p.client?" para "+esc(p.client):""}</b><br>`:"")+(p.intent?"“"+esc(p.intent)+"”":"")+(p.when?`<br><span class="muted">${esc(p.when)}</span>`:"");
+  showStep();renderLib();if(autoplay)play();
+}
+async function play(){
+  if(!cur)load(PROGRAMS.find(p=>p.id==="sol528"));
+  ensureCtx();await ctx.resume();
+  if(paused){paused=false;master.gain.setTargetAtTime(volLevel(),ctx.currentTime,.2);stepStart=ctx.currentTime-pausedAt}
+  else if(!playing)startStep(0);
+  playing=true;setState();clearInterval(tick);tick=setInterval(update,250);
+  try{wake=await navigator.wakeLock?.request("screen")}catch{}
+}
+function pause(){if(!playing)return;paused=true;playing=false;pausedAt=ctx.currentTime-stepStart;master.gain.setTargetAtTime(0,ctx.currentTime,.15);clearInterval(tick);setState()}
+function stop(silent){
+  clearInterval(tick);if(voice)killVoice(voice,.6);voice=null;playing=false;paused=false;
+  if(ctx)master.gain.setTargetAtTime(volLevel(),ctx.currentTime,.05);
+  try{wake&&wake.release()}catch{}wake=null;
+  if(cur){idx=0;elapsedBefore=0;showStep();$("barFill").style.width="0";$("tEl").textContent="00:00"}
+  setState();if(!silent&&cur)toast("Sesión detenida");
+}
+function logDone(){history.unshift({n:cur.name,c:cur.client||"",d:new Date().toISOString(),m:Math.round(total(cur)/60)});history=history.slice(0,50);store.set("lf-hist",history);renderHistory()}
+function update(){
+  if(!playing||!cur)return;const s=cur.steps[idx],inStep=ctx.currentTime-stepStart;
+  if(inStep>=s.dur){if(idx<cur.steps.length-1){startStep(idx+1);toast("Siguiente: "+cur.steps[idx].label)}else{logDone();stop(true);toast("Sesión completa ✨");return}}
+  breathTick(cur.steps[idx],ctx.currentTime-stepStart);
+  const el=elapsedBefore+Math.min(ctx.currentTime-stepStart,cur.steps[idx].dur);$("tEl").textContent=fmt(el);$("barFill").style.width=(el/total(cur)*100)+"%";
+}
+let breathLevel=0;
+function breathTick(s,t){
+  if(!s.br){breathLevel=0;$("breathPh").textContent=s.g?"":"";return}
+  const [a,h,e,h2]=s.br,cyc=a+h+e+h2,x=t%cyc;let ph,left,lv;
+  const N=s.ph||["Inhala","Sostén","Exhala","Pausa"];if(x<a){ph=N[0];left=a-x;lv=x/a}else if(x<a+h){ph=N[1]||"Sostén";left=a+h-x;lv=1}else if(x<a+h+e){ph=N[2];left=a+h+e-x;lv=1-(x-a-h)/e}else{ph=N[3];left=cyc-x;lv=0}
+  breathLevel=lv;$("breathPh").textContent=ph+" · "+Math.ceil(left);
+  if(voice&&voice.breath)voice.breath.gain.setTargetAtTime(lv*(s.ph?.12:.35),ctx.currentTime,.12);
+}
+function showStep(){
+  if(!cur)return;const s=cur.steps[idx],m=effMode(s);
+  $("hz").innerHTML=(+s.f).toLocaleString("es",{maximumFractionDigits:2})+"<span>Hz</span>";
+  $("beat").textContent=s.mu&&!s.b?(s.g&&s.tv>.2?"tono guía + música":"música propia"):m==="pure"?(s.ph||s.tv<1&&s.g?"tono guía":"tono puro"):(m==="binaural"?"binaural · ":"pulsos · ")+s.b+" Hz";
+  $("pname").textContent=cur.name+(cur.steps.length>1?" — "+s.label:"");
+  $("guide").hidden=!s.g;$("guideTx").textContent=s.g||"";$("breathPh").textContent=s.br?"Prepárate":"";
+  $("modeChip").textContent=MODE_NAME[m];$("tTot").textContent=fmt(total(cur));$("tStep").textContent="paso "+(idx+1)+"/"+cur.steps.length;renderSteps();
+}
+function renderSteps(){if(!cur){$("steps").innerHTML="";return}const on=playing||paused;
+  $("steps").innerHTML=cur.steps.map((s,i)=>`<div class="step ${i===idx&&on?"cur":""} ${on&&i<idx?"done":""}"><span>${i===idx&&on?"◆":i+1}</span><span>${esc(s.label)}</span><b>${s.f} Hz${s.b&&s.mode!=="pure"?" · "+s.b:""} · ${fmt(s.dur)}</b></div>`).join("")}
+function setState(){$("stateChip").textContent=playing?"Sonando":paused?"En pausa":"Detenido";$("stateChip").classList.toggle("on",playing);$("playBtn").textContent=playing?"❚❚":"▶";$("playBtn").setAttribute("aria-label",playing?"Pausar":"Reproducir");renderSteps()}
+$("playBtn").onclick=()=>playing?pause():play();
+$("stopBtn").onclick=()=>stop();
+$("nextBtn").onclick=()=>{if(!cur||!playing)return;idx<cur.steps.length-1?startStep(idx+1):stop()};
+$("vol").oninput=e=>{$("volV").textContent=e.target.value+"%";if(ctx&&playing)master.gain.setTargetAtTime(volLevel(),ctx.currentTime,.05)};
+$("noHeadphones").onchange=e=>{store.set("lf-nohp",e.target.checked);if(playing){const el=ctx.currentTime-stepStart;startStep(idx);stepStart=ctx.currentTime-el}else showStep()};
+
+/* ---------- Libre / secuencias ---------- */
+function readCustom(){
+  const f=parseFloat($("cF").value),b=parseFloat($("cB").value)||0,mode=$("cM").value,d=parseFloat($("cD").value),l=$("cL").value.trim();
+  if(!(f>=20&&f<=20000)){toast("La frecuencia audible va de 20 a 20 000 Hz. Para 7.83 Hz usa Pulso.");return null}
+  if(!(d>0)){toast("Indica los minutos");return null}
+  if(mode!=="pure"&&!(b>0)){toast("Binaural e isocrónico necesitan un pulso mayor a 0");return null}
+  return S(f,mode==="pure"?0:b,mode,d,l||(f+" Hz"+(mode!=="pure"?" · "+b:"")));
+}
+const lockedCustom=()=>{if(isMember()||admin)return false;toast("Frecuencia libre es para miembros. Activa tu código en Cuenta.");return true};
+$("cPlay").onclick=()=>{if(lockedCustom())return;const s=readCustom();if(s){load({id:"custom",name:"Frecuencia libre",steps:[s]},true);window.scrollTo({top:0,behavior:"smooth"})}};
+$("cAdd").onclick=()=>{if(lockedCustom())return;const s=readCustom();if(!s)return;seq.push(s);store.set("lf-seq",seq);renderSeq();$("cL").value="";toast("Paso agregado")};
+$("seqPlay").onclick=()=>{if(!seq.length){toast("La secuencia está vacía");return}load({id:"seq",name:"Mi secuencia",steps:seq.slice()},true);window.scrollTo({top:0,behavior:"smooth"})};
+$("seqClear").onclick=()=>{seq=[];store.set("lf-seq",seq);renderSeq()};
+$("seqSave").onclick=()=>{if(!seq.length){toast("La secuencia está vacía");return}const name=prompt?null:null;const n="Programa "+(myProgs.length+1);myProgs.push({name:n,steps:seq.slice()});store.set("lf-my",myProgs);$("txBase").innerHTML="";renderLib();renderMy();toast("Guardado como "+n)};
+const stepTxt=s=>`${esc(s.label)} · ${s.f} Hz · ${MODE_NAME[s.mode]}${s.b?" "+s.b+" Hz":""} · ${s.dur/60} min`;
+function renderSeq(){$("seq").innerHTML=seq.length?seq.map((s,i)=>`<div class="it"><span>${i+1}. ${stepTxt(s)}</span><div class="acts"><button data-rm="${i}" aria-label="Quitar">✕</button></div></div>`).join(""):`<p class="empty">Elige frecuencia, pulso y minutos, y toca “Agregar a la secuencia”.</p>`}
+$("seq").onclick=e=>{const b=e.target.closest("[data-rm]");if(!b)return;seq.splice(+b.dataset.rm,1);store.set("lf-seq",seq);renderSeq()};
+function renderMy(){$("myProgs").innerHTML=myProgs.length?myProgs.map((p,i)=>`<div class="it"><span><b>${esc(p.name)}</b> · ${p.steps.length} pasos · ${Math.round(total(p)/60)} min</span><div class="acts"><button data-play="${i}">▶</button><button data-del="${i}" aria-label="Borrar">✕</button></div></div>`).join(""):`<p class="empty">Guarda una secuencia para tenerla aquí.</p>`}
+$("myProgs").onclick=e=>{const p=e.target.closest("[data-play]"),d=e.target.closest("[data-del]");
+  if(p){const x=myProgs[+p.dataset.play];load({id:"my",name:x.name,steps:x.steps},true);window.scrollTo({top:0,behavior:"smooth"})}
+  if(d){myProgs.splice(+d.dataset.del,1);store.set("lf-my",myProgs);$("txBase").innerHTML="";renderLib();renderMy()}};
+
+/* ---------- Sesiones a distancia ---------- */
+const b64e=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const b64d=s=>decodeURIComponent(escape(atob(s.replace(/-/g,"+").replace(/_/g,"/"))));
+function encodeSession(o){return "LILY1."+b64e(JSON.stringify({n:o.name,c:o.client,i:o.intent,w:o.when,by:o.from,s:o.steps.map(s=>[s.f,s.b,s.mode,s.dur/60,s.label])}))}
+function decodeSession(code){
+  const m=code.trim().match(/LILY1\.([A-Za-z0-9_-]+)/);if(!m)throw new Error("formato");
+  const o=JSON.parse(b64d(m[1]));if(!Array.isArray(o.s)||!o.s.length)throw new Error("vacía");
+  const steps=o.s.slice(0,40).map(a=>{const f=+a[0],b=+a[1]||0,mode=["binaural","iso","pure"].includes(a[2])?a[2]:"pure",min=Math.min(Math.max(+a[3]||1,.1),180);if(!(f>=20&&f<=20000))throw new Error("frecuencia");return S(f,b,mode,min,String(a[4]||f+" Hz").slice(0,60))});
+  return {id:"rx",name:String(o.n||"Sesión").slice(0,80),client:String(o.c||"").slice(0,60),intent:String(o.i||"").slice(0,400),when:String(o.w||"").slice(0,120),from:String(o.by||"tu terapeuta").slice(0,60),steps};
+}
+$("rxOpen").onclick=()=>{try{const s=decodeSession($("rxCode").value);received.unshift({code:$("rxCode").value.trim(),name:s.name,from:s.from,d:new Date().toISOString()});received=received.slice(0,30);store.set("lf-rx",received);renderRx();$("rxCode").value="";load(s,false);window.scrollTo({top:0,behavior:"smooth"});toast("Sesión lista. Ponte audífonos y toca ▶")}catch{toast("No reconozco ese código. Cópialo completo, empieza con LILY1.")}};
+function renderRx(){$("rxList").innerHTML=received.length?received.map((r,i)=>`<div class="it"><span><b>${esc(r.name)}</b><br><span class="muted">de ${esc(r.from)} · ${new Date(r.d).toLocaleDateString("es")}</span></span><div class="acts"><button data-rxp="${i}">▶</button><button data-rxd="${i}" aria-label="Borrar">✕</button></div></div>`).join(""):`<p class="empty">Aquí aparecerán las sesiones que te envíen.</p>`}
+$("rxList").onclick=e=>{const p=e.target.closest("[data-rxp]"),d=e.target.closest("[data-rxd]");
+  if(p){try{load(decodeSession(received[+p.dataset.rxp].code),true);window.scrollTo({top:0,behavior:"smooth"})}catch{toast("Esta sesión está dañada")}}
+  if(d){received.splice(+d.dataset.rxd,1);store.set("lf-rx",received);renderRx()}};
+let lastTx=null;
+$("txMake").onclick=()=>{
+  const base=$("txBase").value;let steps,name;
+  if(base==="__seq"){if(!seq.length){toast("Tu secuencia en Libre está vacía. Elige un programa base o arma una.");return}steps=seq.slice();name="Sesión personalizada"}
+  else if(base.startsWith("my")){const x=myProgs[+base.slice(2)];steps=x.steps;name=x.name}
+  else{const p=PROGRAMS.find(p=>p.id===base);steps=p.steps;name=p.name}
+  const client=$("txClient").value.trim();
+  lastTx={id:"tx",name:client?name+" · "+client:name,client,intent:$("txIntent").value.trim(),when:$("txWhen").value.trim(),from:"tu terapeuta",steps};
+  $("txCode").textContent=encodeSession(lastTx);$("txOut").hidden=false;
+};
+$("txCopy").onclick=()=>copyText($("txCode").textContent,$("txCode"));
+$("txTest").onclick=()=>{if(lastTx){load(decodeSession($("txCode").textContent),false);window.scrollTo({top:0,behavior:"smooth"})}};
+function renderHistory(){$("history").innerHTML=history.length?history.slice(0,15).map(h=>`<div class="it"><span><b>${esc(h.n)}</b> · ${h.m} min</span><span class="muted">${new Date(h.d).toLocaleDateString("es",{day:"numeric",month:"short"})}</span></div>`).join(""):`<p class="empty">Las sesiones que completes quedan registradas aquí.</p>`}
+
+/* ---------- Entrenamiento de intuición ---------- */
+const INT={
+  color:{chance:4,items:[["Rojo","#ff5a6e"],["Azul","#4f8cff"],["Verde","#3fcf8e"],["Amarillo","#ffd34d"]],hint:"Siente su temperatura: ¿cálido, frío, fresco, brillante?"},
+  forma:{chance:4,items:[["Círculo","○"],["Triángulo","△"],["Cuadrado","□"],["Estrella","☆"]],hint:"Siente sus bordes: ¿suave, puntiagudo, firme, radiante?"},
+  carta:{chance:2,items:[["Roja","#ff5a6e"],["Negra","#0b0910"]],hint:"Siente si es intensa y cálida, o profunda y quieta."}
+};
+let intM="color",intS="probar",intTarget=null,intAnswered=false,intStats=store.get("lf-int",{});
+const rnd=n=>{try{const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%n}catch{return Math.floor(Math.random()*n)}};
+function intStyle(m,it){return m==="forma"?{bg:"var(--surface2)",tx:it[1]}:{bg:it[1],tx:""}}
+function intRound(){
+  const cfg=INT[intM];intTarget=rnd(cfg.items.length);intAnswered=false;const t=$("intTarget");
+  if(intS==="aprender"){const it=cfg.items[intTarget],st=intStyle(intM,it);t.style.background=st.bg;t.innerHTML=`${st.tx}<small>${it[0]}</small>`;$("intHint").textContent="Mírala 5 segundos, cierra los ojos y memoriza cómo se siente. Luego toca Nueva ronda."}
+  else{t.style.background="var(--surface2)";t.innerHTML="?<small>Cierra los ojos y siente</small>";$("intHint").textContent=cfg.hint}
+  $("intChoices").innerHTML=intS==="probar"?cfg.items.map((it,i)=>{const st=intStyle(intM,it);return `<button type="button" class="choice" data-i="${i}" style="background:${intM==="forma"?"var(--surface2)":it[1]};color:${intM==="color"&&i===3?"#1a1225":"#fff"};${intM==="carta"&&i===1?"border-color:var(--line)":""}">${st.tx} ${it[0]}</button>`}).join(""):"";
+}
+function intRenderStats(){const s=intStats[intM]||{t:0,h:0};$("stTries").textContent=s.t;$("stHits").textContent=s.h;$("stPct").textContent=s.t?Math.round(s.h/s.t*100)+"%":"–";$("stChance").textContent="Azar "+Math.round(100/INT[intM].chance)+"%"}
+$("intChoices").onclick=e=>{const b=e.target.closest("[data-i]");if(!b||intAnswered)return;intAnswered=true;
+  const cfg=INT[intM],i=+b.dataset.i,it=cfg.items[intTarget],st=intStyle(intM,it),hit=i===intTarget;
+  const s=intStats[intM]||{t:0,h:0};s.t++;if(hit)s.h++;intStats[intM]=s;store.set("lf-int",intStats);intRenderStats();
+  $("intTarget").style.background=st.bg;$("intTarget").innerHTML=`${st.tx}<small>${hit?"✨ ¡Acertaste! ":"Era "}${it[0]}</small>`;
+  $("intHint").textContent=hit?"Recuerda cómo se sintió esta certeza.":"Sin juicio. Observa qué sentiste y sigue.";
+  if(hit&&navigator.vibrate)try{navigator.vibrate(60)}catch{}
+  setTimeout(()=>{if(intAnswered)intRound()},2600);
+};
+$("intMode").onclick=e=>{const b=e.target.closest("[data-m]");if(!b)return;intM=b.dataset.m;$("intMode").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));intRenderStats();intRound()};
+$("intStage").onclick=e=>{const b=e.target.closest("[data-s]");if(!b)return;intS=b.dataset.s;$("intStage").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));intRound()};
+$("intNext").onclick=()=>intRound();
+$("intReset").onclick=()=>{intStats[intM]={t:0,h:0};store.set("lf-int",intStats);intRenderStats()};
+intRenderStats();intRound();
+
+/* ---------- Electro alimentación ---------- */
+/* Órganos y emociones MTC: ácido-Hígado (ira/frustración), amargo-Corazón (ansiedad, exceso de euforia), dulce-Bazo (preocupación), picante-Pulmón (tristeza), salado-Riñón (miedo) */
+const ORG={Hígado:["ira y frustración","ac-higado"],Corazón:["ansiedad y agitación","ac-corazon-f"],Bazo:["preocupación y rumiación","ac-digestivo"],Estómago:["preocupación","ac-digestivo"],Pulmón:["tristeza y duelo","ac-pulmones"],Riñón:["miedo e inseguridad","ac-rinones"],"Intestino grueso":["dificultad para soltar","ac-digestivo"],Vejiga:["miedo","ac-rinones"]};
+const FOODS=[
+ // [nombre, grupo, naturaleza, sabor, órganos, nutrientes, apoya (nutrición), exceso/precaución]
+ ["Limón","Frutas","Fresca","Ácido",["Hígado","Estómago"],"Vitamina C, flavonoides","Defensas, absorción de hierro","El exceso de ácido irrita el estómago y el esmalte dental"],
+ ["Naranja","Frutas","Fresca","Dulce y ácido",["Pulmón","Estómago"],"Vitamina C, folato, potasio","Defensas, piel","En exceso puede dar acidez"],
+ ["Manzana","Frutas","Fresca","Dulce y ácido",["Pulmón","Estómago"],"Fibra (pectina), polifenoles","Digestión, saciedad","Mejor con cáscara y bien lavada"],
+ ["Banano","Frutas","Fría","Dulce",["Bazo","Intestino grueso"],"Potasio, vitamina B6, fibra","Músculos, energía rápida","Frío en exceso: digestión lenta según la tradición"],
+ ["Papaya","Frutas","Neutra","Dulce",["Estómago","Bazo"],"Vitamina C, papaína, fibra","Digestión de proteínas","—"],
+ ["Piña","Frutas","Neutra","Dulce y ácido",["Estómago","Bazo"],"Vitamina C, bromelina, manganeso","Digestión","Puede irritar la boca en exceso"],
+ ["Sandía","Frutas","Fría","Dulce",["Corazón","Estómago","Vejiga"],"Agua, licopeno, potasio","Hidratación","Muy fría en exceso para la digestión según la tradición"],
+ ["Fresas","Frutas","Fresca","Dulce y ácido",["Hígado","Pulmón"],"Vitamina C, antocianinas","Antioxidantes","Alergia en algunas personas"],
+ ["Uvas","Frutas","Neutra","Dulce y ácido",["Hígado","Riñón"],"Polifenoles, potasio","Circulación","Alto en azúcar si se comen muchas"],
+ ["Mango","Frutas","Fresca","Dulce y ácido",["Estómago","Pulmón"],"Vitamina A y C","Piel, vista","Alto en azúcar natural"],
+ ["Aguacate","Frutas","Fresca","Dulce",["Hígado","Pulmón","Intestino grueso"],"Grasa monoinsaturada, potasio, fibra","Corazón, saciedad","Muy calórico en grandes cantidades"],
+ ["Espinaca","Verduras","Fresca","Dulce",["Hígado","Estómago","Intestino grueso"],"Folato, hierro, magnesio, vitamina K","Sangre, músculos, ánimo (magnesio)","Contiene oxalatos: con moderación si hay cálculos renales"],
+ ["Brócoli","Verduras","Fresca","Dulce y algo amargo",["Hígado","Estómago"],"Vitamina C y K, sulforafano, fibra","Defensas, huesos","Puede dar gases"],
+ ["Zanahoria","Verduras","Neutra","Dulce",["Pulmón","Bazo","Hígado"],"Betacaroteno, fibra","Vista, piel","—"],
+ ["Remolacha","Verduras","Neutra","Dulce",["Corazón","Hígado"],"Nitratos, folato, hierro","Circulación, rendimiento físico","Tiñe orina y heces de rojo, es normal"],
+ ["Pepino","Verduras","Fresca","Dulce",["Estómago","Vejiga"],"Agua, potasio","Hidratación","Frío en exceso según la tradición"],
+ ["Tomate","Verduras","Fresca","Dulce y ácido",["Hígado","Estómago"],"Licopeno, vitamina C, potasio","Corazón, piel","Puede dar acidez"],
+ ["Apio","Verduras","Fresca","Dulce y amargo",["Hígado","Estómago"],"Potasio, vitamina K, fibra","Hidratación","—"],
+ ["Cebolla","Verduras","Tibia","Picante",["Pulmón","Estómago"],"Quercetina, fibra prebiótica","Flora intestinal","Puede dar gases o acidez"],
+ ["Ajo","Verduras","Caliente","Picante",["Pulmón","Bazo","Estómago"],"Alicina, compuestos azufrados","Defensas, circulación","Ojo si tomas anticoagulantes"],
+ ["Jengibre","Especias","Tibia","Picante",["Pulmón","Bazo","Estómago"],"Gingerol","Náusea, digestión","Ojo con anticoagulantes y en exceso"],
+ ["Camote","Verduras","Neutra","Dulce",["Bazo","Estómago"],"Betacaroteno, fibra, potasio","Energía estable","—"],
+ ["Ayote / calabaza","Verduras","Tibia","Dulce",["Bazo","Estómago"],"Betacaroteno, fibra","Vista, digestión","—"],
+ ["Hongos","Verduras","Neutra","Dulce",["Estómago","Pulmón"],"Vitaminas B, selenio, fibra","Defensas","Solo hongos comestibles conocidos"],
+ ["Algas","Verduras","Fría","Salado",["Riñón","Hígado"],"Yodo, minerales","Tiroides","Exceso de yodo: precaución con tiroides"],
+ ["Rábano","Verduras","Fresca","Picante y dulce",["Pulmón","Estómago"],"Vitamina C, fibra","Digestión","—"],
+ ["Arroz integral","Granos","Neutra","Dulce",["Bazo","Estómago"],"Fibra, magnesio, vitaminas B","Energía estable","—"],
+ ["Avena","Granos","Tibia","Dulce",["Bazo","Estómago"],"Betaglucanos, fibra, magnesio","Colesterol, saciedad","—"],
+ ["Maíz","Granos","Neutra","Dulce",["Estómago","Bazo"],"Fibra, luteína (amarillo)","Energía, vista","—"],
+ ["Quinoa","Granos","Tibia","Dulce y ácido",["Bazo","Riñón"],"Proteína completa, magnesio, hierro","Músculos, energía","Lavarla bien antes de cocinar"],
+ ["Frijol negro","Legumbres","Neutra","Dulce",["Riñón","Bazo"],"Proteína, fibra, hierro, folato","Saciedad, azúcar estable","Puede dar gases; remojar antes"],
+ ["Lentejas","Legumbres","Neutra","Dulce",["Corazón","Riñón"],"Proteína, hierro, folato, fibra","Sangre, energía","—"],
+ ["Garbanzo","Legumbres","Neutra","Dulce",["Bazo","Estómago"],"Proteína, fibra, folato","Saciedad","Puede dar gases"],
+ ["Nueces","Semillas","Tibia","Dulce",["Riñón","Pulmón"],"Omega 3 (ALA), polifenoles","Cerebro, corazón","Calóricas: un puñado al día"],
+ ["Almendras","Semillas","Neutra","Dulce",["Pulmón","Intestino grueso"],"Vitamina E, magnesio, fibra","Piel, músculos","Calóricas: un puñado al día"],
+ ["Ajonjolí negro","Semillas","Neutra","Dulce",["Hígado","Riñón"],"Calcio, hierro, grasas buenas","Huesos","—"],
+ ["Cacao puro","Semillas","Neutra","Amargo",["Corazón"],"Flavonoides, magnesio","Ánimo, circulación","Tiene cafeína y teobromina: ojo de noche"],
+ ["Huevo","Proteínas","Neutra","Dulce",["Corazón","Riñón"],"Proteína completa, colina, vitamina B12","Músculos, cerebro","—"],
+ ["Pescado (salmón, sardina)","Proteínas","Tibia","Dulce",["Bazo","Riñón"],"Omega 3 (EPA y DHA), vitamina D, proteína","Cerebro, ánimo, corazón","Preferir pescados pequeños por el mercurio"],
+ ["Pollo","Proteínas","Tibia","Dulce",["Bazo","Estómago"],"Proteína, niacina, B6","Músculos","—"],
+ ["Carne de res","Proteínas","Tibia","Dulce",["Bazo","Estómago"],"Proteína, hierro, zinc, B12","Sangre, músculos","Las procesadas (embutidos) mejor evitarlas"],
+ ["Yogur natural","Proteínas","Fresca","Dulce y ácido",["Hígado","Pulmón","Intestino grueso"],"Probióticos, calcio, proteína","Flora intestinal","Elegir sin azúcar añadida"],
+ ["Canela","Especias","Caliente","Picante y dulce",["Riñón","Corazón","Bazo"],"Polifenoles","Sabor sin azúcar","La canela cassia en exceso tiene cumarina"],
+ ["Cúrcuma","Especias","Tibia","Picante y amargo",["Hígado","Bazo"],"Curcumina","Antiinflamatorio leve","Mejor con pimienta negra; ojo con anticoagulantes"],
+ ["Menta","Especias","Fresca","Picante",["Pulmón","Hígado"],"Mentol","Digestión, frescura","Puede empeorar el reflujo"],
+ ["Chile","Especias","Caliente","Picante",["Pulmón","Estómago"],"Capsaicina, vitamina C","Metabolismo","Irrita el estómago en exceso"],
+ ["Miel","Endulzantes","Neutra","Dulce",["Pulmón","Bazo","Intestino grueso"],"Azúcares, antioxidantes","Garganta, energía","Es azúcar: con moderación. No dar a menores de 1 año"],
+ ["Té verde","Bebidas","Fresca","Amargo y dulce",["Corazón","Pulmón","Estómago"],"Catequinas, L-teanina, cafeína","Concentración tranquila","Cafeína: evitar de noche"],
+ ["Café","Bebidas","Tibia","Amargo",["Corazón","Hígado"],"Cafeína, polifenoles","Alerta, concentración","En exceso: ansiedad, insomnio y palpitaciones"],
+ ["Vinagre de manzana","Bebidas","Tibia","Ácido",["Hígado","Estómago"],"Ácido acético","Azúcar después de comer (efecto leve)","Siempre diluido; daña el esmalte puro"],
+ ["Agua","Bebidas","Neutra","—",["Riñón","Vejiga"],"Hidratación","Todo el cuerpo, concentración","—"],
+ ["Azúcar refinada","Con moderación","Neutra","Dulce",["Bazo","Estómago"],"Solo energía","Nada esencial","Exceso: subidas y bajadas de ánimo y energía, inflamación"],
+ ["Alcohol","Con moderación","Caliente","Picante y amargo",["Hígado","Corazón"],"—","Nada esencial","Daña el hígado; deprime el ánimo y altera el sueño"],
+ ["Sal","Con moderación","Fría","Salado",["Riñón"],"Sodio","Necesaria en poca cantidad","Exceso: presión alta y retención de líquidos"],
+ ["Ultraprocesados","Con moderación","—","—",["Bazo","Estómago"],"Azúcares, grasas y aditivos","Nada esencial","Se asocian con peor ánimo y más enfermedades crónicas"],
+ ["Frituras","Con moderación","Caliente","—",["Estómago","Hígado"],"Grasas oxidadas","Nada esencial","Pesadez, inflamación"],
+];
+const FCATS=["Todos","Frutas","Verduras","Granos","Legumbres","Semillas","Proteínas","Especias","Bebidas","Endulzantes","Con moderación"];
+let fcat="Todos";
+function renderFood(){
+  const q=$("foodQ").value.trim().toLowerCase();
+  const list=FOODS.filter(f=>(fcat==="Todos"||f[1]===fcat)&&(!q||[f[0],f[1],f[2],f[3],f[4].join(" "),f[4].map(o=>ORG[o]?ORG[o][0]:"").join(" "),f[5],f[6],f[7]].join(" ").toLowerCase().includes(q)));
+  $("foodList").innerHTML=list.length?list.map(f=>{const em=[...new Set(f[4].map(o=>ORG[o]&&ORG[o][0]).filter(Boolean))].join("; ");const pr=f[4].map(o=>ORG[o]&&ORG[o][1]).find(Boolean);
+   return `<details class="food"><summary><b>${f[0]}</b><span class="tg">${f[1]}</span></summary><dl class="bd">
+    <div><dt>Tradición china</dt><dd>Naturaleza ${f[2].toLowerCase()} · sabor ${f[3].toLowerCase()} · ${f[4].join(", ")}</dd></div>
+    <div><dt>Emoción que ayuda a equilibrar</dt><dd>${em||"—"}</dd></div>
+    <div><dt>Nutrientes</dt><dd>${f[5]}</dd></div>
+    <div><dt>Apoya</dt><dd>${f[6]}</dd></div>
+    <div><dt>En exceso o precaución</dt><dd>${f[7]}</dd></div>
+    ${pr?`<div><button type="button" class="btn" data-fp="${pr}">▶ Escuchar acompañamiento de ${f[4][0].toLowerCase()}</button></div>`:""}
+   </dl></details>`}).join(""):`<p class="empty">No encontré ese alimento. Prueba con un órgano o una emoción.</p>`;
+}
+$("foodCats").innerHTML=FCATS.map(c=>`<button type="button" aria-pressed="${c===fcat}" data-fc="${c}">${c}</button>`).join("");
+$("foodCats").onclick=e=>{const b=e.target.closest("[data-fc]");if(!b)return;fcat=b.dataset.fc;$("foodCats").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderFood()};
+$("foodQ").oninput=renderFood;
+$("foodList").onclick=e=>{const b=e.target.closest("[data-fp]");if(!b)return;const pg=PROGRAMS.find(x=>x.id===b.dataset.fp);if(!pg)return;if(!canPlay(pg)){toast("Programa de miembros. Activa tu código en Cuenta.");return}load(pg,true);window.scrollTo({top:0,behavior:"smooth"})};
+renderFood();
+
+/* ---------- Perfil y número personal ---------- */
+const NUM={
+ 1:["Inicio y liderazgo","Tu energía abre caminos. Te apoyan programas de impulso y poder personal.",["energia","motivacion","ch-plexo"]],
+ 2:["Cooperación y sensibilidad","Sientes mucho y unes a las personas. Te apoyan la calma y el amor propio.",["calma","amor-propio","ch-sacro"]],
+ 3:["Expresión y creatividad","Tu voz y tu alegría son tu medicina. Te apoyan la creatividad y el tarareo.",["creatividad","hum-animo","ch-garganta"]],
+ 4:["Estructura y constancia","Construyes paso a paso. Te apoyan el enfoque y el arraigo.",["concentracion2","enfoque","ch-raiz"]],
+ 5:["Libertad y cambio","Te mueves con el cambio. Te apoyan la vitalidad y bajar la ansiedad.",["sol417","vitalidad","ansiedad"]],
+ 6:["Amor y servicio","Cuidas a otros. Te apoyan el corazón y el perdón.",["chak-cor","coherencia","perdon"]],
+ 7:["Introspección y espiritualidad","Buscas la verdad interior. Te apoyan la intuición y el tercer ojo.",["pineal","intuicion","vision-remota"]],
+ 8:["Poder y abundancia","Materializas. Te apoyan la abundancia y la recarga.",["abund","recarga","superhumano"]],
+ 9:["Compasión y cierre de ciclos","Sueltas para ayudar a otros. Te apoyan soltar y la limpieza.",["soltar","limpieza","sol963"]],
+ 11:["Número maestro de la intuición","Canal sensible e inspirador. Te apoyan la visión interior y el 852 Hz.",["vision-remota","pineal","sol852"]],
+ 22:["Número maestro constructor","Grandes proyectos con los pies en la tierra. Te apoyan el foco y la abundancia.",["concentracion2","abund","ch-raiz"]],
+ 33:["Número maestro del amor","Sanas desde el corazón. Te apoyan la coherencia y la vibración.",["coherencia","hum-vibracion","sol528"]],
+};
+const sumD=s=>String(s).replace(/\D/g,"").split("").reduce((a,d)=>a+ +d,0);
+function reduceN(n,keepMaster=true){while(n>9&&!(keepMaster&&(n===11||n===22||n===33)))n=sumD(n);return n}
+function lifePath(iso){const [y,m,d]=iso.split("-");return reduceN(reduceN(sumD(y))+reduceN(sumD(m))+reduceN(sumD(d)))}
+function personalDay(iso){const [,m,d]=iso.split("-"),t=new Date();return reduceN(sumD(d)+sumD(m)+sumD(t.getFullYear())+sumD(t.getMonth()+1)+sumD(t.getDate()),false)}
+const DAY={1:"Día para empezar algo",2:"Día para escuchar y acompañar",3:"Día para expresarte",4:"Día para ordenar",5:"Día para moverte y cambiar",6:"Día para el amor y la familia",7:"Día para ir hacia adentro",8:"Día para la abundancia",9:"Día para soltar y cerrar"};
+const progBtns=ids=>ids.map(id=>PROGRAMS.find(p=>p.id===id)).filter(Boolean).map(p=>`<button type="button" data-pp="${p.id}">${canPlay(p)?"▶":"🔒"} ${p.name}</button>`).join("");
+function renderProfile(){
+  const pf=store.get("lf-profile",null);$("pfName").value=pf?.name||"";$("pfBirth").value=pf?.birth||"";
+  if(!pf||!pf.birth){$("pfCard").hidden=true;$("today").hidden=true;return}
+  const n=lifePath(pf.birth),info=NUM[n],pd=personalDay(pf.birth),pdProg=NUM[pd][2][new Date().getDate()%3];
+  $("pfCard").hidden=false;$("pfCard").innerHTML=`<div class="top"><div class="num">${n}</div><div><b>${pf.name?esc(pf.name)+", tu":"Tu"} número de vida</b><br><span class="muted">${info[0]}</span></div></div><p>${info[1]}</p><div class="pchips">${progBtns(info[2])}</div>`;
+  const ph=store.get("lf-photo",null);$("today").hidden=false;$("today").innerHTML=`<div class="top">${ph?`<img class="avatar" src="${ph}" alt="">`:""}<div class="num">${pd}</div><div><b>Hola${pf.name?" "+esc(pf.name):""} ✿</b><br><span class="muted">Tu día personal: ${DAY[pd]}</span></div></div><div class="pchips">${progBtns([pdProg,...info[2].slice(0,1)].filter((v,i,a)=>a.indexOf(v)===i))}</div>`;
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-pp]");if(!b)return;const pg=PROGRAMS.find(x=>x.id===b.dataset.pp);if(!canPlay(pg)){toast("Programa de miembros. Activa tu código en Cuenta.");return}load(pg,true);window.scrollTo({top:0,behavior:"smooth"})});
+function photoSet(){const ph=store.get("lf-photo",null);$("pfPhotoRow").hidden=!ph;$("crystalPhoto").hidden=!ph;if(ph){$("pfPhotoImg").src=ph;$("crystalPhoto").src=ph}}
+$("pfPhoto").onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const img=new Image(),url=URL.createObjectURL(f);img.onload=()=>{const s=256,c=document.createElement("canvas");c.width=c.height=s;const k=Math.max(s/img.width,s/img.height),w=img.width*k,h=img.height*k;c.getContext("2d").drawImage(img,(s-w)/2,(s-h)/2,w,h);store.set("lf-photo",c.toDataURL("image/jpeg",.82));URL.revokeObjectURL(url);photoSet();toast("Foto guardada ✿")};img.onerror=()=>toast("No pude leer esa imagen. Prueba con otra.");img.src=url};
+$("pfPhotoDel").onclick=()=>{try{localStorage.removeItem("lf-photo")}catch{}$("pfPhoto").value="";photoSet()};
+photoSet();
+$("pfSave").onclick=()=>{const birth=$("pfBirth").value;if(!birth){toast("Elige tu fecha de nacimiento");return}store.set("lf-profile",{name:$("pfName").value.trim().slice(0,40),birth});renderProfile();toast("Perfil guardado ✿")};
+$("pfDel").onclick=()=>{try{localStorage.removeItem("lf-profile")}catch{}renderProfile();toast("Perfil borrado")};
+renderProfile();
+
+/* ---------- Visual ---------- */
+const cv=$("viz"),g=cv.getContext("2d"),buf=new Uint8Array(2048);
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function draw(t){
+  const W=cv.width,H=cv.height,cx=W/2,cy=H/2;g.clearRect(0,0,W,H);
+  let amp=0;if(analyser&&playing){analyser.getByteTimeDomainData(buf);for(let i=0;i<buf.length;i+=8)amp=Math.max(amp,Math.abs(buf[i]-128)/128)}
+  const s=cur?cur.steps[idx]:null,beat=s&&s.b?s.b:1,ph=playing?Math.sin(t/1000*Math.PI*2*Math.min(beat,12)):0;
+  for(let r=0;r<6;r++){const R=80+r*24+(playing?ph*5*(1+amp*3):0)+breathLevel*26;g.beginPath();g.arc(cx,cy,R,0,Math.PI*2);g.strokeStyle=`rgba(${r%2?"255,159,210":"201,167,255"},${.42-r*.06})`;g.lineWidth=2;g.stroke()}
+  g.beginPath();const N=180;for(let i=0;i<=N;i++){const a=i/N*Math.PI*2,v=analyser&&playing?(buf[Math.floor(i/N*1023)]-128)/128:0,R=68+v*34;const x=cx+Math.cos(a)*R,y=cy+Math.sin(a)*R;i?g.lineTo(x,y):g.moveTo(x,y)}
+  g.strokeStyle="rgba(143,240,208,.8)";g.lineWidth=2;g.stroke();
+  if(!reduce||playing)requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+
+/* ---------- Inicio ---------- */
+function applyTheme(){const t=store.get("lf-theme","light");document.documentElement.setAttribute("data-theme",t);$("themeBtn").textContent=t==="light"?"◐ Cambiar a modo obsidiana":"◐ Cambiar a modo lavanda";document.querySelector('meta[name=theme-color]')?.setAttribute("content",t==="light"?"#ffffff":"#120f1a")}
+applyTheme();
+$("themeBtn").onclick=()=>{store.set("lf-theme",store.get("lf-theme","light")==="light"?"dark":"light");applyTheme()};
+$("trialTxt").textContent=CONFIG.trialDays+" días gratis";$("faqTrial").textContent=CONFIG.trialDays+" días con todos los programas abiertos. Después ingresa el código del mes en Cuenta.";
+$("faqContact").innerHTML=CONFIG.whatsapp?`¿Otra duda? Escríbeme por WhatsApp: <b style="user-select:all">+${esc(CONFIG.whatsapp)}</b> · <a href="https://wa.me/${esc(CONFIG.whatsapp)}" target="_blank" rel="noopener">abrir chat</a>`:"¿Otra duda? Escríbele a tu terapeuta.";
+$("menuBtn").onclick=()=>$("menu").hidden=false;$("menuClose").onclick=()=>$("menu").hidden=true;
+$("menuList").onclick=e=>{const b=e.target.closest("[data-go]");if(!b)return;showTab(b.dataset.go);$("menu").hidden=true;window.scrollTo({top:0})};
+$("howBtn").onclick=()=>{$("menu").hidden=true;$("welcome").hidden=false};
+$("accesoBtn").onclick=()=>{showTab("cuenta");window.scrollTo({top:0})};
+$("askBtn").onclick=()=>$("faq").hidden=false;$("faqClose").onclick=()=>$("faq").hidden=true;
+trialLeft();
+if(!store.get("lf-welcome",false))$("welcome").hidden=false;
+$("welcomeOk").onclick=()=>{store.set("lf-welcome",true);$("welcome").hidden=true};
+renderCats();renderMember();renderSeq();renderMy();renderRx();renderHistory();
+showTab(store.get("lf-tab","programas"));
+load(PROGRAMS.find(p=>p.id==="sol528"));
 </script>
-<script id="lf-menu">(function(){var b=document.getElementById("burger"),l=document.querySelector("nav .links");if(!b||!l)return;b.addEventListener("click",function(){var o=l.classList.toggle("abierto");b.setAttribute("aria-expanded",o);b.textContent=o?"✕":"☰"});l.addEventListener("click",function(e){if(e.target.tagName==="A"){l.classList.remove("abierto");b.setAttribute("aria-expanded","false");b.textContent="☰"}})})();</script>
-<script>
-/* App instalable: guarda una copia para abrir sin conexión y ofrece instalar en Android */
-if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
-(() => {
-  let aviso = null; const b = document.getElementById("btn-instalar");
-  addEventListener("beforeinstallprompt", e => { e.preventDefault(); aviso = e; if (b) b.style.display = ""; });
-  if (b) b.addEventListener("click", async () => { if (!aviso) return; aviso.prompt(); await aviso.userChoice; aviso = null; b.style.display = "none"; });
-  const instalada = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
-  if (instalada) document.querySelectorAll('a[href="#instalar"]').forEach(a => { a.style.display = "none"; });
-})();
-</script>
+<script src="perfiles.js"></script>
+<script src="extras.js"></script>
+<script src="terapeuta.js"></script>
+<script src="adn-1.js"></script>
+<script src="adn-2.js"></script>
+<script src="adn-3.js"></script>
+<script src="programas-extra.js"></script>
+<script src="seccion-mente.js"></script>
+<script src="seccion-emocion.js"></script>
+<script src="seccion-espiritu.js"></script>
+<script src="seccion-bach.js"></script>
+<script src="seccion-manifestacion.js"></script>
+<script src="seccion-conciencia.js"></script>
+<script src="seccion-caminos.js"></script>
+<script src="seccion-ciclos.js"></script>
+<script src="seccion-cierre.js"></script>
+<script src="seccion-amor.js"></script>
+<script src="grupos.js"></script>
+<script src="beneficios.js"></script>
+<script src="meditacion.js"></script>
+<script src="bienvenida.js"></script>
 </body>
 </html>
