@@ -131,6 +131,7 @@ function pinta(){
         '<button data-a="mensual">Activar mensual</button>'+
         '<button data-a="anual">Activar anual</button>'+
         '<button data-a="terapeuta">Terapeuta 1 año</button>'+
+        '<button data-a="prueba-ter">Prueba terapeuta 14 días</button>'+
         '<input type="date" data-a="fecha" value="'+esc(m.vence||"")+'" title="Cambiar la fecha de vencimiento">'+
         (m.activo?'<button class="off" data-a="baja">Desactivar</button>':'')+
       '</div></div>';
@@ -156,6 +157,8 @@ $("lista").addEventListener("click",e=>{
   if(a==="mensual")   guarda(id,{activo:true,plan:"mensual",  vence:masDias(30)},b);
   if(a==="anual")     guarda(id,{activo:true,plan:"anual",    vence:masDias(365)},b);
   if(a==="terapeuta") guarda(id,{activo:true,plan:"terapeuta",vence:masDias(365)},b);
+  /* prueba: mismo acceso de terapeuta (panel y su sección privada) y vence sola a los 14 días */
+  if(a==="prueba-ter") guarda(id,{activo:true,plan:"terapeuta",vence:masDias(14)},b);
   if(a==="baja" && confirm("¿Desactivar esta membresía?")) guarda(id,{activo:false},b);
 });
 $("lista").addEventListener("change",e=>{

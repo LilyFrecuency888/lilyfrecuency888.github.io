@@ -37,6 +37,22 @@ ul{margin:10px 0 0 20px}li{margin:6px 0}
 .small{font-size:.85rem}
 .notice{font-size:.88rem;color:var(--muted);border-left:3px solid var(--rosa);padding-left:12px;margin-top:18px}
 footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:44px}
+h2 em,.pt em{font-style:italic;background:linear-gradient(90deg,var(--lila),var(--rosa),var(--menta));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn.sec{background:transparent;border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)}
+.prueba{margin-top:26px;padding:22px;border-radius:24px;border:1px solid rgba(143,240,208,.55);background:linear-gradient(150deg,rgba(143,240,208,.14),rgba(201,167,255,.08) 55%,rgba(28,22,48,.85))}
+.prueba .pt{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.9rem;line-height:1.1;margin-bottom:8px}
+.prueba p,.prueba li{color:var(--muted)}
+.prueba ol{margin:10px 0 0 22px}
+.row2{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:14px;margin-top:14px}
+.crea{border-radius:22px;padding:20px;background:rgba(28,22,48,.82);border:1px solid var(--line);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.crea.libre{border-color:rgba(143,240,208,.5)}
+.crea.excl{border-color:rgba(255,217,138,.55);background:linear-gradient(160deg,rgba(255,217,138,.10),rgba(28,22,48,.85) 60%)}
+.crea p{color:var(--muted);font-size:.95rem}
+.crea .tag{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px}
+.crea.libre .tag{background:rgba(143,240,208,.16);color:var(--menta)}
+.crea.excl .tag{background:rgba(255,217,138,.18);color:var(--oro)}
+.crea .btn{margin-top:auto;padding:12px 20px}
 </style>
 <link rel="stylesheet" href="lily.css">
 </head>
@@ -54,7 +70,18 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:44px}
     <li>Tu nombre como terapeuta acompañante en las sesiones que envías.</li>
     <li><b>Panel de terapeutas:</b> arma el perfil de cada consultante y su protocolo de frecuencias por fases, con fechas, veces de uso, seguimiento y lectura de pulso con la cámara del celular.</li>
   </ul>
-  <div class="cta" style="margin-top:22px"><a class="btn" href="panel-terapeutas.html">¿Ya tienes tu licencia? Entra a tu panel →</a></div>
+  <div class="cta" style="margin-top:22px"><a class="btn" href="zona-terapeutas.html">¿Ya tienes tu licencia? Entra a la Zona de terapeutas →</a></div>
+
+  <div class="prueba">
+    <div class="pt">✦ Prueba <em>14 días</em> gratis</div>
+    <p>Antes de decidir, conoce todo con tu propia práctica: el <b>Panel de terapeutas</b> con el perfil y protocolo de tus consultantes, la lectura de pulso, las sesiones a distancia y el <b>esquema completo para terapeutas</b>. Sin pagar nada y sin compromiso: a los 14 días tu prueba se cierra sola.</p>
+    <ol>
+      <li>Crea tu cuenta en la web.</li>
+      <li>Escríbeme para activar tu prueba de terapeuta.</li>
+      <li>Entra a tu panel y pruébalo con tus consultantes.</li>
+    </ol>
+    <div class="row2"><a class="btn" href="registro.html?nueva=1&amp;volver=zona-terapeutas.html">1 · Crear mi cuenta</a><a class="btn sec" href="https://wa.me/50234819870?text=Hola%2C%20soy%20terapeuta%20y%20quiero%20mi%20prueba%20de%2014%20d%C3%ADas.%20Mi%20correo%20de%20cuenta%20es%3A%20" target="_blank" rel="noopener">2 · Activar mi prueba 💬</a></div>
+  </div>
 
   <h2>Paquetes por número de pacientes</h2>
   <div class="grid">
@@ -74,6 +101,22 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:44px}
     <tr><td>+50 pacientes</td><td>USD 388</td></tr>
     <tr><td>+100 pacientes</td><td>USD 688</td></tr>
   </table>
+
+  <h2>Creemos <em>juntas</em></h2>
+  <div class="grid2">
+    <div class="crea libre">
+      <span class="tag">Sin costo · para toda la app</span>
+      <h3>Sugiere un programa</h3>
+      <p>¿Te falta una meditación, una frecuencia o un acompañamiento para algo que ves en consulta? Sugiérelo. Lily lo <b>crea y lo personaliza</b>, y queda <b>libre para toda la app</b>: lo reciben tus pacientes y toda la comunidad.</p>
+      <a class="btn sec" href="https://wa.me/50234819870?text=Hola%2C%20soy%20terapeuta%20y%20quiero%20sugerir%20un%20programa%20para%20la%20app%3A%20" target="_blank" rel="noopener">💡 Sugerir un programa</a>
+    </div>
+    <div class="crea excl">
+      <span class="tag">Exclusivo · con cotización</span>
+      <h3>Creaciones solo para tu clínica</h3>
+      <p>Si quieres programas, meditaciones o frecuencias <b>hechos a la medida y solo para tu clínica</b> (con tu nombre, tu protocolo o tu voz guía), te preparo una cotización por correo. Se cobra una sola vez y queda <b>únicamente para tu clínica</b>.</p>
+      <a class="btn" href="mailto:armoniacuanticagt@gmail.com?subject=Cotizaci%C3%B3n%20de%20creaci%C3%B3n%20exclusiva%20%C2%B7%20Lily%20Frequency&amp;body=Hola%20Lily%2C%0A%0AMi%20cl%C3%ADnica%3A%20%0AQu%C3%A9%20me%20gustar%C3%ADa%20crear%3A%20%0APara%20cu%C3%A1ntos%20pacientes%3A%20%0A%0AGracias.">✉ Pedir cotización por correo</a>
+    </div>
+  </div>
 
   <div class="notice">Lily Frequency es una herramienta de <b>apoyo y bienestar</b> con sonido: relajación, meditación y acompañamiento. No diagnostica ni trata enfermedades y no sustituye la atención médica o psicológica de tus pacientes.</div>
 

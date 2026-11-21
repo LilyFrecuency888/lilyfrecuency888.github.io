@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zona de terapeutas · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120f1a;--line:#3a2f52;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc;--aurora:linear-gradient(90deg,#c9a7ff,#ff9fd2,#8ff0d0)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(1000px 700px at 50% -10%,#3a2563,var(--bg) 60%) fixed,var(--bg);line-height:1.6;min-height:100vh}
+a{color:var(--lila2)}
+.wrap{max-width:860px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;gap:12px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:600;text-decoration:none;color:var(--txt)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.2rem,6vw,3.3rem);line-height:1.05;margin-bottom:8px}
+h1 em,h2 em{font-style:italic;background:var(--aurora);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.75rem;line-height:1.15;margin:0 0 6px}
+.muted{color:var(--muted)}.small{font-size:.85rem}
+.estado{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 6px;font-size:.88rem;color:var(--muted)}
+.pin{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.78rem;font-weight:700}
+.pin.ok{background:rgba(143,240,208,.16);color:var(--menta)}
+.pin.prueba{background:rgba(255,217,138,.18);color:var(--oro)}
+.pin.admin{background:rgba(201,167,255,.2);color:var(--lila2)}
+.box{background:rgba(28,22,48,.82);border:1px solid rgba(201,167,255,.35);border-radius:22px;padding:22px;margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;margin-top:18px}
+.tile{position:relative;display:flex;flex-direction:column;gap:6px;padding:22px 20px;border-radius:22px;background:rgba(28,22,48,.85);border:1px solid var(--line);text-decoration:none;color:var(--txt);overflow:hidden;transition:border-color .2s,transform .2s}
+.tile::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--c,var(--aurora))}
+.tile:hover{border-color:var(--c2,var(--lila));transform:translateY(-2px)}
+.tile .ic{font-size:1.5rem;line-height:1}
+.tile h2{font-size:1.45rem;margin:4px 0 0}
+.tile p{color:var(--muted);font-size:.93rem}
+.tile .ir{margin-top:auto;padding-top:8px;font-weight:700;color:var(--c2,var(--lila2))}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:700;text-decoration:none;background:var(--aurora);color:#2a1640;border:0;cursor:pointer;font:700 .95rem Quicksand,inherit}
+.btn.sec{background:transparent;border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.nota{margin-top:30px;font-size:.85rem;color:var(--muted);border-left:3px solid var(--rosa);padding-left:12px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:44px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">✦ Lily Frequency</a><a href="miembros.html" class="small">Zona de miembros →</a></nav>
+  <h1>Zona de <em>terapeutas</em></h1>
+  <div class="estado" id="estadoTx"></div>
+
+  <div class="box" id="puerta"><p class="muted">Revisando tu acceso&hellip;</p></div>
+
+  <div id="zona" hidden>
+    <p class="muted">Tu espacio como terapeuta: el panel de tus consultantes, tus ganancias, y todo lo que creamos juntas para tus pacientes.</p>
+    <div class="grid">
+      <a class="tile" href="panel-terapeutas.html" style="--c:var(--menta);--c2:var(--menta)">
+        <span class="ic">✦</span><h2>Panel de terapeutas</h2>
+        <p>Perfil y protocolo de cada consultante: datos de nacimiento, lo que trae, lectura de pulso con la cámara y su protocolo de frecuencias por fases. Incluye el link de ficha para tu consultante.</p>
+        <span class="ir">Entrar al panel →</span>
+      </a>
+      <a class="tile" href="terapeutas-ganancias.html" style="--c:var(--oro);--c2:var(--oro)">
+        <span class="ic">❋</span><h2>Tus ganancias</h2>
+        <p>Tus dos caminos para ganar dando la membresía a tus pacientes, y las reglas claras.</p>
+        <span class="ir">Ver mis ganancias →</span>
+      </a>
+      <a class="tile" target="_blank" rel="noopener" href="https://wa.me/50234819870?text=Hola%2C%20soy%20terapeuta%20y%20quiero%20sugerir%20un%20programa%20para%20la%20app%3A%20" style="--c:var(--lila);--c2:var(--lila2)">
+        <span class="ic">💡</span><h2>Sugiere un programa</h2>
+        <p>¿Te falta una meditación o una frecuencia para algo que ves en consulta? Lily la crea y queda libre para toda la app: la reciben tus pacientes y toda la comunidad.</p>
+        <span class="ir">Sugerir por WhatsApp →</span>
+      </a>
+      <a class="tile" href="mailto:armoniacuanticagt@gmail.com?subject=Cotizaci%C3%B3n%20de%20creaci%C3%B3n%20exclusiva%20%C2%B7%20Lily%20Frequency&amp;body=Hola%20Lily%2C%0A%0AMi%20cl%C3%ADnica%3A%20%0AQu%C3%A9%20me%20gustar%C3%ADa%20crear%3A%20%0APara%20cu%C3%A1ntos%20pacientes%3A%20%0A%0AGracias." style="--c:linear-gradient(90deg,#ffd98a,#ff9fd2);--c2:var(--rosa)">
+        <span class="ic">✉</span><h2>Creaciones para tu clínica</h2>
+        <p>Programas, meditaciones o frecuencias hechos a la medida y solo para tu clínica, con tu nombre, tu protocolo o tu voz guía. Te cotizo por correo.</p>
+        <span class="ir">Pedir cotización →</span>
+      </a>
+      <a class="tile" href="miembros.html" style="--c:var(--rosa);--c2:var(--rosa)">
+        <span class="ic">♡</span><h2>Contenido para tus pacientes</h2>
+        <p>La Zona de miembros con todo lo que reciben tus pacientes: Armonía, Amor, Mente de cura, alimentos, zona terapéutica y descargables.</p>
+        <span class="ir">Ir a la Zona de miembros →</span>
+      </a>
+      <a class="tile" href="admin.html" id="tAdmin" hidden style="--c:var(--aurora);--c2:var(--lila2)">
+        <span class="ic">♛</span><h2>Administrar membresías</h2>
+        <p>Solo para administradoras: activa membresías, licencias de terapeuta y pruebas de 14 días.</p>
+        <span class="ir">Abrir administración →</span>
+      </a>
+    </div>
+    <div class="row"><button class="btn sec" id="salir" type="button">Salir de mi cuenta</button></div>
+  </div>
+
+  <p class="nota">Lily Frequency es una herramienta de apoyo y bienestar con sonido. No diagnostica ni trata enfermedades y no sustituye la atención médica o psicológica de tus pacientes.</p>
+  <footer>© Lily Frequency · <a href="terminos.html">Términos</a> · <a href="privacidad.html">Privacidad</a></footer>
+</div>
+
+<script src="lily-config.js"></script>
+<script type="module">
+/* La zona se abre solo si Supabase entrega la sección privada de terapeutas:
+   cuentas con licencia de terapeuta activa (o en prueba) y administradoras. */
+const $=id=>document.getElementById(id);
+const C=window.LF_SUPABASE||{};
+const WA=window.LF_WA||"50234819870";
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function puerta(h){$("puerta").hidden=false;$("puerta").innerHTML=h;$("zona").hidden=true}
+try{
+  const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
+  const sb=createClient(C.url,C.anon,{auth:{persistSession:true,autoRefreshToken:true,storageKey:"lf-sesion"}});
+  $("salir").onclick=()=>sb.auth.signOut().then(()=>location.href="registro.html");
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){
+    puerta('<h2>Entra con tu cuenta</h2><p class="muted">La Zona de terapeutas es solo para terapeutas con licencia o en su prueba de 14 días.</p>'+
+      '<div class="row"><a class="btn" href="registro.html?volver=zona-terapeutas.html">Entrar a mi cuenta</a><a class="btn sec" href="terapeutas.html">Conocer las licencias</a></div>');
+  }else{
+    const [priv,mi,adm]=await Promise.all([
+      sb.from("contenido_privado").select("id").eq("id","ganancias-terapeuta").maybeSingle(),
+      sb.from("miembros").select("plan,vence,nombre").eq("id",session.user.id).maybeSingle(),
+      sb.from("admins").select("id").eq("id",session.user.id).maybeSingle()
+    ]);
+    if(priv.error||!priv.data){
+      puerta('<h2>Esta zona es para terapeutas</h2><p class="muted">Tu cuenta todavía no tiene licencia de terapeuta. Puedes pedir tu <b>prueba gratis de 14 días</b> o activar tu licencia.</p>'+
+        '<div class="row"><a class="btn" target="_blank" rel="noopener" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hola, soy terapeuta y quiero mi prueba de 14 días. Mi correo de cuenta es: "+(session.user.email||""))+'">Pedir mi prueba de 14 días 💬</a><a class="btn sec" href="terapeutas.html">Ver licencias</a></div>');
+    }else{
+      const m=mi.data||{}, esAdmin=!!adm.data;
+      const quien=esc(m.nombre||session.user.email||"");
+      let pin="";
+      if(esAdmin)pin='<span class="pin admin">Administradora</span>';
+      else if(m.vence){const dias=Math.ceil((new Date(m.vence+"T23:59:59")-new Date())/864e5);
+        pin=dias<=14?'<span class="pin prueba">Te quedan '+dias+(dias===1?' día':' días')+' de acceso</span>':'<span class="pin ok">Licencia activa hasta el '+esc(m.vence)+'</span>'}
+      else pin='<span class="pin ok">Licencia activa</span>';
+      $("estadoTx").innerHTML='✦ '+quien+' '+pin;
+      $("tAdmin").hidden=!esAdmin;
+      $("puerta").hidden=true;$("zona").hidden=false;
+    }
+  }
+}catch(e){console.error(e);puerta('<p class="muted">No pude conectar con el servidor. Revisa tu internet y recarga la página.</p>')}
+</script>
+</body>
+</html>

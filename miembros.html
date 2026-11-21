@@ -61,13 +61,13 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
   <h1>Zona de <em>miembros</em></h1>
   <p class="muted">Contenido exclusivo para miembros con membresía activa: <b>Mente de cura</b> (32 acompañamientos con calma, visualización y afirmación) la <b>referencia de frecuencias de los alimentos</b> y los <b>descargables en PDF</b>.</p>
 
-  <div class="box" id="gate">
+  <div id="gate"><div class="box">
     <p><b>Ingresa tu código del mes</b></p>
     <p class="muted small">Es el mismo código de 6 letras que activa tu membresía en la app.</p>
     <div style="margin-top:12px"><input id="code" maxlength="6" autocomplete="off" placeholder="––––––" aria-label="Código del mes"></div>
     <div class="row"><button class="btn main" id="go">Entrar ✦</button><a class="btn ghost" href="https://wa.me/50234819870?text=Hola%2C%20quiero%20mi%20membres%C3%ADa%20de%20Lily%20Frequency" target="_blank" rel="noopener">💬 Quiero mi membresía</a></div>
     <p class="err" id="err"></p>
-  </div>
+  </div></div>
 
   <div id="area" hidden>
     <div class="player" id="player" hidden>
@@ -85,10 +85,10 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
       <label class="t"><input type="checkbox" id="pIso" style="width:auto"> Sin audífonos (pulsos por parlante)</label>
     </div>
 
-    <div class="box" style="border-color:var(--oro);background:linear-gradient(135deg,rgba(255,217,138,.14),rgba(201,167,255,.08));margin-bottom:18px">
-      <h2 style="margin-top:0">Panel de terapeutas</h2>
-      <p class="muted">Genera el perfil y protocolo de cada consultante: datos de nacimiento, lo que trae, lectura de pulso con la cámara y su protocolo de frecuencias. Incluye el link de ficha para que tu consultante la llene desde su teléfono. Disponible con licencia de terapeuta.</p>
-      <div class="row"><a class="btn pri" href="panel-terapeutas.html">Entrar al Panel de terapeutas →</a><a class="btn" id="lf-admin-btn" href="admin.html" hidden style="background:transparent;border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)">Administrar membresías</a></div>
+    <div class="box" id="lf-ter-card" hidden style="border-color:var(--oro);background:linear-gradient(135deg,rgba(255,217,138,.14),rgba(201,167,255,.08));margin-bottom:18px">
+      <h2 style="margin-top:0">Zona de terapeutas</h2>
+      <p class="muted">Tu espacio como terapeuta: Panel de terapeutas, tus ganancias, sugerencias de programas y creaciones para tu clínica.</p>
+      <div class="row"><a class="btn pri" href="zona-terapeutas.html">Entrar a la Zona de terapeutas →</a><a class="btn" id="lf-admin-btn" href="admin.html" hidden style="background:transparent;border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)">Administrar membresías</a></div>
     </div>
 
     <div class="box" style="border-color:var(--menta);background:linear-gradient(135deg,rgba(143,240,208,.12),rgba(201,167,255,.08));margin-bottom:18px">
@@ -185,7 +185,11 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
 
     <h2>Descargables</h2>
     <p class="muted">Materiales PDF complementarios, exclusivos para membresías pagadas activas.</p>
-    <div class="box" id="descargas"><p class="muted">✦ Muy pronto encontrarás aquí tus materiales para descargar.</p></div>
+    <div class="box" id="descargas">
+      <h3 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.35rem;margin:0 0 4px">Guía Premium de Geometría Sagrada</h3>
+      <p class="muted small">Tu guía en PDF para acompañar tus sesiones. Descárgala y guárdala en tu teléfono.</p>
+      <div class="row"><a class="btn main" href="descargables/descargables/guia-premium-geometria-sagrada.pdf" target="_blank" rel="noopener" download>Descargar PDF ↓</a></div>
+    </div>
     <div class="row"><button class="btn ghost" id="out">Cerrar sesión</button></div>
   </div>
 
@@ -221,9 +225,11 @@ $("go").onclick=()=>enter($("code").value);
 $("code").onkeydown=e=>{if(e.key==="Enter")enter($("code").value)};
 $("out").onclick=()=>{try{localStorage.removeItem("lf-web-code")}catch{}stopAll();location.reload()};
 try{const c=localStorage.getItem("lf-web-code");if(c)enter(c,true)}catch{}
-/* Botón de administración: solo aparece si la cuenta está en la lista de administradoras */
-(function verAdmin(n){const sb=window.LF_SB;if(!sb){if(n<20)setTimeout(()=>verAdmin(n+1),500);return}
+/* Tarjeta de la Zona de terapeutas: solo para terapeutas con licencia (o prueba) y administradoras.
+   El botón de administración solo para administradoras. */
+(function verTer(n){const sb=window.LF_SB;if(!sb){if(n<20)setTimeout(()=>verTer(n+1),500);return}
   sb.auth.getSession().then(r=>{const s=r&&r.data&&r.data.session;if(!s)return;
+    sb.from("contenido_privado").select("id").eq("id","ganancias-terapeuta").maybeSingle().then(q=>{if(q.data){const c=document.getElementById("lf-ter-card");if(c)c.hidden=false}});
     return sb.from("admins").select("id").eq("id",s.user.id).maybeSingle().then(q=>{if(q.data){const b=document.getElementById("lf-admin-btn");if(b)b.hidden=false}})}).catch(()=>{})})(0);
 
 let DATA=null;

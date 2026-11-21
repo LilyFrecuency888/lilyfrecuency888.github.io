@@ -32,3 +32,6 @@ Disallow: /cura.html
 Disallow: /cura-data.js
 Disallow: /armonia.html
 Disallow: /armonia-data.js
+Disallow: /terapeutas-ganancias.html
+Disallow: /zona-terapeutas.html
+Disallow: /descargables/
