@@ -30,3 +30,5 @@ Disallow: /amor.html
 Disallow: /amor-data.js
 Disallow: /cura.html
 Disallow: /cura-data.js
+Disallow: /armonia.html
+Disallow: /armonia-data.js
