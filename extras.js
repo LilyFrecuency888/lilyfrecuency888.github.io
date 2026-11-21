@@ -124,7 +124,9 @@ const _breathTick=window.breathTick;
 if(typeof _breathTick==="function")window.breathTick=function(s,t){_breathTick(s,t);
   const ph=($("breathPh").textContent||"").split(" · ")[0];
   if(ph&&ph!==lastPh){const P=s.ph||["Inhala","Sostén","Exhala","Pausa"];const i=P.indexOf(ph);
-    if(i===0)buzz(70);else if(i===2)buzz([35,80,35]);else if(i===1&&ph)buzz(15)}
+    if(i===0)buzz(70);else if(i===2)buzz([35,80,35]);else if(i===1&&ph)buzz(15);
+    /* con «Mi voz (Lily)»: decir la fase con su audio, solo en respiraciones con los nombres de siempre */
+    if(!s.ph&&window.lfVozLily()&&VOZ_RESP[ph])tocarVoz(VOZ_RESP[ph])}
   lastPh=ph};
 
 /* ---------- 4. ambientes ---------- */
@@ -179,6 +181,11 @@ function setSleep(min){clearTimeout(sleepT);sleepEnd=Date.now()+min*60000;
 
 /* ---------- 6. voz guiada ---------- */
 var VOCES=[
+ /* La voz de Lily: suena con sus audios grabados (meditación de entrada y respiración).
+    Lo que todavía no tiene audio se lee con una voz de mujer del teléfono. */
+ {id:"lily",  n:"Mi voz (Lily) ✦",        rate:.62, pitch:1.04, grabada:true,
+   pref:/x-(eea|eec|esc|esf|sfb)\b|female|mujer|femenin|helena|laura|sabina|paulina|m[oó]nica|elvira|dalia|lupe|pen[eé]lope|luc[ií]a|conchita|elena|ximena|valentina/i,
+   no:/x-(eed|eef|esd)\b|(^|[^e])male|hombre|masculin|pablo|ra[uú]l|jorge|diego|juan|carlos|enrique|[aá]lvaro|miguel|andr[eé]s|gerardo|tom[aá]s/i},
  {id:"relax", n:"Relajante",              rate:.70, pitch:.95},
  /* Voces de Google en español: eea, eec, esc, esf, sfb son de mujer; eed, eef, esd son de hombre.
     En computadora: Helena, Laura, Sabina, Paulina, Mónica... de mujer; Pablo, Raúl, Jorge... de hombre. */
@@ -227,7 +234,21 @@ function loadVoices(){
 }
 loadVoices();setTimeout(loadVoices,1500);
 function vocesEs(){return VOICES.filter(function(v){return /^es/i.test(v.lang||"")})}
-function vozSel(){var id=opt("vozId","relax");return VOCES.filter(function(v){return v.id===id})[0]||VOCES[0]}
+function vozSel(){var id=opt("vozId","lily");return VOCES.filter(function(v){return v.id===id})[0]||VOCES[0]}
+/* Audios grabados con la voz de Lily (carpeta voz/). Si un archivo no existe, se usa la voz del teléfono. */
+const VOZ_RESP={"Inhala":"voz/resp-inhala.mp3","Sostén":"voz/resp-sosten.mp3","Exhala":"voz/resp-exhala.mp3","Pausa":"voz/resp-pausa.mp3"};
+const vozFalta={};
+let vozEl=null;
+function tocarVoz(src){
+  if(vozFalta[src])return false;
+  try{if(!vozEl){vozEl=new Audio();vozEl.preload="auto"}
+    /* no interrumpir el texto guiado si se está leyendo */
+    try{if(window.speechSynthesis&&speechSynthesis.speaking)return false}catch(e){}
+    vozEl.pause();vozEl.src=src;vozEl.currentTime=0;
+    vozEl.onerror=function(){vozFalta[src]=true};
+    const p=vozEl.play();if(p&&p.catch)p.catch(function(){});return true}catch(e){return false}
+}
+window.lfVozLily=function(){return vozSel().id==="lily"&&opt("voice",true)};
 function suave(t){return String(t).replace(/[“”"«»]/g,"").replace(/!+/g,".").replace(/\s+/g," ").trim()}
 function stopSpeak(){try{CAP.TextToSpeech&&CAP.TextToSpeech.stop()}catch(e){}try{speechSynthesis&&speechSynthesis.cancel()}catch(e){}}
 function hablar(text,forzar){
@@ -285,10 +306,12 @@ function openVoz(){
     q(o,"#vzOn").textContent=opt("voice",true)?"Apagar la voz":"Encender la voz";
   }
   o.querySelectorAll("[data-vz]").forEach(function(b){
-    b.onclick=function(){setOpt("vozId",b.dataset.vz);pinta();hablar("Inhala despacio. Y suelta. Estás a salvo.",true)}});
+    b.onclick=function(){setOpt("vozId",b.dataset.vz);pinta();probarVoz()}});
+  function probarVoz(){stopSpeak();if(vozSel().id==="lily"){try{speechSynthesis.cancel()}catch(e){}vozFalta["voz/med-02.mp3"]=false;tocarVoz("voz/med-02.mp3");return}
+    try{vozEl&&vozEl.pause()}catch(e){}hablar("Inhala despacio. Sostén. Y suelta muy lento. Todo tu cuerpo se relaja.",true)}
   var dev=q(o,"#vzDev");
   if(dev)dev.onchange=function(){setOpt("vozName",dev.value);hablar("Inhala despacio. Y suelta. Estás a salvo.",true)};
-  q(o,"#vzTest").onclick=function(){hablar("Inhala despacio. Sostén. Y suelta muy lento. Todo tu cuerpo se relaja.",true)};
+  q(o,"#vzTest").onclick=function(){probarVoz()};
   q(o,"#vzOn").onclick=function(){setOpt("voice",!opt("voice",true));if(!opt("voice",true))stopSpeak();pinta();syncToggles();
     toast(opt("voice",true)?"Voz guiada activada 🗣":"Voz guiada apagada")};
   o.hidden=false;

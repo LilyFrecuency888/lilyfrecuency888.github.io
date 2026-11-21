@@ -10,7 +10,7 @@ var setOpt=function(v){try{store.set(KEY,v)}catch(e){}};
 var CAPT=(window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.TextToSpeech)||null;
 var nativo=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
 var RATES={relax:[.70,.95],mujer:[.62,1.04],hombre:[.64,.80],andro:[.56,.88]};
-function vz(){try{var id=store.get("lf-x-vozId","relax");return RATES[id]||RATES.relax}catch(e){return RATES.relax}}
+function vz(){try{var id=store.get("lf-x-vozId","lily");return RATES[id]||RATES.mujer}catch(e){return RATES.mujer}}
 function callar(){try{CAPT&&CAPT.stop()}catch(e){}try{speechSynthesis&&speechSynthesis.cancel()}catch(e){}}
 function decir(t){
   var r=vz(), txt=String(t).replace(/[“”"«»]/g,"").replace(/!+/g,".");
@@ -167,13 +167,35 @@ function correr(listo){
   document.documentElement.style.overflow="hidden";
 
   var cv=ov.querySelector("canvas"),h3=ov.querySelector("h3"),pp=ov.querySelector("p"),barra=ov.querySelector(".bar i");
-  var total=FASES.reduce(function(a,f){return a+f.s},0), t0=Date.now(), fase=-1, raf=null, fin=false;
+  var t0=Date.now(), fase=-1, raf=null, fin=false;
+
+  /* Con «Mi voz (Lily)»: cada fase suena con su audio grabado (voz/med-01.mp3 … med-08.mp3)
+     y dura lo que dura el audio, más una pausa breve. Si falta un audio, se lee con la voz del teléfono. */
+  var conVoz=false;try{conVoz=typeof window.lfVozLily==="function"?window.lfVozLily():(store.get("lf-x-vozId","lily")==="lily")}catch(e){}
+  var D=FASES.map(function(f){return f.s});
+  var player=null, falla={};
+  if(conVoz){
+    player=new Audio();player.preload="auto";
+    FASES.forEach(function(f,i){
+      var a=new Audio();a.preload="metadata";a.src=clip(i);
+      a.onloadedmetadata=function(){if(isFinite(a.duration)&&a.duration>0)D[i]=a.duration+1.6};
+      a.onerror=function(){falla[i]=true};
+    });
+  }
+  function clip(i){return "voz/med-"+String(i+1).padStart(2,"0")+".mp3"}
+  function tocar(i,texto){
+    if(!conVoz||falla[i]){decir(texto);return}
+    try{callar();player.pause();player.src=clip(i);player.currentTime=0;
+      player.onerror=function(){falla[i]=true;decir(texto)};
+      var pr=player.play();if(pr&&pr.catch)pr.catch(function(){decir(texto)})}catch(e){decir(texto)}
+  }
 
   audioOn();
 
   function terminar(apagar){
     if(fin)return; fin=true;
     cancelAnimationFrame(raf); callar(); audioOff();
+    try{player&&player.pause()}catch(e){}
     ov.style.opacity="0";
     setTimeout(function(){
       try{ov.remove()}catch(e){}
@@ -190,10 +212,11 @@ function correr(listo){
   function bucle(){
     if(fin)return;
     var seg=(Date.now()-t0)/1000, acum=0, i=0, f=FASES[0];
-    for(i=0;i<FASES.length;i++){if(seg<acum+FASES[i].s){f=FASES[i];break}acum+=FASES[i].s}
+    var total=D.reduce(function(a,b){return a+b},0);
+    for(i=0;i<FASES.length;i++){if(seg<acum+D[i]){f=FASES[i];break}acum+=D[i]}
     if(i>=FASES.length)return terminar(false);
-    if(i!==fase){fase=i;h3.textContent=f.t;pp.textContent=f.sub;decir(f.v)}
-    var p=(seg-acum)/f.s;
+    if(i!==fase){fase=i;h3.textContent=f.t;pp.textContent=f.sub;tocar(i,f.v)}
+    var p=(seg-acum)/D[i];
     barra.style.width=(seg/total*100).toFixed(1)+"%";
     dibujar(cv,f.d,p,seg);
     raf=requestAnimationFrame(bucle);
