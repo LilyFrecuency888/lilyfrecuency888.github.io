@@ -440,6 +440,13 @@ header.top{background:var(--headbg);margin:calc(-14px - env(safe-area-inset-top,
           <button type="button" class="btn" data-go="sesiones">✉ Sesiones a distancia</button>
           <button type="button" class="btn" data-go="cuenta">♛ Mi cuenta y perfil</button>
           <a class="btn" href="https://lilyfrecuency888.github.io/miembros.html" target="_blank" rel="noopener" style="text-align:center;text-decoration:none">✦ Zona de miembros en la web ↗</a>
+          <a class="btn" href="https://lilyfrecuency888.github.io/gana.html" target="_blank" rel="noopener" style="text-align:center;text-decoration:none">✿ Recomiéndanos y gana ↗</a>
+          <div id="menuAdmin" hidden style="display:flex;flex-direction:column;gap:6px;margin-top:6px;padding-top:10px;border-top:1px solid var(--line)">
+            <span class="muted" style="font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:center">♛ Administración</span>
+            <a class="btn" href="https://lilyfrecuency888.github.io/admin.html" target="_blank" rel="noopener" style="text-align:center;text-decoration:none">♛ Administrar membresías ↗</a>
+            <a class="btn" href="https://lilyfrecuency888.github.io/zona-terapeutas.html" target="_blank" rel="noopener" style="text-align:center;text-decoration:none">❋ Zona de terapeutas ↗</a>
+            <a class="btn" href="https://lilyfrecuency888.github.io/panel-terapeutas.html" target="_blank" rel="noopener" style="text-align:center;text-decoration:none">✦ Panel de terapeutas ↗</a>
+          </div>
           <button type="button" class="btn" id="howBtn">? Cómo funciona</button>
           <button type="button" class="btn" id="themeBtn">◐ Cambiar a modo obsidiana</button>
         </div>
@@ -668,6 +675,7 @@ function renderMember(){
   const m=isMember()||admin;const paid=(()=>{const u=store.get("lf-member",null);return u===ym()||(u===prevYm()&&new Date().getDate()<=5)})(),tl=trialLeft();$("memberBadge").textContent=admin?"Terapeuta":paid?"Miembro ✦":tl>0?"Prueba gratis · "+tl+(tl===1?" día":" días"):"Gratis";$("memberBadge").classList.toggle("vip",m);
   $("memberText").textContent=admin?"Modo terapeuta activo: todos los programas abiertos.":paid?"Tu membresía está activa este mes. Todos los programas están abiertos.":tl>0?"Estás en tu prueba gratis: te quedan "+tl+" días con todo abierto. Después ingresa el código del mes que te da tu terapeuta.":"Con la versión gratis tienes "+CONFIG.free.length+" programas. Ingresa el código del mes que te da tu terapeuta para abrir todos.";
   $("therapist").hidden=!admin;$("adminLogin").hidden=admin;$("adminPanel").hidden=!admin;
+  if($("menuAdmin"))$("menuAdmin").hidden=!admin;
   if(admin){$("ymNow").textContent=ym();$("ymNext").textContent=nextYm();$("codeNow").textContent=monthCode(ym());$("codeNext").textContent=monthCode(nextYm())}
   renderLib();if(typeof renderProfile==="function"&&$("pfCard"))try{renderProfile()}catch{}
 }
