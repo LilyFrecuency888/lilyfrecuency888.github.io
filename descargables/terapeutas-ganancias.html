@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tus ganancias como terapeuta · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120f1a;--line:#3a2f52;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc;--aurora:linear-gradient(90deg,#c9a7ff,#ff9fd2,#8ff0d0)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(1000px 700px at 50% -10%,#3a2563,var(--bg) 60%) fixed,var(--bg);line-height:1.6;min-height:100vh}
+a{color:var(--lila2)}
+.wrap{max-width:860px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:600;text-decoration:none;color:var(--txt)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.1rem,6vw,3.2rem);line-height:1.05;margin-bottom:10px}
+h1 em,h2 em{font-style:italic;background:var(--aurora);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.9rem;margin:36px 0 6px;padding-bottom:10px;position:relative}
+h2::after{content:"";position:absolute;left:0;bottom:0;width:56px;height:3px;border-radius:3px;background:var(--aurora)}
+h3{font-size:1.08rem;margin-bottom:6px}
+.muted{color:var(--muted)}.small{font-size:.85rem}
+.box{background:rgba(28,22,48,.82);border:1px solid rgba(201,167,255,.35);border-radius:22px;padding:22px;margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;margin-top:16px}
+.card{background:rgba(28,22,48,.8);border:1px solid var(--line);border-radius:22px;padding:20px}
+.card.a{border-color:rgba(255,217,138,.55);background:linear-gradient(160deg,rgba(255,217,138,.10),rgba(28,22,48,.85) 60%)}
+.card.b{border-color:rgba(143,240,208,.55);background:linear-gradient(160deg,rgba(143,240,208,.10),rgba(28,22,48,.85) 60%)}
+.card p,.card li{color:var(--muted);font-size:.95rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+.a .tag{background:rgba(255,217,138,.18);color:var(--oro)}
+.b .tag{background:rgba(143,240,208,.16);color:var(--menta)}
+.big{font-family:"Cormorant Garamond",serif;font-size:2.4rem;line-height:1.1;color:var(--oro)}
+.b .big{color:var(--menta)}
+ol,ul{margin:10px 0 0 22px}li{margin:6px 0}
+.ejemplo{margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(201,167,255,.08);border-left:3px solid var(--lila);font-size:.9rem;color:var(--lila2)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:700;text-decoration:none;background:var(--aurora);color:#2a1640;border:0;cursor:pointer;font:700 .95rem Quicksand,inherit}
+.btn.sec{background:transparent;border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.nota{margin-top:26px;font-size:.85rem;color:var(--muted);border-left:3px solid var(--rosa);padding-left:12px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:44px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">✦ Lily Frequency</a><a href="zona-terapeutas.html" class="small">← Zona de terapeutas</a></nav>
+  <h1>Tus ganancias como <em>terapeuta</em></h1>
+  <p class="muted">Sección privada para terapeutas con licencia.</p>
+
+  <div class="box" id="estado"><p class="muted">Revisando tu acceso&hellip;</p></div>
+  <div id="contenido" hidden></div>
+
+  <p class="nota">Información confidencial para terapeutas con licencia de Lily Frequency. Por favor no la compartas.</p>
+  <footer>© Lily Frequency · <a href="terminos.html">Términos</a> · <a href="privacidad.html">Privacidad</a></footer>
+</div>
+
+<script src="lily-config.js"></script>
+<script type="module">
+/* El contenido de esta página no está en el archivo: lo entrega Supabase
+   solo a cuentas con licencia de terapeuta activa o administradoras. */
+const $=id=>document.getElementById(id);
+const C=window.LF_SUPABASE||{};
+const WA=window.LF_WA||"50234819870";
+function aviso(h){$("estado").hidden=false;$("estado").innerHTML=h}
+try{
+  const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
+  const sb=createClient(C.url,C.anon,{auth:{persistSession:true,autoRefreshToken:true,storageKey:"lf-sesion"}});
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){
+    aviso('<h3>Entra con tu cuenta</h3><p class="muted">Esta sección es solo para terapeutas con licencia.</p>'+
+      '<div class="row"><a class="btn" href="registro.html?volver=terapeutas-ganancias.html">Entrar a mi cuenta</a></div>');
+  }else{
+    const {data,error}=await sb.from("contenido_privado").select("html").eq("id","ganancias-terapeuta").maybeSingle();
+    if(error||!data){
+      aviso('<h3>Sección solo para terapeutas con licencia</h3><p class="muted">Tu cuenta todavía no tiene licencia de terapeuta. Si ya la pagaste, avísame y la activo.</p>'+
+        '<div class="row"><a class="btn" href="terapeutas.html">Ver licencias</a><a class="btn sec" target="_blank" rel="noopener" href="https://wa.me/'+WA+'?text=Hola%2C%20quiero%20activar%20mi%20licencia%20de%20terapeuta">Avisar por WhatsApp</a></div>');
+    }else{
+      $("estado").hidden=true;$("contenido").innerHTML=data.html;$("contenido").hidden=false;
+    }
+  }
+}catch(e){console.error(e);aviso('<p class="muted">No pude conectar con el servidor. Revisa tu internet y recarga la página.</p>')}
+</script>
+</body>
+</html>

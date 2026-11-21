@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crece con Lily Frequency · Lily Frequency</title>
+<meta name="description" content="Pacientes, terapeutas y creadora: cómo gana cada quien al compartir Lily Frequency.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120f1a;--s2:#251e34;--line:#3a2f52;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc;--aurora:linear-gradient(90deg,#c9a7ff,#ff9fd2,#8ff0d0)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(1000px 700px at 50% -10%,#3a2563,var(--bg) 60%) fixed,var(--bg);line-height:1.6;min-height:100vh}
+a{color:var(--lila2)}
+.wrap{max-width:860px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:600;text-decoration:none;color:var(--txt)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin-bottom:10px}
+h1 em,h2 em{font-style:italic;background:var(--aurora);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.9rem;margin:40px 0 6px;padding-bottom:10px;position:relative}
+h2::after{content:"";position:absolute;left:0;bottom:0;width:56px;height:3px;border-radius:3px;background:var(--aurora)}
+h3{font-size:1.08rem;margin-bottom:6px}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+.lead{font-size:1.05rem}
+/* el círculo: creadora al centro, terapeutas y pacientes alrededor */
+.circulo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin-top:18px}
+.rol{position:relative;background:rgba(28,22,48,.82);border:1px solid var(--line);border-radius:24px;padding:22px 20px 20px;overflow:hidden}
+.rol::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--c)}
+.rol .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;font-weight:700;color:#2a1640;background:var(--c);margin-bottom:10px}
+.rol .que{font-family:"Cormorant Garamond",serif;font-size:1.5rem;line-height:1.15;margin:2px 0 8px}
+.rol p{color:var(--muted);font-size:.95rem}
+.rol .big{font-family:"Cormorant Garamond",serif;font-size:2.4rem;line-height:1;color:var(--c2,var(--oro));margin:10px 0 2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;margin-top:16px}
+.card{background:rgba(28,22,48,.8);border:1px solid var(--line);border-radius:22px;padding:20px}
+.card.a{border-color:rgba(255,217,138,.55);background:linear-gradient(160deg,rgba(255,217,138,.10),rgba(28,22,48,.85) 60%)}
+.card.b{border-color:rgba(143,240,208,.55);background:linear-gradient(160deg,rgba(143,240,208,.10),rgba(28,22,48,.85) 60%)}
+.card p,.card li{color:var(--muted);font-size:.95rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+.a .tag{background:rgba(255,217,138,.18);color:var(--oro)}
+.b .tag{background:rgba(143,240,208,.16);color:var(--menta)}
+.big{font-family:"Cormorant Garamond",serif;font-size:2.4rem;line-height:1.1;color:var(--oro)}
+.b .big{color:var(--menta)}
+ol,ul{margin:10px 0 0 22px}li{margin:6px 0}
+.ejemplo{margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(201,167,255,.08);border-left:3px solid var(--lila);font-size:.9rem;color:var(--lila2)}
+.flujo{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin-top:16px;text-align:center}
+.flujo span{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(37,30,52,.7);font-weight:600;font-size:.92rem}
+.flujo i{font-style:normal;color:var(--lila)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:999px;font-weight:700;text-decoration:none;background:var(--aurora);color:#2a1640}
+.btn.sec{background:transparent;border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:30px}
+.nota{margin-top:30px;font-size:.85rem;color:var(--muted);border-left:3px solid var(--rosa);padding-left:12px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:44px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">✦ Lily Frequency</a><a href="./" class="small">← Volver</a></nav>
+
+  <h1>Crece con <em>Lily Frequency</em></h1>
+  <p class="muted lead">Un círculo donde todas ganan: la paciente que recomienda, la terapeuta que acompaña a sus pacientes y la creadora que sostiene todo el contenido. Cada quien recibe lo suyo por cada membresía realmente pagada.</p>
+
+  <div class="flujo" aria-label="Cómo se mueve una membresía">
+    <span>✦ Lily, creadora</span><i>→</i><span>❋ Terapeuta</span><i>→</i><span>✿ Paciente</span><i>→</i><span>♡ Su amiga</span>
+  </div>
+
+  <h2>Quién gana y <em>cómo</em></h2>
+  <div class="circulo">
+    <div class="rol" style="--c:var(--lila);--c2:var(--lila)">
+      <div class="n">1</div>
+      <div class="que">La creadora</div>
+      <p>Lily crea los programas, la voz guía, la app y la zona de miembros. Recibe primero: la licencia de cada terapeuta y la parte principal de cada membresía.</p>
+    </div>
+    <div class="rol" style="--c:var(--oro)">
+      <div class="n">2</div>
+      <div class="que">La terapeuta</div>
+      <p>Acompaña a sus pacientes con la app, el Panel de terapeutas y sesiones a distancia con su nombre. Con su licencia, les da acceso a todos los programas.</p>
+    </div>
+    <div class="rol" style="--c:var(--menta);--c2:var(--menta)">
+      <div class="n">3</div>
+      <div class="que">La paciente</div>
+      <p>Si le gusta, la recomienda. Por cada membresía pagada con su código recibe <b>30 %</b> en dinero o <b>Lirios ✿</b>.</p>
+    </div>
+  </div>
+
+  <h2>Para <em>terapeutas</em></h2>
+  <p class="muted">Si eres terapeuta y quieres acompañar a tus pacientes con Lily Frequency, conoce las licencias. Las condiciones para terapeutas se comparten directamente con cada terapeuta con licencia.</p>
+  <div class="ctas" style="justify-content:flex-start"><a class="btn sec" href="terapeutas.html">Ver licencias para terapeutas →</a></div>
+
+  <h2>Para <em>pacientes</em>: recomienda y gana</h2>
+  <p class="muted">Si Lily Frequency te ha acompañado, compártela. Cada membresía pagada con tu código te da tu recompensa: <b>30 % en dinero</b> por PayPal, o <b>Lirios ✿</b> para canjear por eventos, talleres, materiales y sesiones con Lily.</p>
+  <div class="ctas" style="justify-content:flex-start"><a class="btn sec" href="promotoras.html">Ver recompensas y Lirios ✿</a></div>
+
+  <h2>Reglas <em>claras</em></h2>
+  <ol>
+    <li><b>Un solo nivel:</b> gana solo quien recomienda directamente. Nadie gana por las personas que recomiendan sus recomendadas.</li>
+    <li>Las recompensas se ganan solo por <b>membresías realmente pagadas</b>, nunca por inscribir personas.</li>
+    <li>La recompensa es de quien recomendó directamente a la persona que pagó.</li>
+    <li>Comisiones en dinero: se pagan una vez al mes por PayPal o transferencia, al acumular USD 10 o más.</li>
+    <li>Al recomendar, habla de <b>bienestar, relajación y acompañamiento</b>. No prometas curas ni ingresos.</li>
+  </ol>
+
+  <div class="ctas">
+    <a class="btn" href="https://wa.me/50234819870?text=Hola%2C%20quiero%20mi%20c%C3%B3digo%20para%20recomendar%20Lily%20Frequency" target="_blank" rel="noopener">💬 Quiero recomendar</a>
+  </div>
+
+  <p class="nota">Lily Frequency es una herramienta de apoyo y bienestar con sonido. No diagnostica ni trata enfermedades y no sustituye la atención médica o psicológica.</p>
+  <footer>© Lily Frequency · <a href="terminos.html">Términos</a> · <a href="privacidad.html">Política de privacidad</a></footer>
+</div>
+</body>
+</html>

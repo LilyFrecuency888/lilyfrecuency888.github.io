@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zona de miembros · Lily Frequency</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120f1a;--s:#1c1630;--s2:#251e34;--line:#3a2f52;--lila:#c9a7ff;--lila2:#e4d4ff;--rosa:#ff9fd2;--menta:#8ff0d0;--oro:#ffd98a;--txt:#f4eeff;--muted:#bfb2dc}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Quicksand,system-ui,sans-serif;color:var(--txt);background:radial-gradient(1000px 700px at 50% -10%,#3a2563,var(--bg) 60%) fixed,var(--bg);line-height:1.6;min-height:100vh}
+a{color:var(--lila2)}
+.wrap{max-width:760px;margin:0 auto;padding:22px 18px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:600;text-decoration:none;color:var(--txt)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.2rem,6vw,3.2rem);line-height:1.05;margin-bottom:8px}
+h1 em{font-style:italic;background:linear-gradient(90deg,var(--lila),var(--rosa),var(--menta));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.9rem;margin:34px 0 8px}
+.muted{color:var(--muted)}
+.box{background:rgba(28,22,48,.8);border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:18px}
+input{width:100%;padding:14px;border-radius:14px;border:1.5px solid var(--line);background:var(--s2);color:var(--txt);font:700 1.3rem/1 ui-monospace,monospace;letter-spacing:.3em;text-transform:uppercase;text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:999px;border:0;font:700 1rem Quicksand,sans-serif;cursor:pointer;text-decoration:none}
+.btn.main{background:linear-gradient(90deg,var(--lila),var(--rosa));color:#2a1640}
+.btn.ghost{background:transparent;border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.err{color:var(--rosa);margin-top:10px;min-height:1.4em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:14px}
+.csec{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:1.2rem;color:var(--lila2);margin:22px 0 2px}
+.csec+.ctxt{color:var(--muted);font-size:.84rem;margin:0}
+.pdesc{color:var(--muted);font-size:.86rem;margin:6px 0 0;line-height:1.5}
+.decreto{margin-top:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--lila);
+  background:linear-gradient(135deg,rgba(201,167,255,.15),rgba(255,159,210,.08))}
+.decreto span{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--lila2);margin-bottom:4px}
+.decreto b{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.08rem;font-weight:600;line-height:1.45}
+.card{text-align:left;background:var(--s2);border:1px solid var(--line);border-radius:18px;padding:14px;cursor:pointer;color:var(--txt);font:inherit}
+.card:hover,.card.on{border-color:var(--rosa)}
+.card b{display:block;margin-bottom:2px}
+.card small{color:var(--muted)}
+.player{position:relative;background:rgba(18,15,26,.95);border:1px solid var(--lila);border-radius:22px;padding:18px;margin-top:18px;backdrop-filter:blur(6px)}
+.player .hz{font-family:"Cormorant Garamond",serif;font-size:2.6rem;line-height:1;color:var(--lila)}
+.player .hz small{font-size:1rem;color:var(--rosa)}
+.player .ph{font-weight:700;color:var(--menta);min-height:1.4em}
+.player .g{font-size:1.05rem;margin:6px 0}
+.bar{height:6px;border-radius:9px;background:var(--s2);overflow:hidden;margin:10px 0 4px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--lila),var(--rosa))}
+.small{font-size:.85rem}
+.ref table{width:100%;border-collapse:collapse;margin:10px 0}.ref td{padding:6px 4px;border-bottom:1px solid var(--line)}.ref td:last-child{text-align:right;color:var(--oro);font-family:ui-monospace,monospace}
+.ref b{font-size:1.05rem}
+label.t{display:flex;gap:8px;align-items:center;margin-top:10px;font-size:.9rem;color:var(--muted)}
+.notice{font-size:.85rem;color:var(--muted);border-left:3px solid var(--rosa);padding-left:12px;margin-top:14px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:40px}
+</style>
+<link rel="stylesheet" href="lily.css">
+<script src="lily-config.js"></script>
+<script src="lily-acceso.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="logo" href="./">✦ Lily Frequency</a><a href="./" class="small">← Volver</a></nav>
+  <h1>Zona de <em>miembros</em></h1>
+  <p class="muted">Contenido exclusivo para miembros con membresía activa: <b>Mente de cura</b> (32 acompañamientos con calma, visualización y afirmación) la <b>referencia de frecuencias de los alimentos</b> y los <b>descargables en PDF</b>.</p>
+
+  <div id="gate"><div class="box">
+    <p><b>Ingresa tu código del mes</b></p>
+    <p class="muted small">Es el mismo código de 6 letras que activa tu membresía en la app.</p>
+    <div style="margin-top:12px"><input id="code" maxlength="6" autocomplete="off" placeholder="––––––" aria-label="Código del mes"></div>
+    <div class="row"><button class="btn main" id="go">Entrar ✦</button><a class="btn ghost" href="https://wa.me/50234819870?text=Hola%2C%20quiero%20mi%20membres%C3%ADa%20de%20Lily%20Frequency" target="_blank" rel="noopener">💬 Quiero mi membresía</a></div>
+    <p class="err" id="err"></p>
+  </div></div>
+
+  <div id="area" hidden>
+    <div class="player" id="player" hidden>
+      <div class="hz" id="pHz">–</div>
+      <div><b id="pName"></b> · <span class="muted" id="pStep"></span></div>
+      <p class="pdesc" id="pDesc"></p>
+      <div class="decreto" id="pIntent" hidden><span>Tu decreto</span><b id="pIntentTx"></b></div>
+      <div class="ph" id="pPh"></div>
+      <div class="g" id="pG"></div>
+      <div class="bar"><i id="pBar"></i></div>
+      <div class="row" style="align-items:center">
+        <button class="btn main" id="pPlay">▶ Escuchar</button><button class="btn ghost" id="pStop">■ Detener</button>
+        <span class="small muted" style="margin-left:auto">Volumen <input type="range" id="pVol" min="0" max="100" value="35" style="width:110px;padding:0;letter-spacing:0;vertical-align:middle"></span>
+      </div>
+      <label class="t"><input type="checkbox" id="pIso" style="width:auto"> Sin audífonos (pulsos por parlante)</label>
+    </div>
+
+    <div class="box" id="lf-ter-card" hidden style="border-color:var(--oro);background:linear-gradient(135deg,rgba(255,217,138,.14),rgba(201,167,255,.08));margin-bottom:18px">
+      <h2 style="margin-top:0">Zona de terapeutas</h2>
+      <p class="muted">Tu espacio como terapeuta: Panel de terapeutas, tus ganancias, sugerencias de programas y creaciones para tu clínica.</p>
+      <div class="row"><a class="btn pri" href="zona-terapeutas.html">Entrar a la Zona de terapeutas →</a><a class="btn" id="lf-admin-btn" href="admin.html" hidden style="background:transparent;border:1.5px solid rgba(201,167,255,.5);color:var(--lila2)">Administrar membresías</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--menta);background:linear-gradient(135deg,rgba(143,240,208,.12),rgba(201,167,255,.08));margin-bottom:18px">
+      <h2 style="margin-top:0">Frecuencias de Armonía</h2>
+      <p class="muted">5 programas con una textura que no existe en el resto del catálogo: varios tonos sonando a la vez, espaciados por la proporción áurea (1.618). Como nunca coinciden entre sí, el sonido tiembla en vez de asentarse. Funcionan con o sin audífonos.</p>
+      <div class="row"><a class="btn pri" href="armonia.html">Entrar a Frecuencias de Armonía →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--lila);background:linear-gradient(135deg,rgba(201,167,255,.14),rgba(255,159,210,.08));margin-bottom:18px">
+      <h2 style="margin-top:0">Amor y relaciones</h2>
+      <p class="muted">22 programas en 6 secciones: mantras de atracción (Kleem, Om Shreem Mahalakshmiyei Namaha, Aham Prema), el tono de Venus de Hans Cousto, theta sobre 639 Hz para las creencias de rechazo y merecimiento, entonación con tu propia voz, tambor ancestral al ritmo del corazón y 432 Hz para la noche. Cada uno con su decreto.</p>
+      <div class="row"><a class="btn pri" href="amor.html">Entrar a Amor y relaciones →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--rosa);background:linear-gradient(135deg,rgba(255,159,210,.14),rgba(201,167,255,.08));margin-bottom:18px">
+      <h2 style="margin-top:0">Mente de cura</h2>
+      <p class="muted">32 programas en 9 secciones: metabólico y corazón, dolor y articulaciones, digestivo y respiratorio, defensas y piel, tratamientos fuertes y cirugía, ánimo y descanso, etapas de la mujer, hábitos que cuestan y para quien acompaña. Cada uno con su decreto. No sustituye tu tratamiento: lo acompaña.</p>
+      <div class="row"><a class="btn pri" href="cura.html">Entrar a Mente de cura →</a></div>
+    </div>
+
+    <h2>Frecuencias de los alimentos</h2>
+    <div class="box ref" id="ref"></div>
+    <div class="box" style="border-color:var(--menta);background:linear-gradient(135deg,rgba(143,240,208,.14),rgba(201,167,255,.09));margin-bottom:18px">
+      <h2 style="margin-top:0">Zona terapéutica</h2>
+      <p class="muted">68 programas más: órganos y meridianos, bioenergética, acompañamiento del dolor, alimentación consciente y cuerpo. 24 horas de contenido, con el mismo código.</p>
+      <div class="row"><a class="btn pri" href="terapeutica.html">Entrar a la zona terapéutica →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--lila);background:linear-gradient(135deg,rgba(201,167,255,.15),rgba(255,159,210,.09));margin-bottom:18px">
+      <h2 style="margin-top:0">Manifestación y rituales</h2>
+      <p class="muted">64 programas: los métodos clásicos de manifestación, tapping guiado, visualizaciones, limpiezas energéticas, horas espejo y naturaleza. Más el repetidor de códigos.</p>
+      <div class="row"><a class="btn pri" href="manifestacion.html">Entrar a Manifestación →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--menta);background:linear-gradient(135deg,rgba(143,240,208,.15),rgba(201,167,255,.08));margin-bottom:18px">
+      <h2 style="margin-top:0">Sueño y sonidos de fondo</h2>
+      <p class="muted">20 programas nuevos: lluvia, lluvia en el techo, tormenta, olas del mar, arroyo, bosque de noche, chimenea, ventilador, tren nocturno y ruido blanco, rosa y marrón. Más sesiones para dormir profundo, volver a dormir de madrugada y siestas de 20 minutos. Con el mismo código.</p>
+      <div class="row"><a class="btn pri" href="sueno.html">Entrar a sueño y sonidos →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--menta);background:linear-gradient(135deg,rgba(143,240,208,.12),rgba(201,167,255,.08));margin-bottom:18px">
+      <h2 style="margin-top:0">Ondas y conciencia</h2>
+      <p class="muted">24 programas: ondas cerebrales de delta a gamma, práctica de tercer ojo e intuición, y sesiones largas de viaje interior.</p>
+      <div class="row"><a class="btn pri" href="conciencia.html">Entrar a Ondas y conciencia →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--oro);background:linear-gradient(135deg,rgba(255,217,138,.12),rgba(201,167,255,.08));margin-bottom:18px">
+      <h2 style="margin-top:0">Decretos con mi voz</h2>
+      <p class="muted">Mis decretos grabados, sonando sobre la frecuencia que elijas: reprogramación, expansión o anclaje.</p>
+      <div class="row"><a class="btn pri" href="decretos.html">Entrar a Decretos →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--menta);background:linear-gradient(135deg,rgba(143,240,208,.13),rgba(255,159,210,.07));margin-bottom:18px">
+      <h2 style="margin-top:0">Conexión Madre Tierra</h2>
+      <p class="muted">Música que se compone sola y nunca se repite, con el pulso de la tierra. Tres ambientes: Bosque, Micelio y Raíz, con temporizador.</p>
+      <div class="row"><a class="btn pri" href="generativa.html">Entrar a Conexión Madre Tierra →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--oro);background:linear-gradient(135deg,rgba(255,217,138,.12),rgba(143,240,208,.07));margin-bottom:18px">
+      <h2 style="margin-top:0">Cuencos y campanas</h2>
+      <p class="muted">Un baño de sonido que se toca solo. Cinco juegos: los nueve solfeggio, siete chakras, cuencos graves, campanas altas y todo junto.</p>
+      <div class="row"><a class="btn pri" href="cuencos.html">Entrar a Cuencos y campanas →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--rosa);background:linear-gradient(135deg,rgba(255,159,210,.12),rgba(201,167,255,.07));margin-bottom:18px">
+      <h2 style="margin-top:0">Conexión Cielo y Tierra</h2>
+      <p class="muted">La frecuencia al frente y debajo dos latidos: un corazón humano en calma, en gozo, enamorado o en éxtasis, y el pulso de la Tierra.</p>
+      <div class="row"><a class="btn pri" href="cielo-tierra.html">Entrar a Cielo y Tierra →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--lila);background:linear-gradient(135deg,rgba(201,167,255,.14),rgba(143,240,208,.07));margin-bottom:18px">
+      <h2 style="margin-top:0">Caminos del alma</h2>
+      <p class="muted">80 programas: números angelicales, arcángeles, Ho’oponopono, mantras, registros akáshicos y reiki.</p>
+      <div class="row"><a class="btn pri" href="caminos.html">Entrar a Caminos →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--oro);background:linear-gradient(135deg,rgba(255,217,138,.13),rgba(201,167,255,.07));margin-bottom:18px">
+      <h2 style="margin-top:0">Ciclos y tiempos</h2>
+      <p class="muted">51 programas: las catorce fases de la luna, los doce signos con su cara de sombra, los siete días planetarios y duelo.</p>
+      <div class="row"><a class="btn pri" href="ciclos.html">Entrar a Ciclos →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--menta);background:linear-gradient(135deg,rgba(143,240,208,.13),rgba(255,159,210,.07));margin-bottom:18px">
+      <h2 style="margin-top:0">Familia y cuerpo</h2>
+      <p class="muted">42 programas: vibroacústica aplicada al cuerpo, niños, mascotas y embarazo.</p>
+      <div class="row"><a class="btn pri" href="familia.html">Entrar a Familia y cuerpo →</a></div>
+    </div>
+
+    <div class="box" style="border-color:var(--lila);background:linear-gradient(135deg,rgba(201,167,255,.14),rgba(143,240,208,.06));margin-bottom:18px">
+      <h2 style="margin-top:0">Sonidos para dormir</h2>
+      <p class="muted">18 ambientes que se generan en el momento: lluvia, mar, chimenea, viento, tren, grillos y ruido blanco, rosa y marrón. Mezcla varios a la vez y ponle temporizador hasta ocho horas.</p>
+      <div class="row"><a class="btn pri" href="sonidos.html">Entrar a Sonidos para dormir →</a></div>
+    </div>
+
+    <h2>Descargables</h2>
+    <p class="muted">Materiales PDF complementarios, exclusivos para membresías pagadas activas.</p>
+    <div class="box" id="descargas">
+      <h3 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.35rem;margin:0 0 4px">Guía Premium de Geometría Sagrada</h3>
+      <p class="muted small">Tu guía en PDF para acompañar tus sesiones. Descárgala y guárdala en tu teléfono.</p>
+      <div class="row"><a class="btn main" href="descargables/guia-premium-geometria-sagrada.pdf" target="_blank" rel="noopener" download>Descargar PDF ↓</a></div>
+    </div>
+    <div class="row"><button class="btn ghost" id="out">Cerrar sesión</button></div>
+  </div>
+
+  <footer>© Lily Frequency · <a href="privacidad.html">Política de privacidad</a></footer>
+</div>
+<script>
+const VAULT={"iv":"qrMmuCR/97mf7LNF","ct":"GXh7fn795Iw0RHeswZrO5uhwPItgHZT1uc50C+WFJWJXWPUr+38wPKxc01Q1TiTR0ez3sjf9pnpoo6upq6MPvw1T5jw0/BNOf6rrwNsPNMCubqgiwU9gClSbsb6nWZYIB1Seyaq5a+xcrnnoWToiqAh0ZNAS+gP9BpmpKaXIdomgYEd0cc1/PXnyws5GoPvcYc4vZe6but9Faf+dDdMe6jpBqBGb/Fk6gZtdtQSEVm6F+1GNuYSEfpGUg7FmyZwN/iqZxijL1QWqffEGEAZyU66ox/VZtYwIgbUU+sVTmQ1KduLotcOcSub3/cCqGYR67bgC/SsNgmfXh1rE5KDhkCpt6feqdpNbtWRN2V1XCQVqIBy+8aMtxrC5XEd08plTs8zgfodWuFI47GI2na76d0LxORgwwFwyTcKnzu+ilWsjytLiMVZwA7Icu2WgXLfcICMHACQwCiyYNMhg7eoXGlb2nHIpLC9zIaeX+ZOWVjIOWvz1T2PdcH1/E9gh0ByygmVCQz7iXIjFpEi0InSOE1NfaO9H2ittdnoA9GXlbs4GrWko1pVBfH/WA2gUHw0NV1rPKL1wryaEjhm8LYCxYD0eqruu61u7c5vA5NW1TEMB/L8K6sn/d6NbCQTM67i/Hv3lvgNIQ6YhkAjVbN2rCSC7TkIV6u7/SpyMY1fKz0z+50VarQEDEURK/0CIxa4i24V/un3bgNamiuoQAJPXEAH/K0Fx7qrLQAIv9mFmSitN6dK2cj0iPkylXwRp+eqFMi/RhxKEjV1DLS931Pptg/p/FUMzZqhtsU7WKNKHa9k+aY0UBG58y1YjBJd9dBspNC+xNt4xB3IbJWcNZCHWZatHbNd6h4ggAQddDmzhyYeEoPDt1i1oh/zizT1r9sXFD5JzfAbuRa3tBLcvNf9kMrX9mVvKclhYcgjOFZPf9bZUytmaTmj4fhe6ijb7ujDyuwa+cBbaxQybObtAAuWobQ+Bqzg2Voqipp1L64Tr6vStflaWZpHWYIfSN3agZ0VerVAVkeWwCAphIBG4Ypirb/uIBLMQFvcIuqyxtxEgsiLxKhuqZMIZJYGYBNNN4D6Q5T2nIxri9u6QM+yLuG8692FDAEMcOoAfBtEZQ44wsQJzpuMMCoSihfMxvehxKkRL6+wIvethG4ePbr63mbTmzUQing4nBr11C1PlqrM+h5zdVaXjeiNgYTXee3ffYRHfNTTZCYaEQ5uRHCOTHb26A4QSgqhrT2z+LYfrPa/r3mCqj5/7xw113lvMGBJN+jV4xxx/I5mr7ZutjyKsYgABbE6t/VaHOlHDA0LC8t3VY79O5yi64Q59HB5jcGQdHKXyT4beY3UXOws4aklMLqVV/kwYYcfzlSnprq44wam4IATySBEDHQg4UbMDk2yxFlGCbSdRfTawOoosV2lluAfjIDzhDAQNyMW6KxxIsjYsWIM6yWrQetF0xOxuCpJ5SEcaF8NCoVvDtYfS/aeW7vwolmjH3WSmeJsJoYIMEY+rm0nFtpzn1i3QXUgGFikYwbCu11sxotcfKlVEtBwmPBeNNTsc3JM3JAmZ1WnjhraxOrxppj5eGLnZr16O/985z/uC/woJ8OaRtp6yAklmR10iuSUh5fJ6LPfg/M8wf9ayUDXwYMfpbX7L8FCkGbTeciylTcNwuoewN52V1zOsCvu3gk3r1roVGmK/im/L4QZirV5zZ+KMbgsUQiGwlqW7PqDnoZ33OuhaV9tdBQ9Qr1UuLx1wMXuXCk7WNghAJczn9XXmHFdM8UkhDDstQk7VuGgVk5lqdgGQqCi5o5ye/N/9YvV1H3BENrJgRaGmgH3WLkVe/LhmGaYdLcXnjq52wejlhlFNvROp4UkiMxuL3xgb8tfa+EZBO/3rs/dQMjHTYk6/Pir17VwR418woB1Iwf5u5NB8Y2B9Ie2vmh/+FEUA394B6JLnyJEbmyZP9SNGHFe9r9lEJpXerxQsn84XH0BfuVbPaY1ldlGF6q2u0aan4OOBPsY3zv3veuwe9dmn2iSJ0o3KUx++iLWFTFbwTovtT2ZydVo66huqp7fKHtxFy0bjuffqsOnGKEaOQvro6eTu3ZPTVgsBh9qXJ40oDlbuc4HQ3ORnhiNyABHsKK8fbaMfiZ4ECbrnSMzmkMaDRETuZbxQ64V5F8ZOWC9xFkgzw4Sno3nqqi9QlA9e7a1m6qFb66whhDoWhb7/ZKpxS1SFjtpq86legVrZvLceQAuzVUaZChjlqNHdmemFXrTad0prmh4jEsW6LF22HqSpqtGfj3QFtoZea08KgquDYyqP0nRa2lZ8yLeJIsypdWbEedQzjSbOBAOMir3B8E0JUuZ+hwGBdbrFrPoLGgKqMsA5t6J/WTthZKmfTNge3kfYkApox7pA8Kxg8qFRLmLkbzZnj6cXfog8J3+M3bS+cfm4ETJOOEPDQrZnrpDC2A+fP3P2ySSUS1gm2nWcZyS7q3h+74wEDPjD2fKs5HBCm/u+BuQ+JydEZCFTW8tBVZW98T7Tlb75mcNB27RDih5Q6i4Ll6JktwYs0T3RjSvq4HYVQHuJBoLGQJjlCD5UAcGCFS/ithn4qEv0Yp7t1ZrTggxkSVpvOHp9JcwukXzXPpV4E1aYUwm97Ekp9nHeQ5axIUcOm9Z5tAdAiCCEX7qcLIQXaXVArEl+XYvvi68+V/JMopXzu28U58dKY4Lg91kGif8Nh3gQXVA7vMupcXog5KhFHmMLFBtGXmTRGv1hlzBNR2j9os9R6cnDmFe+0MI+OO9zpbz8FEjE4bGr2roXHGfYppFGw/ZICRdyv5+AS5GRAjg5rA7gbU+zx6rTbbYQkk0F299hgAVsom/PkpNCpVwEDIgQQriO2XXYQfVzMApgsJ5Aj5eXWgEfxdGiAm+CM/yeNroFL4WbcFWmKkZjqf5LBNI6VLZG2Bgbs+eE1FSTzipd1UZ8aHsMUfQDgW8cB2ltemkfCg0rOn8oeK3GvsMh52CRktZ/eKrowwVYpYzshzoBbFL519L0tVe7zwe3UIOYTYZ+SBql0H1DbKKkLrSJhP9z4emT4ppHO3aqbS3ajlPDwqwPKQgFGEsQYjSg5icuTVq6Tlz6Toaum6Ul4B2PQoFc+BRfApPSS9VEP5qZa+L+yV6nUDbt6q++f8og06tbfQgwhIDxwKhBX9gVPLt0a/Xxf6CCqglpFKS+FomVVsHluWAynCJ+Eace4ZD/3K4mftynCOx9MVRqgf44lP2VkdEF/T3T72Aria/K2M5p2lFSj6DnmaxVDB9QwgjzJ9EvOTgxtIzgjP7fQQAT+7K+q4OwoiHeOs40ZfLYJFr35tTWnH7NKsUeOcDlfekaXvUCMSPtFcDxIxR4kSicCmEFvEfA2HaNdGAeOaHxKTavKa2yyuN7PpVgbm/2nO9lTQTijbW7ChPkLcEEh6YC8tm6SoYhW2G6x1RocMnFNmp08kcHWbHZLAj7Z8s4MCjafbpTpwLZ5nIIlsDWhg/hap3MatcjhRNwW6NYGPfgY1ktKaulVNkvH3p9HjvVjpn1CyhkJYz2dpHGC0n5EY/3wcar/7vOZ5OsWXitVFQnzqtz0gqMsHF9bLNvxw+4xAe0774XiJRNwQJ4Ew6+W+8qK70XKI+SkcBHXB9PDdn8RNztLcuy5VFYwZJkvtxmCACono8/2o4qnydzNSEl2GHHHdSGbKpk3MHC0AmNULco9Njmy3dbhf6maEuQe/G4KrODaqcrCNyXYRpts0B4fg9goZV7RKL07PQmbhDvp+kpw0sHUEekawd9rHXnqNNx9dj0LGXaPpRrTtrhY1GVEgQDZC4G85DJKHZrPxbSihGX6IJIgYfhhteh45pGmi6vOX+2O1J6/TVBraHJox5/b+fYmAk58r8hjm+YCiNK4VmYXVAuSQYPoBwNp1GGsYeFkZMfc0gII45Ctb+KGoyOa5Y0Irx6JkbzViqv5bNYe2AlNscy1ZP82eytpyWkHsh/BFpWJziU6POCx2Z09Ypqm4StukXFNxPFOMD7WQ7HHGzCgbiwbgixgjws7vAmDpl8ddn9GyjH8ZuFquFUIQcgZfK5/aoe1JQhRArnZIYFQktQFcZ/xTGafEaaw1G3H+I4htL144HUzeJY237nKAhp/8YLugRjYVTB2d19e1X4iqZPRX326R4FvBXRY06FJY9P2GWfsfsY7/Q7RswZDcf7yob6+h/1ISY5piTh/4RHzk+1T2te0w0QpkF911Q1IQifptvaT2smyTT0XDNcC0TsV+0beLsX7R6q4oBNNDtV0+BHr1b1xhJwBNpG8islTdl5nKZnvVvlWUPbLXTICzkqbssuZN36iM0sJtRXSRjJVQmst2IR5FXc+Hc9yu9iWJ17NCmrJlvD8Qp4mJGsIslYOYcS0UH5gfOOSKp8dnuYKPFIKxTc/0BYH9KNUVGxrCFYQRq0vErfZO22ZxR/UNpVgPKGykkjSzgTLfDp5j1wryBs+Gxx2f+UDQKoCAtQkF6vY576dSp43NZKLROJ6teyxqVvladxDj6376ClI8ZCvyV9XwQzvbrjMtngFAggXaA8t02rViJ2nbp74razvpIdEtFp1zPo0Z8sRWDKvzf4u0NI7p+VPFmCU1VEAe1e4zmOzQdKDcYaVeSVlnkfS+nCWi8nSVkF9EOBSfmrPE9coouL9tMBtEM4+A3eSuZqbMoXOBXrxA6ZK0bP47skgfsxl4B8rOt8w3XcJAjUCjeajb0+f27JD59bYLuzjogjc4ORqk0pRYFE+NrZcHU0pyLBhe2zk7xKgDcOPNBBeWHsXaTVuKoSIBtFZPckaUTmE3H+4MJFlKmKgx3lMlPLH5SAh/cWYW3QQ4lquSVtg8qmOmCZE1C62FJOO3IL9Sj+WNkomljrdsWgJ8zuuF67E6lqhYej55LIwoozKZ8lOvd745J/MkACXbQhfeDSYbREpw94MfxP40shedusL8L7NO0npQCZLNuj28wRRiTGEhWPVLby8Nyyt5lJ15F2Ez+QmFRYrgppqrNsKCQvyGKUy7nkF27lbZkeToYtCf41XdHHObR7gxwTWN5BLpxFyNA5BLXDeSFcsxnWyFTqgRXLtiPdszjgnuUq8P9zqChUaLYnoILj9C7MYK3TjRuC7P8p9X5xkGUFQ7BJCvmpugeG790nrqVjfpTBnwFoI8DLC4/uzGTpOOd6pLx09m5ye8b+o9bH2OpA1YwUjI/FS5A9ifyIkVtV4cSVs9cL9ahvPCxtqySdhEa3x83Ivlx6nXMzucPBuny7ppBXcVhorT/J2QehxBhhSdyq1/SW3W+honBsyJEsMfLJNKQZxZ8bxPk/rYQpw77OopgsQwLNMuOEcje7MbDjOOjnb4gzTWUtEbLaRLJLkQx8Y9PfGpLqxm0vIz0BSiIphgfM27QKKQ3qNtslW4Cjrj+rI31Sv3qOvsA4E9lHftxgtvSzQnsk74KsJWDjqJz7TVNBd79FacOiFqzKbhIXyMTHUMemN652Tuk8zRfeAdnPKLY+v0+Mp9Wev+1vSjEaovjPAK/08LJ01DvEeDt+qzCl1WF/zQ4PNsXpDqiHfxa2TAgnD8onS1/EFhyTWlHIdP1Spu5F3bVDQe/EE4Mf8ucZoI/M4HGEo2iF3X9oDbhe+hI2i9K3FflmKot4vajmI9Q0QcUmJGwzWZohKMPDJfn9AP86274xXf+dzfF1XHLjFfe7Q7ufjUPiVXmw/aqCdsIvJfUeueYtE+Co3wy9IyGETmxjhmA2K4SMcoG6V/YbB96G3vajgwgIgZVaFAFpwcVl9BGn1wtyybpd0h/OQfhbNkCG2w6qehRdHBAnRr7XRJuJ9PBaMKq5BKByQ1ODtsaXoaHgRDp4HAtWnxpe6N6YxNZWobVO8yXIiYUQkVrIbGkuypCzjQdJn6ms/MUJGrLtgrmpWxo3q6vw+YVZ+naZ4yBmC1/JWagysZEvaitncd15yCOfEIOW2WCAqoLzePko3fCUkzroMyVALQYbS8n4X76L3RepyYQC/j3cJhMtw7X3dVmSG6QCc5o4xnXzUC+STqTmhNR0WZHKG24osmT/Lrru9CvvMCF8O9R6hVd+lxBnMQI89lzV/eEaMC+JWz2iTj5coQ48BAWEJ5beR4kUiO9hx3J1x5b3PcXaOqEcaP5ABEDfQNr6XGyPKRBZ7OUemfeEl4n3MQm9X5G2RAPWE5NfMOI7ItagMTpouVJgAIqEmBlBXvhE+QMIEChaNsjE2E6mgRhUFSOy33IehEOeNOIV0TcxU8rQViitgQcj601j7vge3HrGf17q4Oxwioj1DIOEe1Wvh9smBWhps/mjzgPQHZ8jSMP5+Hgr27DGqgSZfHStptDTTBRqt0y6Qrh8RyI5qF9kNM/pOn4sK/pY3Y8W0Gb7RFJgJiSqoxYhQcc5d4zt/MiDOrq1mFFq8CvoV1oxEkE9KVDLgiN/ePC7KQcVpaSKy0Oxfr1exmq7udWETbM2248xatcWLq932mzPC0AQub+IWlXFS96FHmd8naGbTMa2ciqI83pH++v9wu5gwRxhmEYEMm5RB2OqzRJyojOQTJiFhYCl6kHESnrM03ifVyfQnsUP3thC0VukWQ7r9yhGqP7K6LyESbbXRO3CaKBqC5RqFLQyZzcBuOBTcT7upfr3D/3cYgsKYR78Wpt5eCIHPfEmQqzLU4XnkpNRot9dUcB6PIC9ZTXvGScnAlxRQzVlusQjahJFrBlS5lQCaThFUrsCcVuZrf/XYGcdy4wxaz17qnT2Ss1JTbq6a7fiJnoUz3fJqHgdpD2+IH3rBcynOkpDTrgwmHrMT35jiDIw7/dVxVTQW6V/mAYJo9AqwpKCa9QBIipgnByntRSs1QY1jk57sq0LUnXGD0dU4/iXzxWv5b/MSLaRmg1Sa+ag567TVQc1fosfPX4mvuMBfwWzwjQib2aPuC4SlW+C9t6Dq6bP8N0n/efP7eYkoo11fHnhE+hi9/k8vcKFT5VVVPFuRbn2A/E8HOXXvIM2mdCOS5fI7r4ExnpBkIkN/N0lLbchvZacYjCoNq3Pg/mO6PE3KLxqW9BHp+10nf7C4YxitLtkPrTKT4XzcJJLyNti6FD754UgB5w/ykhYgjqEcS5oUJzPheZzs3r6ltcQfOySjG8SQ+TIc4NwSFZ11FAmDf0x99uViDtfivWNTMAklxMUr4b0omSLGrHSQg==","wrap":{"2026-11":["0KeJKVZ/FLkWNuzt","J0MzLpFwvO2QkzS6nqBjQIvKou6JCkWpwz6dQ9TAycwJ9UdHpFknDcjpjSWYMpaR"],"2026-12":["Oo1BOhaU6MJALQlC","mRZP1OSmJYFe0jW+IT8oyzUsDQIzO7buybCr5SaoFowW2M4yQR//u3gXeeUb/QN/"],"2027-01":["5oAlm2uwVCmIaNhm","+c+GJqrfcPfREQTbhoVJ5qmceBrsY2kYY6Z730HL9b8C7/kWD1LckS40HQKZzrr+"],"2027-02":["e8WCYsxvkIunKcN5","G5Y88qh8MGA8t6GF0Hb0NjT8Fu17KVxpsW6NjG8j7+AJYXPz295bmCv581j5R5nh"],"2027-03":["fnIovYXFNt9J5Kiv","ukqUZ6gPrDFnKz+KJHf/3d6RTxztKKaXUjkZ13vj88J0fEr/uzlL05zIk5qLmDpb"],"2027-04":["PKL3vqSwWdGA8y9M","OO559nCxUADJ30BcLypacoLiPAS2huyQQ6Am2SMs4AXoOn/V+oR5w1wOSjys5G8o"],"2027-05":["VYxU/6hEM5i7vtyx","6C6ur6jVo0FluRChJnQhDpBpuWHFb/fG9SRCt54TUriMYzrc5VeMyD2NajbGPQ1x"],"2027-06":["BxVXniKK1MJ17yaL","RaezCK5iMr02RLlqG68FRR1XSNbwRMdZaHzZhXwejsdX4SaszJczMj4POldPXOi3"],"2027-07":["Ndv+h+f+LbixFN15","BI6+OZ4+8wahuehds9fcn2qC52UWn/lR6kGXh93uULcFEq7Y6vXoaByXKc0R2Dse"],"2027-08":["7zWyffhsoBRcZzfS","97l9Z96H1f3GLzuZFP399A5mytqC5wN1ZNVv7+EeWItG6W3hp808An8xUTq+oSXY"],"2027-09":["Ktgn5IY4pzlz471p","Mk8C+yLusKXaFCsRBLCJdys/YShxxEpVATDgc2GHaOgj35noJHZk+5+VJ6oNH/eD"],"2027-10":["oe07IBE5hTTDTJgK","ky9dUXn1jvs9tUEzAupDdCnH+FObPbovFQqP3jSW8IyFhvgZ4myUWo+kIPlW9Pxj"],"2027-11":["45/gO0Y161rYbzHK","Gz/UEYdVWZ8rcUO2dLUSd3s2dTTrrmdR5WhJfhyG9dxZhnap78+g9BNZ1Magv8Vf"],"2027-12":["cqTdG3rrEm3oy/FH","18EVaOZ4RwOpMG4dPjo0O3Yhr8FC5/m8fE1KsvAJjiBYE6SR3FvFj9FdVG14IHhH"],"2028-01":["JgGP2C/gd6nMcyKy","m29RaqhTGeg43mAUHLKZLgANlEcCRPGfoo34F54hrg4M6kPT3BUuEYXHNMyrS0hG"],"2028-02":["arEyt1a3bMsZQ+GG","Rem/7LNo8eTne1bNZy/A04TBAssuyTBXaUFeCAggEzq2vkUzIMmKh/bXv4WalmSW"],"2028-03":["zPrPrUEFItjznKoG","gzpi/UICn9IkCzofqTx7qlAx/cQFzZmQWAnA4C1pV0Arkdk5qUPa8moHEbXmn0lS"],"2028-04":["2i3MA7vpgEvwhRdW","g9X2ZybADKmSJBZ0CIgVy7JiQ4854oGuP6T3f6BFVHp6hzzAEsGNrvYORzB31I/K"],"2028-05":["fYMNcPnNoluf3t2j","3CCds8vleHcpZgNzCY3n3CK5BXh9iKYI3Zj8MYByKsWMw3FvpGQQJMh66pPXG212"],"2028-06":["G+2CGHiFWZcKaPFP","13zdR9s//rZcMe+z7hOanacVFcjXdBBu/BzviYEz7w+kJkXrHKBBBELrFssB7JeE"],"2028-07":["kFCtHZ7b6L0l4NVu","JTouq9gsUQyTuMJBQQ7i6vcPZgHpa1E1I1JL382OvBKACc3m1IjMDYShHMDPcjRm"],"2028-08":["kbMy8eaV5s0c3FOy","6ddJijoZCJ0yO9x99+adYIiLAM2F+odV11OgWz3cUOgW/YwH8T9Krhp1Et1d8Iwo"],"2028-09":["CWLFc7EMZoZvrZMi","IX+nrq70kFMb4/U4PWA5nHuMYqnelr2DC++SmJ9qsf3xvJo2TB+DYjyoWTIEARBr"],"2028-10":["LFPcIY5r4L4TLGTa","iOeza9sNCfvA+Ed9osy/WvNZ8w04EtR/1t9JOPj3oq5nKe8h2FApLpGoaEQwMnIV"],"2028-11":["OO16DMIAom+kW/0t","r8cTRnX0Aw+q7Ut2hNIpDnSjUJJ7Gfe3hauWN9dZZpx68NWIqv6hBrvCcZa9Znsm"],"2028-12":["WhoxRGqf+t9qpIWz","TOyuPH/FMfpCOF5N77F2bIm5JxuW6i5efXQ9ponxD5XNBuqIKB8KM1imnXbfl6oM"],"2029-01":["iRDHFQV6wJGMzB+B","Qq1rFJeYjp2GOwxZvY7Px4altB8jyw/IS0AId5qWzgXb0RCx0keLxcuffzOaXx93"],"2029-02":["9J1R63XLM3U032+2","huWHiMy9Y2J5EfVVjXnOoTbWdxxTf/eKqxAdMhSxV0piOk1KF7y77pWFWTEyMAzX"],"2029-03":["OOOf3KO21glbuJ1N","L4XuQ9iGZ72hgsUXf90ow/zsVo0Tue/SyrmxeUHGx9AS9Ha0SDhOhQcWbGhZu4Fi"],"2029-04":["ShL8hb1cJVDlUpfa","P85vlRmSHrnHh33MAwtWtzr0OffppbCodiUI9PEtaw7gaP9t0NR3n5rar6pC7Wgk"],"2029-05":["+6ZSSxAXnX+Q2+oi","6ee/SCixNfxy2kIP4HsFJ9ofJAL/nY6YtpeJKjWp3zCMf+h4So1c06kXdVSl8mLw"],"2029-06":["23PNR8iYo0sCM5Qe","mc8SoxDiF1oSvDaWhrosrqrELAiu2oy0KQBTU0z1yWiTA0vIblPrLkolVaeH6QSu"]}};
+const $=id=>document.getElementById(id);
+const ym=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function unlock(code){
+  const now=new Date(),months=[ym(now)];if(now.getDate()<=5){const p=new Date(now.getFullYear(),now.getMonth()-1,1);months.push(ym(p))}
+  const enc=new TextEncoder();
+  for(const m of months){const w=VAULT.wrap[m];if(!w)continue;
+    try{const base=await crypto.subtle.importKey("raw",enc.encode(code),"PBKDF2",false,["deriveKey"]);
+      const wk=await crypto.subtle.deriveKey({name:"PBKDF2",salt:enc.encode("lily|"+m),iterations:150000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+      const K=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(w[0])},wk,b64(w[1]));
+      const kk=await crypto.subtle.importKey("raw",K,"AES-GCM",false,["decrypt"]);
+      const gz=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(VAULT.iv)},kk,b64(VAULT.ct));
+      const txt=await new Response(new Blob([gz]).stream().pipeThrough(new DecompressionStream("gzip"))).text();
+      return {data:JSON.parse(txt),m};
+    }catch(e){}}
+  return null;
+}
+async function enter(code,silent){
+  $("err").textContent=silent?"":"Verificando…";$("go").disabled=true;
+  const r=await unlock(code.trim().toUpperCase());$("go").disabled=false;
+  if(!r){$("err").textContent=silent?"":"Código no válido para este mes. Pídele el código actual a tu terapeuta.";try{localStorage.removeItem("lf-web-code")}catch{}return}
+  try{localStorage.setItem("lf-web-code",code.trim().toUpperCase())}catch{}
+  $("gate").hidden=true;$("area").hidden=false;render(r.data);
+}
+$("go").onclick=()=>enter($("code").value);
+$("code").onkeydown=e=>{if(e.key==="Enter")enter($("code").value)};
+$("out").onclick=()=>{try{localStorage.removeItem("lf-web-code")}catch{}stopAll();location.reload()};
+try{const c=localStorage.getItem("lf-web-code");if(c)enter(c,true)}catch{}
+/* Tarjeta de la Zona de terapeutas: solo para terapeutas con licencia (o prueba) y administradoras.
+   El botón de administración solo para administradoras. */
+(function verTer(n){const sb=window.LF_SB;if(!sb){if(n<20)setTimeout(()=>verTer(n+1),500);return}
+  sb.auth.getSession().then(r=>{const s=r&&r.data&&r.data.session;if(!s)return;
+    sb.from("contenido_privado").select("id").eq("id","ganancias-terapeuta").maybeSingle().then(q=>{if(q.data){const c=document.getElementById("lf-ter-card");if(c)c.hidden=false}});
+    return sb.from("admins").select("id").eq("id",s.user.id).maybeSingle().then(q=>{if(q.data){const b=document.getElementById("lf-admin-btn");if(b)b.hidden=false}})}).catch(()=>{})})(0);
+
+let DATA=null;
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+/* Mente de cura agrupada, igual que Manifestacion */
+const CURA_SEC=[
+ ["Metabólico y corazón","Lo que se lleva con control y constancia.",
+  ["Diabetes","Presión alta","Tiroides","Hígado graso","Enfermedad del corazón","Enfermedad renal"]],
+ ["Dolor y articulaciones","Para los días en que el cuerpo no da tregua.",
+  ["Artritis","Fibromialgia","Migraña","Dolor crónico"]],
+ ["Digestivo y respiratorio","Donde los nervios se sienten primero.",
+  ["Gastritis y colitis","Colon irritable","Asma","Alergias"]],
+ ["Defensas y piel","Cuando el cuerpo reacciona contra sí mismo.",
+  ["Lupus y enfermedades autoinmunes","Psoriasis y dermatitis","Infecciones y parásitos","Recuperación de gripe o covid"]],
+ ["Tratamientos fuertes y cirugía","Para los días más duros. Acompañan, no reemplazan nada.",
+  ["Cáncer (en tratamiento)","Días de quimio o radioterapia","Antes de una cirugía","Recuperación de cirugía"]],
+ ["Ánimo y descanso","Lo que pesa por dentro también se trata.",
+  ["Trastorno de ansiedad","Depresión","Insomnio"]],
+ ["Etapas de la mujer","Cambios que piden otro ritmo.",
+  ["Menopausia","Tratamiento de fertilidad"]],
+ ["Hábitos que cuestan","Para sostener la decisión cuando el cuerpo pide lo otro.",
+  ["Cuidar tu peso","Dejar de fumar","Recuperación de adicciones"]],
+ ["Para quien acompaña","Cuidar a alguien también desgasta.",
+  ["Para quien cuida a un enfermo","Memoria y demencia (acompañante)"]]
+];
+function tarjetaCura(p,i){
+  return `<button class="card" data-i="${i}"><b>${esc(p.name)}</b><small>${Math.round(p.steps.reduce((a,s)=>a+s.dur,0)/60)} min · ${p.steps.length} pasos</small></button>`;
+}
+function render(d){DATA=d;
+  const pos=new Map(); d.cura.forEach((p,i)=>pos.set(p.name,i));
+  const puestos=new Set(); let h="";
+  for(const [sec,pie,nombres] of CURA_SEC){
+    const ids=nombres.filter(n=>pos.has(n)).map(n=>pos.get(n));
+    if(!ids.length) continue;
+    ids.forEach(i=>puestos.add(i));
+    h+=`<h3 class="csec">${esc(sec)}</h3><p class="ctxt">${esc(pie)}</p>`+
+       `<div class="grid">${ids.map(i=>tarjetaCura(d.cura[i],i)).join("")}</div>`;
+  }
+  const resto=d.cura.map((p,i)=>i).filter(i=>!puestos.has(i));
+  if(resto.length) h+=`<h3 class="csec">Otros</h3><p class="ctxt">&nbsp;</p>`+
+     `<div class="grid">${resto.map(i=>tarjetaCura(d.cura[i],i)).join("")}</div>`;
+  const L=$("list"); if(L) L.innerHTML=h;
+  $("ref").innerHTML=d.ref;
+}
+if($("list")) $("list").onclick=e=>{const c=e.target.closest("[data-i]");if(!c)return;document.querySelectorAll(".card").forEach(x=>x.classList.toggle("on",x===c));load(DATA.cura[+c.dataset.i]);play()};
+
+/* motor de sonido */
+let ctx,master,cur=null,idx=0,stepStart=0,voice=null,tick=null,playing=false;
+const vol=()=>$("pVol").value/100*.6;
+function ensure(){if(ctx)return;ctx=new (window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=vol();master.connect(ctx.destination)}
+$("pVol").oninput=()=>{if(master)master.gain.setTargetAtTime(vol(),ctx.currentTime,.1)};
+function makeVoice(s){const t=ctx.currentTime,out=ctx.createGain();out.gain.setValueAtTime(0,t);out.gain.linearRampToValueAtTime(1,t+3);out.connect(master);const n=[out];
+  const iso=$("pIso").checked||s.mode!=="binaural";
+  if(s.b&&!iso){const L=ctx.createOscillator(),R=ctx.createOscillator(),m=ctx.createChannelMerger(2);L.frequency.value=s.f;R.frequency.value=s.f+s.b;L.connect(m,0,0);R.connect(m,0,1);m.connect(out);L.start();R.start();n.push(L,R,m)}
+  else if(s.b){const o=ctx.createOscillator(),g=ctx.createGain(),l=ctx.createOscillator(),lg=ctx.createGain();o.frequency.value=s.f;g.gain.value=.5;l.frequency.value=s.b;lg.gain.value=.5;l.connect(lg);lg.connect(g.gain);o.connect(g);g.connect(out);o.start();l.start();n.push(o,g,l,lg)}
+  else{const o=ctx.createOscillator();o.frequency.value=s.f;o.connect(out);o.start();n.push(o)}
+  return {out,n}}
+function kill(v){if(!v)return;const t=ctx.currentTime;v.out.gain.cancelScheduledValues(t);v.out.gain.setValueAtTime(v.out.gain.value,t);v.out.gain.linearRampToValueAtTime(0,t+1.2);setTimeout(()=>v.n.forEach(x=>{try{x.stop&&x.stop()}catch{}try{x.disconnect()}catch{}}),1400)}
+function load(p){stopAll();cur=p;idx=0;$("player").hidden=false;show();$("player").scrollIntoView({behavior:"smooth",block:"nearest"})}
+function show(){const s=cur.steps[idx];$("pHz").innerHTML=(+s.f).toLocaleString("es")+" <small>Hz"+(s.b?" · "+s.b+" Hz":"")+"</small>";$("pName").textContent=cur.name;$("pStep").textContent="Paso "+(idx+1)+"/"+cur.steps.length+" · "+s.label;$("pG").textContent=s.g||"";$("pPh").textContent="";
+  $("pDesc").textContent=cur.desc||"";
+  const it=cur.intent||""; $("pIntent").hidden=!it; $("pIntentTx").textContent=it;}
+function startStep(i){idx=i;kill(voice);voice=makeVoice(cur.steps[i]);stepStart=ctx.currentTime;show()}
+async function play(){if(!cur)return;ensure();await ctx.resume();if(!playing){startStep(idx);playing=true;clearInterval(tick);tick=setInterval(upd,250)}$("pPlay").textContent="♪ Sonando"}
+function stopAll(){clearInterval(tick);if(voice)kill(voice);voice=null;playing=false;$("pPlay").textContent="▶ Escuchar";$("pBar").style.width="0";$("pPh").textContent=""}
+function upd(){if(!playing)return;const s=cur.steps[idx],t=ctx.currentTime-stepStart;
+  if(t>=s.dur){if(idx<cur.steps.length-1)startStep(idx+1);else{stopAll();$("pPh").textContent="Sesión completa ✨";return}}
+  const tot=cur.steps.reduce((a,x)=>a+x.dur,0),done=cur.steps.slice(0,idx).reduce((a,x)=>a+x.dur,0)+Math.min(t,s.dur);$("pBar").style.width=(done/tot*100)+"%";
+  if(s.br){const [a,h,e,h2]=s.br,c=a+h+e+h2,x=t%c;let ph,l;if(x<a){ph="Inhala";l=a-x}else if(x<a+h){ph="Sostén";l=a+h-x}else if(x<a+h+e){ph="Exhala";l=a+h+e-x}else{ph="Pausa";l=c-x}$("pPh").textContent=ph+" · "+Math.ceil(l)}else $("pPh").textContent=""}
+$("pPlay").onclick=play;$("pStop").onclick=stopAll;
+</script>
+</body>
+</html>
